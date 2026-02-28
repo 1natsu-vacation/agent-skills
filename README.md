@@ -21,17 +21,17 @@ npx skills add ./agent-skills -g
 
 | Skill | Description |
 |-------|-------------|
-| [commit](./skills/commit/SKILL.md) | Git commit best practices with conventional commits |
+| [1natsu-commit](./skills/1natsu-commit/SKILL.md) | Git commit best practices with conventional commits |
 
 ## Structure
 
 ```
 skills/
-└── <skill-name>/
+└── 1natsu-<skill-name>/
     └── SKILL.md
 ```
 
-Each skill is a standalone `SKILL.md` with YAML frontmatter (`name`, `description`) and markdown content.
+All skill names are prefixed with `1natsu-` to avoid naming conflicts with other skill packages.
 
 ## License
 

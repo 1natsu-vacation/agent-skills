@@ -1,5 +1,5 @@
 ---
-name: commit
+name: 1natsu-commit
 description: Use when creating git commits, writing commit messages, or staging changes. Provides best practices for conventional commits, atomic commits, and clear commit messages that work across any coding agent.
 ---
 
