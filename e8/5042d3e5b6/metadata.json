@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "e85042d3e5b6",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "skills/1natsu-git-analysis/SKILL.md",
+    "skills/1natsu-git-analysis/references/git-commands.md",
+    "skills/1natsu-git-analysis/scripts/get_branch_diff.sh",
+    "skills/1natsu-git-analysis/scripts/get_commit_history.sh"
+  ],
+  "sessions": [
+    {
+      "metadata": "/e8/5042d3e5b6/0/metadata.json",
+      "transcript": "/e8/5042d3e5b6/0/full.jsonl",
+      "context": "/e8/5042d3e5b6/0/context.md",
+      "content_hash": "/e8/5042d3e5b6/0/content_hash.txt",
+      "prompt": "/e8/5042d3e5b6/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 4,
+    "cache_creation_tokens": 1486,
+    "cache_read_tokens": 203498,
+    "output_tokens": 917,
+    "api_call_count": 4
+  }
+}
