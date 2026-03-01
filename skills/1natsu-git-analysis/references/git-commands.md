@@ -1,98 +1,98 @@
-# Git Commands Reference
+# Git コマンド リファレンス
 
-## Branch Information
+## ブランチ情報
 
 ```bash
-# Get default branch
+# デフォルトブランチの取得
 git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
 
-# Alternative: query remote
+# 代替方法: リモートに問い合わせ
 git remote show origin | grep 'HEAD branch' | awk '{print $NF}'
 
-# Get current branch
+# 現在のブランチの取得
 git branch --show-current
 ```
 
-## Merge Base Operations
+## マージベース操作
 
 ```bash
-# Between current branch and remote default
+# 現在のブランチとリモートデフォルトの間
 git merge-base origin/main HEAD
 
-# Between two branches
+# 2つのブランチ間
 git merge-base branch1 branch2
 
-# Show merge base details
+# マージベースの詳細表示
 MERGE_BASE=$(git merge-base origin/main HEAD)
 git show --no-patch --format="%H %s (%an, %ar)" $MERGE_BASE
 ```
 
-## Commit History Formats
+## コミット履歴のフォーマット
 
 ```bash
-# One-line
+# 1行表示
 git log --oneline <merge-base>..HEAD
 
-# Structured (pipe-separated)
+# 構造化（パイプ区切り）
 git log --format="%H|%s|%an|%ae|%ad" --date=iso <merge-base>..HEAD
 
-# With changed files
+# 変更ファイル付き
 git log --name-status <merge-base>..HEAD
 
-# Filter by author
+# 著者でフィルタ
 git log --author="Name" <merge-base>..HEAD
 
-# Filter by date
+# 日付でフィルタ
 git log --since="2 weeks ago" <merge-base>..HEAD
 
-# Filter by file
+# ファイルでフィルタ
 git log <merge-base>..HEAD -- path/to/file
 ```
 
-## Diff Operations
+## 差分操作
 
 ```bash
-# Summary stats
+# 要約統計
 git diff --stat <merge-base>..HEAD
 git diff --shortstat <merge-base>..HEAD
 
-# File names only
+# ファイル名のみ
 git diff --name-only <merge-base>..HEAD
 
-# File names with status (A/M/D)
+# ファイル名とステータス（A/M/D）
 git diff --name-status <merge-base>..HEAD
 
-# Line count per file
+# ファイルごとの行数
 git diff --numstat <merge-base>..HEAD
 
-# Ignore whitespace
+# 空白を無視
 git diff -w <merge-base>..HEAD
 ```
 
-## Working Directory
+## 作業ディレクトリ
 
 ```bash
-# Short status
+# 短縮ステータス
 git status -s
 
-# Untracked files
+# 未追跡ファイル
 git ls-files --others --exclude-standard
 
-# Staged files
+# ステージ済みファイル
 git diff --cached --name-only
 
-# Check ahead/behind remote
+# リモートとのahead/behind確認
 git rev-list --left-right --count origin/main...HEAD
 ```
 
-## Performance Tips
+## パフォーマンスのヒント
 
-- Use plumbing commands for scripting (`git rev-parse`, `git diff-index`)
-- Limit output depth: `git log --max-count=10`
-- Run independent commands in parallel with `&` and `wait`
-- Limit diff context: `git diff --unified=1`
+- スクリプティングにはplumbingコマンドを使う（`git rev-parse`, `git diff-index`）
+- 出力の深さを制限する：`git log --max-count=10`
+- 独立したコマンドは `&` と `wait` で並列実行する
+- diffのコンテキストを制限する：`git diff --unified=1`
 
-## Robust Script Template
+## 堅牢なスクリプトテンプレート
 
 ```bash
 #!/usr/bin/env bash

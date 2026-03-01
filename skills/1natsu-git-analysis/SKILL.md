@@ -1,72 +1,72 @@
 ---
 name: 1natsu-git-analysis
-description: Analyze git repository changes, branch differences, and commit history. Use when analyzing branches, comparing changes, examining commit history, preparing for PR creation, or reviewing code changes. Activate whenever the user mentions branch analysis, merge base, commit history, or wants to understand what changed in a branch.
+description: gitリポジトリの変更、ブランチの差分、コミット履歴を分析する。ブランチ分析、変更比較、コミット履歴の確認、PR作成の準備、コード変更のレビュー時に使用する。
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
-# Git Analysis
+# Git 分析
 
-Analyze git repository state — branches, commits, diffs, and working directory changes.
+gitリポジトリの状態を分析する — ブランチ、コミット、差分、作業ディレクトリの変更。
 
-## When to Use
+## いつ使うか
 
-- Analyze what changed in a branch
-- Prepare information for PR creation or code review
-- Compare branches or examine commit history
-- Understand code changes before committing
+- ブランチで何が変更されたかを分析するとき
+- PR作成やコードレビューのために情報を整理するとき
+- ブランチの比較やコミット履歴を確認するとき
+- コミット前にコード変更を把握するとき
 
-## Quick Start
+## クイックスタート
 
-Run the bundled helper scripts for common operations:
+よく使う操作のヘルパースクリプトを実行する：
 
 ```bash
-# Get branch diff summary (default branch, merge base, commit count, file stats)
+# ブランチ差分の要約（デフォルトブランチ、マージベース、コミット数、ファイル統計）
 bash scripts/get_branch_diff.sh
 
-# Get structured commit history from merge base
+# マージベースからの構造化されたコミット履歴
 bash scripts/get_commit_history.sh
 ```
 
-## Core Workflow
+## 基本ワークフロー
 
-### 1. Identify Default Branch and Merge Base
+### 1. デフォルトブランチとマージベースの特定
 
 ```bash
 DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
 MERGE_BASE=$(git merge-base origin/$DEFAULT_BRANCH HEAD)
 ```
 
-The merge base is where the current branch diverged — always compare from here, not from the current state of the base branch.
+マージベースは現在のブランチが分岐した地点。ベースブランチの現在の状態ではなく、常にここから比較する。
 
-### 2. Analyze Changes
+### 2. 変更の分析
 
-Run these in parallel for efficiency:
+効率のためにこれらを並列実行する：
 
 ```bash
-# Commits since divergence
+# 分岐以降のコミット
 git log --oneline $MERGE_BASE..HEAD
 
-# File change statistics
+# ファイル変更の統計
 git diff --stat $MERGE_BASE..HEAD
 
-# Structured commit data
+# 構造化されたコミットデータ
 git log --format="%H|%s|%an|%ae|%ad" --date=iso $MERGE_BASE..HEAD
 ```
 
-### 3. Check Working Directory
+### 3. 作業ディレクトリの確認
 
 ```bash
-git status                # Overall status
-git diff --cached         # Staged changes
-git diff                  # Unstaged changes
+git status                # 全体のステータス
+git diff --cached         # ステージ済みの変更
+git diff                  # 未ステージの変更
 ```
 
-## Output Format
+## 出力フォーマット
 
-Present analysis results with summary first, then details:
+分析結果はまず要約、次に詳細を提示する：
 
 ```
 Branch: feature/new-feature (from main)
@@ -80,11 +80,11 @@ Recent commits:
 3. docs(api): update documentation
 ```
 
-## Helper Scripts
+## ヘルパースクリプト
 
 ### get_branch_diff.sh
 
-Outputs structured key-value pairs:
+構造化されたキーバリューペアを出力する：
 
 ```
 DEFAULT_BRANCH: main
@@ -97,26 +97,26 @@ DELETIONS: 89
 
 ### get_commit_history.sh
 
-Outputs pipe-separated commit data (one per line):
+パイプ区切りのコミットデータを1行ずつ出力する：
 
 ```
 hash|subject|author_name|author_email|date
 ```
 
-Accepts an optional merge base argument. Auto-detects if omitted.
+オプションでマージベースを引数として受け取る。省略時は自動検出。
 
-## Error Handling
+## エラーハンドリング
 
-Check prerequisites before analysis:
+分析前に前提条件を確認する：
 
 ```bash
-# Verify git repository
+# gitリポジトリかどうか確認
 git rev-parse --git-dir > /dev/null 2>&1 || echo "Not in a git repository"
 
-# Verify remote exists
+# リモートが存在するか確認
 git ls-remote origin > /dev/null 2>&1 || echo "Remote 'origin' not found"
 ```
 
-## References
+## リファレンス
 
-See [references/git-commands.md](references/git-commands.md) for advanced git command patterns, plumbing commands, and performance optimization tips.
+高度なgitコマンドパターン、plumbingコマンド、パフォーマンス最適化のヒントは [references/git-commands.md](references/git-commands.md) を参照。

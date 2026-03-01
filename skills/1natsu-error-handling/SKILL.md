@@ -1,79 +1,79 @@
 ---
 name: 1natsu-error-handling
-description: Use when implementing error handling, writing try-catch blocks, designing error handling layers, or reviewing code for proper error propagation. Provides language-aware guidelines for structured error handling.
+description: エラーハンドリングの実装、try-catchブロックの記述、エラーハンドリング層の設計、エラー伝播のレビュー時に使用する。言語を考慮した構造的エラーハンドリングのガイドラインを提供する。
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
-# Error Handling Guidelines
+# エラーハンドリング ガイドライン
 
-Structured error handling patterns to prevent silent failures and ensure proper error propagation.
+サイレントな失敗を防ぎ、適切なエラー伝播を保証するための構造的エラーハンドリングパターン。
 
-## When to Use
+## いつ使うか
 
-- Implementing error handling in any language
-- Writing or reviewing try-catch / try-except blocks
-- Designing error handling layers or middleware
-- Reviewing code for swallowed errors or missing error handling
+- 任意の言語でエラーハンドリングを実装するとき
+- try-catch / try-except ブロックを書く・レビューするとき
+- エラーハンドリング層やミドルウェアを設計するとき
+- エラーの握りつぶしやハンドリング漏れをレビューするとき
 
-## Principles
+## 原則
 
-### Never swallow errors
+### エラーを握りつぶさない
 
-Errors must be either handled meaningfully or propagated to the caller. Empty catch blocks are forbidden.
+エラーは意味のあるハンドリングをするか、呼び出し元に伝播させなければならない。空のcatchブロックは禁止。
 
-### Handle at boundaries, not at endpoints
+### 末端ではなく境界でハンドリングする
 
-Endpoint functions (business logic, utilities) should throw/raise errors. Catch them at **architectural boundaries** — API handlers, UI layers, job runners, middleware — where they can be handled structurally.
+末端の関数（ビジネスロジック、ユーティリティ）はエラーをthrow/raiseすべき。キャッチするのは**アーキテクチャの境界** — APIハンドラ、UIレイヤー、ジョブランナー、ミドルウェア — で構造的にハンドリングできる場所。
 
-### Separate concerns by layer
+### レイヤーごとに関心を分離する
 
-- **Domain layer**: throw domain-specific errors
-- **Infrastructure layer**: translate infrastructure errors into domain errors
-- **Presentation layer**: convert errors into user-facing responses
+- **ドメイン層**: ドメイン固有のエラーをthrow
+- **インフラ層**: インフラのエラーをドメインエラーに変換
+- **プレゼンテーション層**: エラーをユーザー向けのレスポンスに変換
 
-### Catch at the right granularity
+### 適切な粒度でキャッチする
 
-Avoid wrapping large blocks in a single try. Keep try blocks small so the error source is obvious.
+大きなブロックを1つのtryで囲むのは避ける。tryブロックは小さく保ち、エラー発生箇所を明確にする。
 
-### Use custom error types
+### カスタムエラー型を使う
 
-Distinguish error kinds via types/classes so handlers can branch appropriately.
+型/クラスでエラーの種類を区別し、ハンドラが適切に分岐できるようにする。
 
-### Don't conflate logging with handling
+### ロギングとハンドリングを混同しない
 
-Logging is observability. Handling is action (retry, fallback, user notification). Do both at the boundary handler — don't `console.log` and re-throw at every layer.
+ロギングはオブザーバビリティ。ハンドリングはアクション（リトライ、フォールバック、ユーザー通知）。両方とも境界のハンドラで行う — 各レイヤーで `console.log` してre-throwしない。
 
-### Guarantee resource cleanup
+### リソースのクリーンアップを保証する
 
-Use `finally` / `defer` / `with` / `using` to prevent resource leaks on error paths.
+`finally` / `defer` / `with` / `using` を使い、エラーパスでのリソースリークを防ぐ。
 
 ## JavaScript / TypeScript
 
-### Strategy
+### 戦略
 
-- **Endpoint functions**: detect errors and `throw`. Do not catch.
-- **Middleware / boundaries**: catch errors structurally in a centralized handler.
-- **Async code**: always handle `async/await` errors upstream with `try-catch` or `.catch()`.
+- **末端の関数**: エラーを検出して `throw` する。キャッチしない。
+- **ミドルウェア / 境界**: 集約ハンドラでエラーを構造的にキャッチする。
+- **非同期コード**: `async/await` のエラーは必ず上流で `try-catch` または `.catch()` でハンドリングする。
 
-### Anti-patterns
+### アンチパターン
 
 ```typescript
-// BAD: empty catch — swallows the error
+// BAD: 空のcatch — エラーを握りつぶしている
 try {
   await fetchData();
 } catch (e) {}
 
-// BAD: console.log only — no actual handling
+// BAD: console.logだけ — 実際のハンドリングがない
 try {
   await fetchData();
 } catch (e) {
   console.log(e);
 }
 
-// BAD: catch at endpoint with default return — caller can't distinguish DB error from missing data
+// BAD: 末端でキャッチしてデフォルト値を返す — 呼び出し元がDBエラーとデータ不在を区別できない
 async function getUser(id: string) {
   try {
     return await db.users.findById(id);
@@ -83,19 +83,19 @@ async function getUser(id: string) {
 }
 ```
 
-### Recommended patterns
+### 推奨パターン
 
 ```typescript
-// GOOD: throw at endpoint, let errors propagate
+// GOOD: 末端ではthrowし、エラーを伝播させる
 async function getUser(id: string): Promise<User> {
-  const user = await db.users.findById(id); // DB errors propagate naturally
+  const user = await db.users.findById(id); // DBエラーは自然に伝播
   if (!user) {
     throw new NotFoundError(`User not found: ${id}`);
   }
   return user;
 }
 
-// GOOD: centralized handler at the boundary
+// GOOD: 境界で集約ハンドリング
 app.use((err, req, res, next) => {
   if (err instanceof NotFoundError) {
     return res.status(404).json({ error: err.message });

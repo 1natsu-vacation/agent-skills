@@ -1,28 +1,28 @@
 ---
 name: 1natsu-create-pr
-description: Create GitHub pull requests with conventional commit titles, structured descriptions, and multi-language support (en/ja). Use when creating PRs, writing PR descriptions, formatting PR titles, or when the user says "create PR", "make a PR", "open a pull request", or similar. Also activate when reviewing or improving existing PR descriptions.
+description: GitHub PRの作成、PRタイトルやdescriptionの記述時に使用する。Conventional Commitsフォーマットのタイトル、構造化されたdescription、多言語対応（en/ja）を提供する。
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
-# Create Pull Request
+# Pull Requestの作成
 
-Create high-quality GitHub pull requests with conventional commit format and structured descriptions.
+Conventional Commitsフォーマットと構造化されたdescriptionで高品質なGitHub PRを作成する。
 
-## Workflow
+## ワークフロー
 
-### Step 1: Analyze Branch Changes
+### ステップ1: ブランチの変更を分析
 
-Gather all information needed to write a meaningful PR. Analyze ALL commits from the merge base, not just the latest.
+意味のあるPRを書くために必要な情報をすべて収集する。最新のコミットだけでなく、マージベースからの**すべてのコミット**を分析する。
 
 ```bash
-# Get branch info
+# ブランチ情報の取得
 DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
 MERGE_BASE=$(git merge-base origin/$DEFAULT_BRANCH HEAD)
 
-# Run in parallel
+# 並列実行
 git status &
 git diff --cached &
 git log --oneline $MERGE_BASE..HEAD &
@@ -30,33 +30,33 @@ git diff --stat $MERGE_BASE..HEAD &
 wait
 ```
 
-### Step 2: Determine Language
+### ステップ2: 言語の決定
 
-Use the language specified by the user. Default to English if not specified.
+ユーザーが指定した言語を使用する。指定がなければ英語をデフォルトとする。
 
-- `en` — English (Summary, Test plan)
-- `ja` — Japanese (概要, テスト計画)
+- `en` — English（Summary, Test plan）
+- `ja` — Japanese（概要, テスト計画）
 
-Be consistent throughout — never mix languages within a single PR.
+一貫性を保つ — 1つのPR内で言語を混ぜない。
 
-### Step 3: Write PR Title
+### ステップ3: PRタイトルの作成
 
-Follow [Conventional Commits](https://www.conventionalcommits.org/) format:
+[Conventional Commits](https://www.conventionalcommits.org/) フォーマットに従う：
 
 ```
 <type>(<scope>): <description>
 ```
 
-**Rules:**
-- No emojis
-- Imperative mood: "add" not "added"
-- No capitalized first letter
-- No period at the end
-- Under 50 characters when possible
+**ルール：**
+- 絵文字なし
+- 命令形："add"（"added" ではなく）
+- 先頭を大文字にしない
+- 末尾にピリオドをつけない
+- 可能なら50文字以内
 
-**Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
+**タイプ：** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
 
-**Examples:**
+**例：**
 ```
 feat(auth): add OAuth2 authentication
 fix(api): resolve timeout on large requests
@@ -64,50 +64,50 @@ docs(readme): update installation instructions
 refactor(db): extract query builder into module
 ```
 
-### Step 4: Write PR Description
+### ステップ4: PR descriptionの作成
 
-**Standard structure:**
+**基本構成：**
 
 ```markdown
 ## Summary
-- Brief description of changes (1-3 bullet points)
-- Focus on what and why, not how
+- 変更の簡潔な説明（1-3箇条書き）
+- whatとwhyに焦点を当て、howには触れない
 
 ## Test plan
-- [ ] Test case 1
-- [ ] Test case 2
-- [ ] Verify no regressions
+- [ ] テストケース1
+- [ ] テストケース2
+- [ ] リグレッションがないことを確認
 ```
 
-**For complex PRs, add sections as needed:**
+**複雑なPRでは必要に応じてセクションを追加：**
 
 ```markdown
 ## Summary
-- Main changes
+- 主な変更点
 
 ## Background
-Context or motivation
+コンテキストや動機
 
 ## Implementation Details
-High-level overview of approach
+アプローチの概要
 
 ## Test plan
-- [ ] Tests
+- [ ] テスト
 ```
 
-**Key principles:**
-- Summary: 1-3 bullet points, present tense, what changed and why
-- Test plan: checkbox format, specific and actionable scenarios
-- No implementation details in summary (those are in the code)
+**重要な原則：**
+- Summary：1-3箇条書き、現在形、何をなぜ変更したか
+- Test plan：チェックボックス形式、具体的で実行可能なシナリオ
+- Summaryに実装の詳細を入れない（それはコードにある）
 
-### Step 5: Check for Project Template
+### ステップ5: プロジェクトテンプレートの確認
 
-If `.github/pull_request_template.md` exists:
-- Follow its structure exactly
-- Don't modify section headers or add custom sections
-- Fill in all sections (use "N/A" if not applicable)
+`.github/pull_request_template.md` が存在する場合：
+- その構造に正確に従う
+- セクションヘッダーを変更したり独自セクションを追加しない
+- すべてのセクションを埋める（該当しない場合は "N/A"）
 
-### Step 6: Create the PR
+### ステップ6: PRの作成
 
 ```bash
 gh pr create --draft --title "feat(scope): description" --body "$(cat <<'EOF'
@@ -120,13 +120,13 @@ EOF
 )"
 ```
 
-**Important:**
-- Use `--draft` flag by default
-- Use HEREDOC (`cat <<'EOF'`) for multi-line body
-- `gh pr create` pushes automatically — do NOT run `git push` first
-- Return the PR URL when done
+**重要：**
+- デフォルトで `--draft` フラグを使用する
+- 複数行のbodyには HEREDOC（`cat <<'EOF'`）を使う
+- `gh pr create` は自動的にpushする — 先に `git push` を実行しない
+- 完了時にPR URLを返す
 
-## Language Examples
+## 言語別の例
 
 ### English
 
@@ -154,19 +154,19 @@ EOF
 - [ ] エラーハンドリングの確認
 ```
 
-## Common Mistakes
+## よくある間違い
 
-| Mistake | Fix |
-|---------|-----|
-| `git push` before `gh pr create` | `gh pr create` handles push |
-| Emojis in title | No emojis allowed |
-| `Add new feature` (no type) | `feat: add new feature` |
-| Only analyzing latest commit | Analyze ALL commits from merge base |
-| Vague descriptions | Be specific about what and why |
-| Mixing languages | Stay consistent within the PR |
+| 間違い | 修正 |
+|--------|------|
+| `gh pr create` の前に `git push` する | `gh pr create` がpushを処理する |
+| タイトルに絵文字を使う | 絵文字は使わない |
+| `Add new feature`（タイプなし） | `feat: add new feature` |
+| 最新のコミットだけを分析 | マージベースからの**すべて**のコミットを分析 |
+| 曖昧な説明 | whatとwhyを具体的に書く |
+| 言語の混在 | PR内で一貫した言語を使う |
 
-## References
+## リファレンス
 
-See [references/pr-templates.md](references/pr-templates.md) for detailed PR description templates for various scenarios (features, bug fixes, refactoring, security fixes, breaking changes) in both English and Japanese.
+各種シナリオ（機能追加、バグ修正、リファクタリング、セキュリティ修正、破壊的変更）のPR descriptionテンプレート（英語・日本語）は [references/pr-templates.md](references/pr-templates.md) を参照。
 
-See [references/conventional-commits.md](references/conventional-commits.md) for the full conventional commits type reference with examples.
+Conventional Commitsのタイプリファレンスと例は [references/conventional-commits.md](references/conventional-commits.md) を参照。

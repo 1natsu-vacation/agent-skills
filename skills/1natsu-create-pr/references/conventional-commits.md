@@ -1,44 +1,44 @@
-# Conventional Commits Reference
+# Conventional Commits リファレンス
 
-## Full Format
+## 完全なフォーマット
 
 ```
 <type>(<scope>): <description>
 
-[optional body]
+[任意の本文]
 
-[optional footer(s)]
+[任意のフッター]
 ```
 
-## Type Reference
+## タイプリファレンス
 
-| Type | Purpose | Example |
-|------|---------|---------|
-| `feat` | New feature | `feat(auth): add OAuth2 login` |
-| `fix` | Bug fix | `fix(api): resolve timeout error` |
-| `docs` | Documentation | `docs(api): add endpoint examples` |
-| `style` | Formatting | `style(components): fix indentation` |
-| `refactor` | Code restructuring | `refactor(utils): simplify validation` |
-| `perf` | Performance | `perf(queries): optimize database calls` |
-| `test` | Testing | `test(auth): add login flow tests` |
-| `build` | Build system | `build(webpack): update config` |
+| タイプ | 用途 | 例 |
+|--------|------|-----|
+| `feat` | 新機能 | `feat(auth): add OAuth2 login` |
+| `fix` | バグ修正 | `fix(api): resolve timeout error` |
+| `docs` | ドキュメント | `docs(api): add endpoint examples` |
+| `style` | フォーマット | `style(components): fix indentation` |
+| `refactor` | コード再構成 | `refactor(utils): simplify validation` |
+| `perf` | パフォーマンス | `perf(queries): optimize database calls` |
+| `test` | テスト | `test(auth): add login flow tests` |
+| `build` | ビルドシステム | `build(webpack): update config` |
 | `ci` | CI/CD | `ci(actions): add test workflow` |
-| `chore` | Maintenance | `chore(deps): update dependencies` |
-| `revert` | Reverting | `revert: feat(auth): add OAuth2` |
+| `chore` | メンテナンス | `chore(deps): update dependencies` |
+| `revert` | 取り消し | `revert: feat(auth): add OAuth2` |
 
-## Scope Guidelines
+## スコープのガイドライン
 
-**By module:** `feat(auth):`, `fix(payment):`, `docs(api):`
+**モジュール別：** `feat(auth):`, `fix(payment):`, `docs(api):`
 
-**By component:** `feat(button):`, `fix(modal):`, `style(navbar):`
+**コンポーネント別：** `feat(button):`, `fix(modal):`, `style(navbar):`
 
-**By layer:** `feat(frontend):`, `fix(backend):`, `refactor(database):`
+**レイヤー別：** `feat(frontend):`, `fix(backend):`, `refactor(database):`
 
-**No scope** (global changes): `chore: update all dependencies`
+**スコープなし**（グローバルな変更）：`chore: update all dependencies`
 
-## Breaking Changes
+## 破壊的変更
 
-Indicate with `!` after type/scope:
+タイプ/スコープの後に `!` を付けて示す：
 
 ```
 feat(api)!: change endpoint response format
@@ -46,30 +46,30 @@ feat(api)!: change endpoint response format
 BREAKING CHANGE: API responses now use camelCase instead of snake_case
 ```
 
-## Examples by Category
+## カテゴリ別の例
 
-### Features
+### 機能追加
 ```
 feat(search): add fuzzy search capability
 feat(export): support CSV export
 feat(i18n): add Japanese localization
 ```
 
-### Bug Fixes
+### バグ修正
 ```
 fix(validation): prevent empty email submission
 fix(cache): resolve race condition in cache updates
 fix(auth): handle expired token gracefully
 ```
 
-### Performance
+### パフォーマンス
 ```
 perf(images): implement lazy loading
 perf(queries): add database indexes
 perf(bundle): reduce JavaScript bundle size
 ```
 
-### Refactoring
+### リファクタリング
 ```
 refactor(auth): extract validation logic
 refactor(components): convert to TypeScript

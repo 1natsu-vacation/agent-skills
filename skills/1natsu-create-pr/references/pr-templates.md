@@ -1,6 +1,6 @@
-# PR Description Templates
+# PR description テンプレート
 
-## Feature (en)
+## 機能追加 (en)
 
 ```markdown
 ## Summary
@@ -13,7 +13,7 @@
 - [ ] Verify no regressions
 ```
 
-## Feature (ja)
+## 機能追加 (ja)
 
 ```markdown
 ## 概要
@@ -26,7 +26,7 @@
 - [ ] リグレッションがないことを確認
 ```
 
-## Bug Fix (en)
+## バグ修正 (en)
 
 ```markdown
 ## Summary
@@ -40,7 +40,7 @@
 - [ ] Add regression test
 ```
 
-## Bug Fix (ja)
+## バグ修正 (ja)
 
 ```markdown
 ## 概要
@@ -54,7 +54,7 @@
 - [ ] リグレッションテストを追加
 ```
 
-## Refactoring (en)
+## リファクタリング (en)
 
 ```markdown
 ## Summary
@@ -67,7 +67,7 @@
 - [ ] Code coverage maintained or improved
 ```
 
-## Refactoring (ja)
+## リファクタリング (ja)
 
 ```markdown
 ## 概要
@@ -80,7 +80,7 @@
 - [ ] コードカバレッジの維持または改善
 ```
 
-## Breaking Change (en)
+## 破壊的変更 (en)
 
 ```markdown
 ## Summary
@@ -100,7 +100,7 @@
 - [ ] Documentation reflects all breaking changes
 ```
 
-## Breaking Change (ja)
+## 破壊的変更 (ja)
 
 ```markdown
 ## 概要
@@ -120,7 +120,7 @@
 - [ ] ドキュメントがすべての破壊的変更を反映
 ```
 
-## Complex Change (en)
+## 複雑な変更 (en)
 
 ```markdown
 ## Summary
@@ -140,7 +140,7 @@
 - [ ] Performance benchmarks
 ```
 
-## Complex Change (ja)
+## 複雑な変更 (ja)
 
 ```markdown
 ## 概要
@@ -160,7 +160,7 @@
 - [ ] パフォーマンスベンチマーク
 ```
 
-## Language Quick Reference
+## 言語クイックリファレンス
 
 | English | Japanese |
 |---------|----------|
