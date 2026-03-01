@@ -1,0 +1,124 @@
+Implement the following plan:
+
+# Plan: 1natsu-create-pr スキルに language 引数を追加
+
+## Context
+
+現在の `1natsu-create-pr` スキル（v1.2.0）はステップ2で「ユーザーが指定した言語を使用する。指定がなければ英語をデフォルトとする」と記載しているが、引数としての指定方法が定義されていない。Claude Code の公式スキル引数機能（`argument-hint` + `$ARGUMENTS` 変数）を使い、言語を明示的に渡せるようにする。
+
+## 変更対象ファイル
+
+- `skills/1natsu-create-pr/SKILL.md`
+
+## 変更内容
+
+### 1. frontmatter に `argument-hint` を追加
+
+```yaml
+argument-hint: "[lang]"
+```
+
+これにより `/1natsu-create-pr` のオートコンプリート時に `[lang]` がヒント表示される。
+
+### 2. ステップ2（言語の決定）を更新
+
+`$ARGUMENTS` 変数を使って引数から言語を取得するロジックに変更する。
+
+現在:
+```markdown
+ユーザーが指定した言語を使用する。指定がなければ英語をデフォルトとする。
+```
+
+更新後:
+```markdown
+以下の優先順位で言語を決定する：
+1. 引数（`$ARGUMENTS`）で指定された言語コード
+2. ユーザーがプロンプトで指定した言語
+3. デフォルト: `en`（英語）
+
+**使用例：**
+- `/1natsu-create-pr` → 英語（デフォルト）
+- `/1natsu-create-pr ja` → 日本語
+- `/1natsu-create-pr en` → 英語（明示指定）
+```
+
+### 3. バージョンを `1.3.0` にインクリメント
+
+機能追加（マイナーバージョンアップ）。
+
+## 検証方法
+
+```bash
+bunx skills add . --list    # スキルが認識されるか確認
+```
+
+
+If you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /Users/1natsu/.claude/projects/-Users-1natsu-ghq-github-com-1natsu-vacation-agent-skills/b907e52e-3950-4f76-bb3c-d9b303b3ae64.jsonl
+
+If this plan can be broken down into multiple independent tasks, consider using the TeamCreate tool to create a team and parallelize the work.
+
+---
+
+## Context
+
+- Current git status: On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   skills/1natsu-create-pr/SKILL.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+- Current git diff (staged and unstaged changes): diff --git a/skills/1natsu-create-pr/SKILL.md b/skills/1natsu-create-pr/SKILL.md
+index fb49813..f9bec9f 100644
+--- a/skills/1natsu-create-pr/SKILL.md
++++ b/skills/1natsu-create-pr/SKILL.md
+@@ -1,10 +1,11 @@
+ ---
+ name: 1natsu-create-pr
+ description: GitHub PRの作成、PRタイトルやdescriptionの記述時に使用する。Conventional Commitsフォーマットのタイトル、構造化されたdescription、多言語対応（en/ja）を提供する。
++argument-hint: "[lang]"
+ license: MIT
+ metadata:
+   author: 1natsu
+-  version: "1.2.0"
++  version: "1.3.0"
+ ---
+ 
+ # Pull Requestの作成
+@@ -32,8 +33,17 @@ wait
+ 
+ ### ステップ2: 言語の決定
+ 
+-ユーザーが指定した言語を使用する。指定がなければ英語をデフォルトとする。
++以下の優先順位で言語を決定する：
++1. 引数（`$ARGUMENTS`）で指定された言語コード
++2. ユーザーがプロンプトで指定した言語
++3. デフォルト: `en`（英語）
+ 
++**使用例：**
++- `/1natsu-create-pr` → 英語（デフォルト）
++- `/1natsu-create-pr ja` → 日本語
++- `/1natsu-create-pr en` → 英語（明示指定）
++
++**対応言語：**
+ - `en` — English（Summary, Test plan）
+ - `ja` — Japanese（概要, テスト計画）
+- Current branch: main
+- Recent commits: 28134f8 feat: add entire-context skill for entire CLI reference
+9647403 refactor: consolidate conventional commits info into dedicated skill (#1)
+36896be chore: add git-add permission to repo settings and gitignore local settings
+d4506e9 docs: localize all skills and references to Japanese
+f06d681 docs(readme): add git-analysis and create-pr skill entries
+f22ebf0 feat: add error-handling skill
+500bda2 feat: add create-pr skill
+dcc4b0d feat: add git-analysis skill
+e0ee444 feat: add license and metadata to skill frontmatter
+051ce94 chore: add entire tool configuration
+
+## Your task
+
+Based on the above changes, create a single git commit.
+
+You have the capability to call multiple tools in a single response. Stage and create the commit using a single message. Do not use any other tools or do anything else. Do not send any other text or messages besides these tool calls.
