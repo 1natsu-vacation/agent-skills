@@ -114,7 +114,7 @@ EOF
 **重要：**
 - デフォルトで `--draft` フラグを使用する
 - 複数行のbodyには HEREDOC（`cat <<'EOF'`）を使う
-- `gh pr create` は自動的にpushする — 先に `git push` を実行しない
+- リモートにブランチがなければ先に `git push -u origin <branch>` でpushする
 - 完了時にPR URLを返す
 
 ## 言語別の例
@@ -149,7 +149,7 @@ EOF
 
 | 間違い | 修正 |
 |--------|------|
-| `gh pr create` の前に `git push` する | `gh pr create` がpushを処理する |
+| リモートにpushせずに `gh pr create` する | 先に `git push -u origin <branch>` を実行する |
 | タイトルに絵文字を使う | 絵文字は使わない |
 | `Add new feature`（タイプなし） | `feat: add new feature` |
 | 最新のコミットだけを分析 | マージベースからの**すべて**のコミットを分析 |
