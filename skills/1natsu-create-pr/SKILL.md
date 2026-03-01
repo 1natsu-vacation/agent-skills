@@ -4,7 +4,7 @@ description: GitHub PRの作成、PRタイトルやdescriptionの記述時に使
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Pull Requestの作成
@@ -41,20 +41,11 @@ wait
 
 ### ステップ3: PRタイトルの作成
 
-[Conventional Commits](https://www.conventionalcommits.org/) フォーマットに従う：
+[Conventional Commits](https://www.conventionalcommits.org/) フォーマットに従う（タイプやdescriptionの詳細ルールは `1natsu-conventional-commits` スキルを参照）：
 
 ```
 <type>(<scope>): <description>
 ```
-
-**ルール：**
-- 絵文字なし
-- 命令形："add"（"added" ではなく）
-- 先頭を大文字にしない
-- 末尾にピリオドをつけない
-- 可能なら50文字以内
-
-**タイプ：** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
 
 **例：**
 ```
@@ -168,5 +159,3 @@ EOF
 ## リファレンス
 
 各種シナリオ（機能追加、バグ修正、リファクタリング、セキュリティ修正、破壊的変更）のPR descriptionテンプレート（英語・日本語）は [references/pr-templates.md](references/pr-templates.md) を参照。
-
-Conventional Commitsのタイプリファレンスと例は [references/conventional-commits.md](references/conventional-commits.md) を参照。
