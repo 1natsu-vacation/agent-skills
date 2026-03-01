@@ -15,6 +15,7 @@ skills/
 - `description` はスキルの発動条件を具体的に書く（エージェントがいつ使うか判断する材料になる）
 - 内容はエージェント非依存・汎用的に保つ（Claude Code, Cursor, Cline, Codex 等で横断的に使える）
 - 1スキル = 1トピック、スコープを絞る
+- frontmatter には `license: MIT` と `metadata`（`author`, `version`）を必ず含める。バージョンは更新時にインクリメントする
 
 ## SKILL.md Template
 
@@ -22,6 +23,10 @@ skills/
 ---
 name: 1natsu-skill-name
 description: When this skill should be activated and what it does.
+license: MIT
+metadata:
+  author: 1natsu
+  version: "1.0.0"
 ---
 
 # Skill Title
