@@ -77,6 +77,9 @@
     ]
   },
   "permissions": {
+    "allow": [
+      "Bash(git add:*)"
+    ],
     "deny": [
       "Read(./.entire/metadata/**)"
     ]
