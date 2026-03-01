@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "e14cde8bf6cd",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "skills/1natsu-commit/SKILL.md",
+    "skills/1natsu-create-pr/SKILL.md",
+    "skills/1natsu-create-pr/references/conventional-commits.md",
+    "skills/1natsu-create-pr/references/pr-templates.md",
+    "skills/1natsu-error-handling/SKILL.md",
+    "skills/1natsu-git-analysis/SKILL.md",
+    "skills/1natsu-git-analysis/references/git-commands.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/e1/4cde8bf6cd/0/metadata.json",
+      "transcript": "/e1/4cde8bf6cd/0/full.jsonl",
+      "context": "/e1/4cde8bf6cd/0/context.md",
+      "content_hash": "/e1/4cde8bf6cd/0/content_hash.txt",
+      "prompt": "/e1/4cde8bf6cd/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1831,
+    "cache_creation_tokens": 80577,
+    "cache_read_tokens": 652097,
+    "output_tokens": 12818,
+    "api_call_count": 12
+  }
+}

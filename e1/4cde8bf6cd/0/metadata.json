@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "e14cde8bf6cd",
+  "session_id": "8d6bf940-dd57-4170-8956-25bff1e8a8f8",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-01T10:18:04.644335Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "skills/1natsu-commit/SKILL.md",
+    "skills/1natsu-create-pr/SKILL.md",
+    "skills/1natsu-create-pr/references/conventional-commits.md",
+    "skills/1natsu-create-pr/references/pr-templates.md",
+    "skills/1natsu-error-handling/SKILL.md",
+    "skills/1natsu-git-analysis/SKILL.md",
+    "skills/1natsu-git-analysis/references/git-commands.md"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "b5f14890bcc7",
+  "token_usage": {
+    "input_tokens": 1831,
+    "cache_creation_tokens": 80577,
+    "cache_read_tokens": 652097,
+    "output_tokens": 12818,
+    "api_call_count": 12
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-01T10:18:04.568823Z",
+    "agent_lines": 282,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 282,
+    "agent_percentage": 100
+  }
+}
