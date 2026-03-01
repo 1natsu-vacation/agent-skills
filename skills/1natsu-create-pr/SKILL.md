@@ -1,10 +1,11 @@
 ---
 name: 1natsu-create-pr
 description: GitHub PRの作成、PRタイトルやdescriptionの記述時に使用する。Conventional Commitsフォーマットのタイトル、構造化されたdescription、多言語対応（en/ja）を提供する。
+argument-hint: "[lang]"
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.2.0"
+  version: "1.3.0"
 ---
 
 # Pull Requestの作成
@@ -32,8 +33,17 @@ wait
 
 ### ステップ2: 言語の決定
 
-ユーザーが指定した言語を使用する。指定がなければ英語をデフォルトとする。
+以下の優先順位で言語を決定する：
+1. 引数（`$ARGUMENTS`）で指定された言語コード
+2. ユーザーがプロンプトで指定した言語
+3. デフォルト: `en`（英語）
 
+**使用例：**
+- `/1natsu-create-pr` → 英語（デフォルト）
+- `/1natsu-create-pr ja` → 日本語
+- `/1natsu-create-pr en` → 英語（明示指定）
+
+**対応言語：**
 - `en` — English（Summary, Test plan）
 - `ja` — Japanese（概要, テスト計画）
 
