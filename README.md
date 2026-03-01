@@ -22,6 +22,8 @@ npx skills add ./agent-skills -g
 | Skill | Description |
 |-------|-------------|
 | [1natsu-commit](./skills/1natsu-commit/SKILL.md) | Git commit best practices with conventional commits |
+| [1natsu-git-analysis](./skills/1natsu-git-analysis/SKILL.md) | Git repository analysis — branches, diffs, commit history |
+| [1natsu-create-pr](./skills/1natsu-create-pr/SKILL.md) | GitHub PR creation with conventional commits and multi-language support |
 
 ## Structure
 
