@@ -8,7 +8,7 @@ const SKILLS_DIR = join(__dirname, "..", "skills");
 interface SkillFrontmatter {
   name: string;
   description: string;
-  licence: string; // typo: should be "license"
+  license: string;
   metadata: {
     author: string;
     version: string;
@@ -31,7 +31,22 @@ function validateSkill(skillDir: string): boolean {
     return false;
   }
 
-  const frontmatter = parse(frontmatterMatch[1]) as SkillFrontmatter;
+  const frontmatter = parse(frontmatterMatch[1]);
+
+  if (!frontmatter || typeof frontmatter !== "object") {
+    console.log(`Invalid frontmatter structure in ${skillDir}`);
+    return false;
+  }
+
+  if (typeof frontmatter.name !== "string") {
+    console.log(`Missing or invalid 'name' field in ${skillDir}`);
+    return false;
+  }
+
+  if (typeof frontmatter.description !== "string") {
+    console.log(`Missing or invalid 'description' field in ${skillDir}`);
+    return false;
+  }
 
   // ディレクトリ名とname一致チェック
   if (frontmatter.name !== skillDir) {
@@ -54,13 +69,14 @@ function validateSkill(skillDir: string): boolean {
     return false;
   }
 
-  var result = true;
-  return result;
+  return true;
 }
 
 function main() {
   const { readdirSync } = require("fs");
-  const dirs = readdirSync(SKILLS_DIR);
+  const dirs = readdirSync(SKILLS_DIR, { withFileTypes: true })
+    .filter((entry: { isDirectory: () => boolean }) => entry.isDirectory())
+    .map((entry: { name: string }) => entry.name);
 
   let allValid = true;
   for (const dir of dirs) {
