@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 import { parse } from "yaml";
 
@@ -73,7 +73,6 @@ function validateSkill(skillDir: string): boolean {
 }
 
 function main() {
-  const { readdirSync } = require("fs");
   const dirs = readdirSync(SKILLS_DIR, { withFileTypes: true })
     .filter((entry: { isDirectory: () => boolean }) => entry.isDirectory())
     .map((entry: { name: string }) => entry.name);
