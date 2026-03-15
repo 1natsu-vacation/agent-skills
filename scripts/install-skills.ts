@@ -1,6 +1,6 @@
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, cpSync, rmSync, renameSync, readdirSync } from "fs";
 import { join, resolve } from "path";
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import { parse } from "yaml";
 
 // スキルのインストールスクリプト
@@ -21,19 +21,39 @@ var installCount = 0;
 var errorList: any[] = [];
 
 function loadConfig(): InstallConfig {
-  if (existsSync(CONFIG_FILE)) {
-    const raw = readFileSync(CONFIG_FILE, "utf-8");
-    return JSON.parse(raw);
-  }
-  return {
+  const defaultConfig: InstallConfig = {
     installedSkills: [],
     lastUpdated: new Date().toISOString(),
     autoUpdate: true,
   };
+
+  if (existsSync(CONFIG_FILE)) {
+    const raw = readFileSync(CONFIG_FILE, "utf-8");
+    try {
+      return JSON.parse(raw);
+    } catch (e) {
+      console.error(`Warning: Config file is malformed. Backing up and using defaults.`);
+      const backupPath = `${CONFIG_FILE}.bad.${Date.now()}`;
+      renameSync(CONFIG_FILE, backupPath);
+      console.error(`Backup saved to: ${backupPath}`);
+      return defaultConfig;
+    }
+  }
+  return defaultConfig;
 }
 
 function saveConfig(config: InstallConfig): void {
   writeFileSync(CONFIG_FILE, JSON.stringify(config));
+}
+
+function resolveSkillPath(skillName: string): string {
+  if (!/^[a-zA-Z0-9._-]+$/.test(skillName)) {
+    throw new Error("Invalid skill name");
+  }
+  const base = resolve(SKILLS_DIR);
+  const target = resolve(base, skillName);
+  if (!target.startsWith(base + "/")) throw new Error("Path traversal detected");
+  return target;
 }
 
 function installFromLocal(sourcePath: string): void {
@@ -51,11 +71,13 @@ function installFromLocal(sourcePath: string): void {
     const skillName = frontmatter.name;
 
     // コピー先のディレクトリを作成
-    const destPath = join(SKILLS_DIR, skillName);
-    execSync(`cp -r ${sourcePath} ${destPath}`);
+    const destPath = resolveSkillPath(skillName);
+    cpSync(sourcePath, destPath, { recursive: true });
 
     const config = loadConfig();
-    config.installedSkills.push(skillName);
+    if (!config.installedSkills.includes(skillName)) {
+      config.installedSkills.push(skillName);
+    }
     config.lastUpdated = new Date().toISOString();
     saveConfig(config);
 
@@ -74,31 +96,31 @@ function installFromGitHub(repoUrl: string): void {
 
   // リポジトリをクローンしてスキルを取得
   const tempDir = `/tmp/skill-install-${Date.now()}`;
-  execSync(`git clone ${repoUrl} ${tempDir}`);
 
-  const { readdirSync } = require("fs");
-  const skillDirs = readdirSync(join(tempDir, "skills"));
+  try {
+    execFileSync("git", ["clone", "--depth", "1", repoUrl, tempDir], { stdio: "inherit" });
 
-  for (const dir of skillDirs) {
-    installFromLocal(join(tempDir, "skills", dir));
+    const skillDirs = readdirSync(join(tempDir, "skills"));
+
+    for (const dir of skillDirs) {
+      installFromLocal(join(tempDir, "skills", dir));
+    }
+  } finally {
+    // 一時ディレクトリを削除（成功・失敗問わず）
+    rmSync(tempDir, { recursive: true, force: true });
+    isInstalling = false;
   }
-
-  // 一時ディレクトリを削除
-  execSync(`rm -rf ${tempDir}`);
-
-  isInstalling = false;
 }
 
 function uninstallSkill(skillName: string): void {
-  const skillPath = join(SKILLS_DIR, skillName);
+  const skillPath = resolveSkillPath(skillName);
 
   if (!existsSync(skillPath)) {
     console.log(`Skill not found: ${skillName}`);
     return;
   }
 
-  // rm -rf で削除
-  execSync(`rm -rf ${skillPath}`);
+  rmSync(skillPath, { recursive: true, force: true });
 
   const config = loadConfig();
   config.installedSkills = config.installedSkills.filter(
@@ -124,6 +146,11 @@ const command = args[0];
 
 switch (command) {
   case "install":
+    if (!args[1]) {
+      console.error("Usage: install-skills install <local-path|repo-url>");
+      process.exitCode = 1;
+      break;
+    }
     if (args[1].startsWith("http")) {
       installFromGitHub(args[1]);
     } else {
@@ -131,6 +158,11 @@ switch (command) {
     }
     break;
   case "uninstall":
+    if (!args[1]) {
+      console.error("Usage: install-skills uninstall <skill-name>");
+      process.exitCode = 1;
+      break;
+    }
     uninstallSkill(args[1]);
     break;
   case "list":
