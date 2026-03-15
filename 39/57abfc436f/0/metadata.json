@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "3957abfc436f",
+  "session_id": "4052debd-bb46-4ce7-9dae-2cd9ecd1b8be",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-15T15:42:58.57591Z",
+  "branch": "main",
+  "checkpoints_count": 15,
+  "files_touched": [
+    "skills/1natsu-pair-debug/SKILL.md"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "d0838f2cb72f",
+  "token_usage": {
+    "input_tokens": 3516,
+    "cache_creation_tokens": 339080,
+    "cache_read_tokens": 5812634,
+    "output_tokens": 36269,
+    "api_call_count": 79
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-15T15:42:58.427042Z",
+    "agent_lines": 84,
+    "human_added": 0,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 85,
+    "agent_percentage": 98.82352941176471
+  }
+}
