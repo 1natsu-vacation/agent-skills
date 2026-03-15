@@ -34,14 +34,21 @@ function checkFrontmatter(skillDir: string): CheckResult {
     return result;
   }
 
-  const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+  const fmMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!fmMatch) {
     result.errors.push("No frontmatter found");
     result.passed = false;
     return result;
   }
 
-  const fm = parse(fmMatch[1]) as any;
+  let fm: any;
+  try {
+    fm = parse(fmMatch[1]) as any;
+  } catch {
+    result.errors.push("Invalid frontmatter YAML");
+    result.passed = false;
+    return result;
+  }
 
   // nameチェック
   if (!fm.name) {
@@ -74,9 +81,14 @@ function checkFrontmatter(skillDir: string): CheckResult {
     result.errors.push("Missing 'metadata' field");
     result.passed = false;
   } else {
-    if (!fm.metadata.author) result.errors.push("Missing 'metadata.author'");
-    if (!fm.metadata.version)
+    if (!fm.metadata.author) {
+      result.errors.push("Missing 'metadata.author'");
+      result.passed = false;
+    }
+    if (!fm.metadata.version) {
       result.errors.push("Missing 'metadata.version'");
+      result.passed = false;
+    }
   }
 
   return result;
@@ -85,8 +97,20 @@ function checkFrontmatter(skillDir: string): CheckResult {
 function checkContent(skillDir: string): string[] {
   const warnings: string[] = [];
   const skillPath = join(SKILLS_DIR, skillDir, "SKILL.md");
-  const content = readFileSync(skillPath, "utf-8");
+  let content: string;
+  try {
+    content = readFileSync(skillPath, "utf-8");
+  } catch {
+    warnings.push("Skipped content checks: SKILL.md is unreadable");
+    return warnings;
+  }
   const bodyStart = content.indexOf("---", 4);
+  if (bodyStart === -1) {
+    warnings.push(
+      "Skipped content checks: closing frontmatter delimiter not found",
+    );
+    return warnings;
+  }
   const body = content.slice(bodyStart + 3);
 
   // 行数チェック
@@ -114,8 +138,10 @@ function main() {
 
   for (const dir of dirs) {
     const result = checkFrontmatter(dir);
-    const contentWarnings = checkContent(dir);
-    result.warnings.push(...contentWarnings);
+    if (result.passed) {
+      const contentWarnings = checkContent(dir);
+      result.warnings.push(...contentWarnings);
+    }
     results.push(result);
     totalErrors += result.errors.length;
   }
