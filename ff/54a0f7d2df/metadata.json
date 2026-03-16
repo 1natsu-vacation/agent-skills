@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "ff54a0f7d2df",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md",
+    "skills/1natsu-pair-resolve-conflicts/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ff/54a0f7d2df/0/metadata.json",
+      "transcript": "/ff/54a0f7d2df/0/full.jsonl",
+      "context": "/ff/54a0f7d2df/0/context.md",
+      "content_hash": "/ff/54a0f7d2df/0/content_hash.txt",
+      "prompt": "/ff/54a0f7d2df/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2339,
+    "cache_creation_tokens": 245665,
+    "cache_read_tokens": 972104,
+    "output_tokens": 11389,
+    "api_call_count": 21
+  }
+}
