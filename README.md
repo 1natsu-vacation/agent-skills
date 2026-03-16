@@ -28,6 +28,7 @@ npx skills add ./agent-skills -g
 | [1natsu-error-handling](./skills/1natsu-error-handling/SKILL.md) | Structured error handling guidelines |
 | [1natsu-git-analysis](./skills/1natsu-git-analysis/SKILL.md) | Git repository analysis — branches, diffs, commit history |
 | [1natsu-pair-debug](./skills/1natsu-pair-debug/SKILL.md) | Collaborative debugging with human-in-the-loop observation |
+| [1natsu-pair-resolve-conflicts](./skills/1natsu-pair-resolve-conflicts/SKILL.md) | Collaborative git conflict resolution with commit history analysis |
 | [1natsu-pr-review-handler](./skills/1natsu-pr-review-handler/SKILL.md) | Autonomous PR review comment handling and code fixes |
 
 ## Structure
