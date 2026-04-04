@@ -1,0 +1,61 @@
+@skills/1natsu-document-harness/ 既存ドキュメントに追記するだけでなく、ファイルの新規作成・複数ファイルに重複するものの統合や、ドキュメント間で不整合になる部分を修正するなどの検査と提案をして欲しいんだけど、すでにSKILLにはそういう作りになっていますか？
+
+---
+
+監査の時だけ「提案→確認→実行のフロー」を挟むようにしたいんだよね。そうするとAパターンだとSKILL全体が複雑になる？
+責務分離の観点でコマンド分離する場合、ドキュメント配置の判断基準（3層モデル、placement-guide等）の共通のコンテキストの管理が煩雑になる？1箇所のreferencesを2つのSKILLから同一のものを参照する方式は取れたりする？あるいはuser-invocable:falseなinternal SKILLを作りdocument-harness系コマンドの集約コマンドを用意するとか？一番いいパターンかつ公式に推奨されている安定したものを選びたい。
+
+---
+
+いいね進めてください。
+
+---
+
+参照不足：ドキュメントの内容的にpaths参照に含めるべきpathが漏れているかのチェック
+
+---
+
+Bで。
+
+---
+
+ツリーとコマンド名前空間に調整が必要。
+document-auditではなんのドキュメント監査かわからないので、harnessドキュメントの文脈であることがわかるべき。1natsu-document-harness-auditかな。内部も同様かつ内部はプライベートSKILLとわかるように 1natsu-document-harness-modelとする。
+呼び出しスラッシュコマンドでの名前は1natsu-document-harnessと1natsu-document-harness:audit にできると嬉しい。
+
+---
+
+同意です。AでOK。
+
+---
+
+ok
+
+---
+
+ok
+
+---
+
+ok
+
+---
+
+プランはいいけど、superpowersでの実装はせずここまでのプランに止める。なぜなら私は本来 skill-creator　SKILLを使うつもりだったからです。このプランを使ってskill-creatorに移譲します。
+
+---
+
+/skill-creator @docs/superpowers/specs/2026-04-05-document-harness-refactor-design.md のプランを元にスキルを作成して
+
+---
+
+スキップでいいです。
+
+---
+
+いえ、ここから最適化作業をぜひskill-creatorの目線でどんどんやってほしい。
+description最適化はもちろん、スキルの内容全般をskill-creatorの目線で改めてレビューして欲しい。superpowersでプランを組ませたが、彼はSKILLに特化したスキルではないので、おそらくもっとベターな部分があるはずだ。
+
+---
+
+OK。一旦完璧だと思う？他にレビュー観点ない？なければコミット・
