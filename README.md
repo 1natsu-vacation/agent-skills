@@ -23,6 +23,8 @@ npx skills add ./agent-skills -g
 |-------|-------------|
 | [1natsu-commit](./skills/1natsu-commit/SKILL.md) | Git commit best practices with conventional commits |
 | [1natsu-document-harness](./skills/1natsu-document-harness/SKILL.md) | Harness documentation generation with consistent placement and granularity |
+| [1natsu-document-harness-audit](./skills/1natsu-document-harness-audit/SKILL.md) | Harness documentation audit — detects duplicates, inconsistencies, and stale content |
+| [1natsu-document-harness-model](./skills/1natsu-document-harness-model/SKILL.md) | Harness documentation model reference (internal, auto-loaded) |
 | [1natsu-conventional-commits](./skills/1natsu-conventional-commits/SKILL.md) | Conventional Commits reference (internal, auto-loaded) |
 | [1natsu-create-pr](./skills/1natsu-create-pr/SKILL.md) | GitHub PR creation with conventional commits and multi-language support |
 | [1natsu-entire-context](./skills/1natsu-entire-context/SKILL.md) | entire CLI reference for accessing session history and checkpoints |
