@@ -338,3 +338,7 @@ iteration-2へ進んで。
 ---
 
 質問。ignoreした 1natsu-auto-resolbe-conflicts-workspace だけど、そもそもこのリポジトリ直下に配置した意味はなぜ？Gitのテストをするため？GitのテストをするためだとしたらIgnoreしてしまうと、次回移行skill-creatorで再テストするときに意味をなさなくなったりしない？
+
+---
+
+a 現状維持
