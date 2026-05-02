@@ -21,6 +21,7 @@ npx skills add ./agent-skills -g
 
 | Skill | Description |
 |-------|-------------|
+| [1natsu-auto-resolve-conflicts](./skills/1natsu-auto-resolve-conflicts/SKILL.md) | Fully-autonomous git conflict resolution — resolves, validates, commits, with safe bail-out to pair mode |
 | [1natsu-commit](./skills/1natsu-commit/SKILL.md) | Git commit best practices with conventional commits |
 | [1natsu-document-harness](./skills/1natsu-document-harness/SKILL.md) | Harness documentation generation with consistent placement and granularity |
 | [1natsu-document-harness-audit](./skills/1natsu-document-harness-audit/SKILL.md) | Harness documentation audit — detects duplicates, inconsistencies, and stale content |
