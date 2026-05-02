@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.5.1",
+  "checkpoint_id": "57b3797a6f08",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 15,
+  "files_touched": [
+    "skills/1natsu-auto-resolve-conflicts/SKILL.md",
+    "skills/1natsu-auto-resolve-conflicts/evals/evals.json",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/01-simple-import-merge.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/02-integrate-both-sides.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/03-api-signature-degrade.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/04-mixed-bail-out.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/05-rebase-continue-with-validation-failure.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/06-lockfile-regenerate.sh",
+    "skills/1natsu-auto-resolve-conflicts/references/bailout-rules.md",
+    "skills/1natsu-auto-resolve-conflicts/references/commit-message-template.md",
+    "skills/1natsu-auto-resolve-conflicts/references/handoff-to-pair-resolve.md",
+    "skills/1natsu-auto-resolve-conflicts/references/lockfile-regeneration.md",
+    "skills/1natsu-auto-resolve-conflicts/references/verification-detection.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/57/b3797a6f08/0/metadata.json",
+      "transcript": "/57/b3797a6f08/0/full.jsonl",
+      "content_hash": "/57/b3797a6f08/0/content_hash.txt",
+      "prompt": "/57/b3797a6f08/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 259,
+    "cache_creation_tokens": 1273441,
+    "cache_read_tokens": 27422993,
+    "output_tokens": 175987,
+    "api_call_count": 118
+  }
+}
