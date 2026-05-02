@@ -140,3 +140,7 @@ vite.config.ts.timestamp-*
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# skill-creator evaluation workspaces (regeneratable, contain absolute paths
+# and subagent-specific temporary state — keep local only).
+skills/*-workspace/
