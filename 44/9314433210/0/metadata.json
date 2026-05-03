@@ -1,0 +1,82 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "449314433210",
+  "session_id": "c3da8140-dc41-486c-a167-a93af1c6ae3a",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-03T13:22:56.820901Z",
+  "branch": "main",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "skills/1natsu-auto-resolve-conflicts/SKILL.md"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "46c8e2ca0edd",
+  "checkpoint_transcript_start": 448,
+  "transcript_lines_at_start": 448,
+  "token_usage": {
+    "input_tokens": 54,
+    "cache_creation_tokens": 48502,
+    "cache_read_tokens": 2881938,
+    "output_tokens": 25614,
+    "api_call_count": 16
+  },
+  "session_metrics": {
+    "turn_count": 11
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-03T13:22:56.803769Z",
+    "agent_lines": 0,
+    "agent_removed": 1,
+    "human_added": 0,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 1,
+    "total_lines_changed": 3,
+    "agent_percentage": 33.33333333333333,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 2
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 2
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 2
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 1,
+      "user_lines_removed": 1,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        "skills/1natsu-auto-resolve-conflicts/SKILL.md": 1
+      },
+      "user_removed_per_file": {
+        "skills/1natsu-auto-resolve-conflicts/SKILL.md": 1
+      }
+    }
+  ]
+}

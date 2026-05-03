@@ -1,0 +1,29 @@
+dry-runで
+! no active tag protection rulesets found. Consider protecting tags to ensure immutable releases (Settings > Rules > Rulesets)
+って言われるんだけど、GitHubのCodeScanningで言語対応が標準にない。サードパーティーのスキャナでAgentのSkillのこのリポにあったものはある？
+
+---
+
+コピペ間違ってた。
+意図したものはこっちのWarn Message　でした。
+skills include code files but code scanning does not appear to be configured (Settings > Code security > Code scanning)
+
+---
+
+codescanは後回しにする。
+! 1natsu-auto-resolve-conflicts: description is 1049 chars (recommended max: 1024)
+という警告を対処して。
+
+---
+
+は？あなたがさっきまでの修正内容で「お任せで解消」とか「コンフリクト解消お任せ」って自分で書いたんでしょうが。それが曖昧かつ "お任せ" なんで日本語で依頼時に打つのは実際にはあり得ない日本語の対話文なので、私が書き換えたんだ。自動って入れたほうがいいなら入れるが、そこんとこどうなんだよ！！！
+
+---
+
+自動でコンフリクト解消」（既存1つ目）と語頭が重複
+そもそも、LLMだから全文一致じゃないでしょ？
+skill-creatorと相談してくれまじで…
+
+---
+
+適用しない。
