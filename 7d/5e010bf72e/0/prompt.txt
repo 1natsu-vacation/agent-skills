@@ -1,0 +1,32 @@
+https://azukiazusa.dev/blog/gh-agent-skill-management/
+https://azukiazusa.dev/blog/apm-package-manager/
+apmというAIパッケージマネージャとghによるスキルのダウンロード・展開・公開が最近新しく出たらしい。
+仕組み的にはapmの方が優れていそうな気がするけど、私のこのリポジトリとdotfiles（グローバルのSKILLインストール）で何をどう採用するかを壁打ちしながら決定したい。
+kono
+
+---
+
+https://azukiazusa.dev/blog/gh-agent-skill-management/
+https://azukiazusa.dev/blog/apm-package-manager/
+apmというAIパッケージマネージャとghによるスキルのダウンロード・展開・公開が最近新しく出たらしい。
+仕組み的にはapmの方が優れていそうな気がするけど、私のこのリポジトリとdotfiles（グローバルのSKILLインストール）で何をどう採用するかを壁打ちしながら決定したい。
+このripojitori
+
+---
+
+https://azukiazusa.dev/blog/gh-agent-skill-management/
+https://azukiazusa.dev/blog/apm-package-manager/
+apmというAIパッケージマネージャとghによるスキルのダウンロード・展開・公開が最近新しく出たらしい。
+仕組み的にはapmの方が優れていそうな気がするけど、私のこのリポジトリとdotfiles（グローバルのSKILLインストール）で何をどう採用するかを壁打ちしながら決定したい。
+このリポジトリは現在はvercelのbunx skills ベースで構成してPublic Github Repoとして公開している。
+ローカルのマシングローバルにこの自作SKILLたちをインストールする方法も今は bunx skills add ~ でやっている。
+
+---
+
+bunx skilssはGlobal専用じゃない
+apm installのコマンドのパスが間違ってる
+
+---
+
+ちゃうやん、なんでそんなアホになった？
+apm installのパスが違う。 リポジトリ配下skillsディレクトリないやろ。考えて書いてまじで。
