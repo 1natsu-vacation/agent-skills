@@ -144,3 +144,9 @@ vite.config.ts.timestamp-*
 # skill-creator evaluation workspaces (regeneratable, contain absolute paths
 # and subagent-specific temporary state — keep local only).
 skills/*-workspace/
+
+# `.claude/skills/` は `gh skill install` の取り込み先として gh CLI が前提にする
+# 場所のため、デフォルト ignore（他著者のスキルを誤って含めない）。
+# Internal skill は `!.claude/skills/<name>/` で個別に例外指定する。
+.claude/skills/*
+!.claude/skills/publish-this-repo/

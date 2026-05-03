@@ -6,7 +6,19 @@ Compatible with any agent that supports the [skills](https://github.com/vercel-l
 
 ## Installation
 
+Choose any installer you prefer. All three reference the same repository; the difference is the **default source** they fetch from.
+
+### gh CLI (`gh skill install`)
+
+Fetches from the latest GitHub Release tag published via `gh skill publish` (requires gh CLI v2.90.0+):
+
+```bash
+gh skill install 1natsu-vacation/agent-skills
+```
+
 ### Vercel `skills`
+
+Fetches from the default branch (`main`):
 
 ```bash
 npx skills add 1natsu-vacation/agent-skills -g
@@ -15,6 +27,8 @@ bunx skills add 1natsu-vacation/agent-skills -g
 ```
 
 ### apm
+
+Fetches from the default branch (`main`) by default; tag pinning supported via `#vX.Y.Z`.
 
 Install everything (mirrors `npx skills add`):
 
