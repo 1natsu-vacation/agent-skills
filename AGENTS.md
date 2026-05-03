@@ -44,3 +44,8 @@ metadata:
 bunx skills add . --list    # スキルが認識されるか確認
 bunx skills add . -g -y     # グローバルインストール
 ```
+
+## Distribution
+
+- Vercel `skills` 互換（`bunx skills` / `npx skills` / `apm install` でインストール）
+- apm Primitive Form 対応（`apm install --skill` で個別スキルを取得、`apm.yml` 不要）

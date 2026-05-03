@@ -6,16 +6,35 @@ Compatible with any agent that supports the [skills](https://github.com/vercel-l
 
 ## Installation
 
+### Vercel `skills`
+
 ```bash
-# Install all skills globally
 npx skills add 1natsu-vacation/agent-skills -g
-
-# Or with bun
+# or
 bunx skills add 1natsu-vacation/agent-skills -g
-
-# Install from local directory
-npx skills add ./agent-skills -g
 ```
+
+### apm
+
+Install everything (mirrors `npx skills add`):
+
+```bash
+apm install 1natsu-vacation/agent-skills
+```
+
+Install a single skill:
+
+```bash
+apm install 1natsu-vacation/agent-skills --skill 1natsu-<skill-name>
+```
+
+Pin to a tag:
+
+```bash
+apm install 1natsu-vacation/agent-skills#v0.1.0 --skill 1natsu-<skill-name>
+```
+
+Add `-g` for global / user scope.
 
 ## Skills
 
