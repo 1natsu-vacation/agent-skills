@@ -4,7 +4,7 @@ description: agent-skills リポジトリの公開・デプロイ・リリース
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.0.0"
+  version: "1.1.0"
   internal: true
 ---
 
@@ -34,7 +34,17 @@ gh auth status     # 認証済みであること
 git status         # working tree がクリーンであること
 git rev-parse --abbrev-ref HEAD   # 現在ブランチが main であること
 git fetch origin && git status -uno   # origin/main と同期していること
+gh api repos/1natsu-vacation/agent-skills/immutable-releases --jq '.enabled'   # true であること
 ```
+
+最後の immutability チェックが `false` を返した場合、本フローを中断してユーザーに以下を案内する:
+
+1. ブラウザで https://github.com/1natsu-vacation/agent-skills/settings を開く
+2. ページ下部の "Releases" セクションへスクロール
+3. "Enable release immutability" のチェックボックスを ON にして保存
+4. 再度 `gh api .../immutable-releases --jq '.enabled'` が `true` を返すことを確認してから本フローを再開
+
+immutability はリポジトリレベル設定で、有効化以降の **future releases にのみ自動付与**される（既存リリースには遡及しない）。`gh skill publish` の CLI フラグや対話プロンプトでは制御できないため、Step 1 のここで確認しておくことが必須。
 
 ### Step 2. dry-run 検証
 
@@ -87,17 +97,20 @@ gh skill publish .
 | Add `agent-skills` topic to the repository? | Yes |
 | Tag strategy | Semver |
 | Version tag | Step 3 で決めた値（例: `v0.2.0`） |
-| Enable Immutable Release? | Yes（改ざん防止） |
 | Generate release notes automatically? | Yes |
 
-非対話で済ませたい場合は `gh skill publish --tag vX.Y.Z .` も可。
+immutability は Step 1 で検証済みのリポジトリ設定（`immutable-releases.enabled: true`）により、本コマンドで作成される release に自動付与される。CLI 側でのプロンプト/フラグ制御は存在しない。
+
+非対話で済ませたい場合は `gh skill publish --tag vX.Y.Z .` も可（immutability 挙動はリポジトリ設定が支配するため、対話モードと差はない）。
 
 ### Step 5. 公開後確認
 
 ```bash
-gh release view vX.Y.Z                                    # Release が作成されたか
-gh skill install 1natsu-vacation/agent-skills --dry-run   # Consumer 視点で install できるか
+gh release view vX.Y.Z                                              # Release が作成されたか
+gh release view vX.Y.Z --json isImmutable --jq '.isImmutable'       # immutable=true であること
 ```
+
+`isImmutable` が `false` の場合は Step 1 の immutability 設定確認を見直す（リポジトリ設定が release 作成より後に有効化された等）。Step 7 の手順で再 publish が必要。
 
 ### Step 6. 緊急ロールバック
 
@@ -107,9 +120,18 @@ gh skill install 1natsu-vacation/agent-skills --dry-run   # Consumer 視点で i
 gh release delete vX.Y.Z --cleanup-tag --yes
 ```
 
-タグも一緒に削除されるため、修正後に同バージョンで再公開できる（ただし Immutable Release が既に effective な場合は別バージョンを切ること）。
+タグも一緒に削除される。immutable release は削除自体は可能だが、削除後に同バージョンを再公開すると新しい immutable インスタンスとして扱われる（タグが指す commit が変わる場合は consumer 側のキャッシュ整合に注意）。安全策としては別バージョン（patch bump）を切るのが望ましい。
 
-### Step 7. トラブルシュート
+### Step 7. 既存リリースを immutable 化する
+
+リポジトリ設定で immutability を有効化する **前** に作成された release は遡及で immutable にならない。immutable 化したい場合:
+
+1. Step 1 と同様にリポジトリ設定の immutability が ON か確認（OFF なら有効化）
+2. 該当 release を削除: `gh release delete vX.Y.Z --cleanup-tag --yes`
+3. 同バージョンで再 publish: `gh skill publish --tag vX.Y.Z .`
+4. Step 5 と同様に `gh release view vX.Y.Z --json isImmutable --jq '.isImmutable'` が `true` を返すことを確認
+
+### Step 8. トラブルシュート
 
 | エラー | 対処 |
 |--------|------|
@@ -118,8 +140,12 @@ gh release delete vX.Y.Z --cleanup-tag --yes
 | `allowed-tools must be a string` | 配列で書いていたら `"Read, Write, Bash"` 等の文字列に変換 |
 | `gh: command not found` または old version | `brew upgrade gh` で 2.90.0 以上に更新 |
 | `not authenticated` | `gh auth login` を実行 |
+| `immutable-releases` API が 404 | gh CLI / GitHub 側の機能未到達。`brew upgrade gh` 後に再試行、それでも駄目なら GitHub Web UI から状態確認 |
+| 公開後 release が `isImmutable: false` | リポジトリ設定 immutability が release 作成より後に有効化されたケース。Step 7 で再 publish |
 
 ## References
 
 - `gh skill publish` reference: https://cli.github.com/manual/gh_skill_publish
 - Vercel skills README (Internal flag spec): https://github.com/vercel-labs/skills/blob/main/README.md
+- Immutable releases (GitHub Docs): https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases
+- Preventing changes to your releases (GitHub Docs): https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/establish-provenance-and-integrity/preventing-changes-to-your-releases
