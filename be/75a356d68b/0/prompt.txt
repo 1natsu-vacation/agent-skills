@@ -1,0 +1,17 @@
+現在はGit Pushしてリポジトリ更新＝すぐデプロイ＝公開という手順になっているが、gh skill publishが登場したので、常にこれを使ってデプロイするようにしたい。
+https://cli.github.com/manual/gh_skill_publish
+https://azukiazusa.dev/blog/gh-agent-skill-management/#%E3%82%B9%E3%82%AD%E3%83%AB%E3%81%AE%E5%85%AC%E9%96%8B
+
+---
+
+1. .claude/skills/ contains installed skills and should be added to .gitignore — gh skill publish は .claude/skills/ を「他人のインストール先」と推定する仕様。今回は maintainer 自作 Internal skill
+  なので実害なし（metadata.internal + 位置で二重排除済み、配布物には含まれない）
+これについて詳しく！
+
+---
+
+Bだな！
+
+---
+
+3を一応。対策なかったら1で。
