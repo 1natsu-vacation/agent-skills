@@ -3,7 +3,7 @@
   "checkpoint_id": "273137d7a3e1",
   "strategy": "manual-commit",
   "branch": "feat/harness-context-economy",
-  "checkpoints_count": 4,
+  "checkpoints_count": 1,
   "files_touched": [
     "skills/1natsu-document-harness-audit/SKILL.md",
     "skills/1natsu-document-harness-audit/evals/evals.json",
@@ -17,14 +17,14 @@
       "metadata": "/27/3137d7a3e1/0/metadata.json",
       "transcript": "/27/3137d7a3e1/0/full.jsonl",
       "content_hash": "/27/3137d7a3e1/0/content_hash.txt",
-      "prompt": "/27/3137d7a3e1/0/prompt.txt"
+      "prompt": ""
     }
   ],
   "token_usage": {
-    "input_tokens": 28842,
-    "cache_creation_tokens": 412391,
-    "cache_read_tokens": 19428060,
-    "output_tokens": 216092,
-    "api_call_count": 86
+    "input_tokens": 108162,
+    "cache_creation_tokens": 2425800,
+    "cache_read_tokens": 42437713,
+    "output_tokens": 422966,
+    "api_call_count": 194
   }
 }
