@@ -1,0 +1,33 @@
+{
+  "_note": "著者側の仕様ドリフト監視マニフェスト（非配布）。spec-drift-watch スキルと scripts/check.mjs が参照する。role:\"index\" の source（llms.txt 等）はドキュメント一覧で、これ自体を snapshot+diff することで新ページ追加/削除/リネームを検出する（新ページの relevance 判定と sources.json への追加はエージェントが行う）。role:\"doc\"（既定）の source は個別ドキュメントで、url は生 markdown を返す .md エンドポイント。skills はその doc にドリフト追従すべきスキルのリポジトリ相対パス。詳細は .spec-watch/README.md。",
+  "sources": [
+    {
+      "id": "claude-code-docs-index",
+      "url": "https://code.claude.com/docs/llms.txt",
+      "label": "Claude Code Docs — LLM 向けインデックス（全 doc ページの一覧）。新ハーネス関連ページの自己検出に使う",
+      "role": "index",
+      "skills": [],
+      "last_checked": "2026-06-07"
+    },
+    {
+      "id": "claude-code-memory",
+      "url": "https://code.claude.com/docs/en/memory.md",
+      "label": "Claude Code — How Claude remembers your project (CLAUDE.md / .claude/rules/ / auto memory のロード挙動)",
+      "role": "doc",
+      "skills": [
+        "skills/1natsu-document-harness-model"
+      ],
+      "last_checked": "2026-06-07"
+    },
+    {
+      "id": "claude-code-large-codebases",
+      "url": "https://code.claude.com/docs/en/large-codebases.md",
+      "label": "Claude Code — Set up Claude Code in a monorepo or large codebase (nested CLAUDE.md / per-package skills / scoping)",
+      "role": "doc",
+      "skills": [
+        "skills/1natsu-document-harness-model"
+      ],
+      "last_checked": "2026-06-07"
+    }
+  ]
+}

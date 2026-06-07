@@ -150,3 +150,5 @@ skills/*-workspace/
 # Internal skill は `!.claude/skills/<name>/` で個別に例外指定する。
 .claude/skills/*
 !.claude/skills/publish-this-repo/
+!.claude/skills/spec-drift-watch/
+!.claude/skills/spec-drift-fix/
