@@ -6,6 +6,11 @@
 
 > Give Claude persistent instructions with CLAUDE.md files, and let Claude accumulate learnings automatically with auto memory.
 
+Each Claude Code session begins with a fresh context window. Two mechanisms carry knowledge across sessions:
+
+* **CLAUDE.md files**: instructions you write to give Claude persistent context
+* **Auto memory**: notes Claude writes itself based on your corrections and preferences
+
 This page covers how to:
 
 * [Write and organize CLAUDE.md files](#claude-md-files)
