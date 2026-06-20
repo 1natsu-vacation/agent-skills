@@ -1,0 +1,23 @@
+{
+  "cli_version": "0.7.6",
+  "checkpoint_id": "4511a8f481d9",
+  "strategy": "manual-commit",
+  "branch": "feat/resolve-conflicts-v1.2.0",
+  "checkpoints_count": 3,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/45/11a8f481d9/0/metadata.json",
+      "transcript": "/45/11a8f481d9/0/full.jsonl",
+      "content_hash": "/45/11a8f481d9/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 697,
+    "cache_creation_tokens": 547546,
+    "cache_read_tokens": 14184924,
+    "output_tokens": 40027,
+    "api_call_count": 32
+  }
+}
