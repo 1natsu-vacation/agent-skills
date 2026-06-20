@@ -1,0 +1,115 @@
+{
+  "cli_version": "0.7.6",
+  "checkpoint_id": "6e26d7b159fa",
+  "session_id": "af720eaa-1c5b-404a-8ee2-d4aced814ffc",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-20T10:05:50.712647Z",
+  "branch": "br",
+  "checkpoints_count": 6,
+  "files_touched": [
+    "skills/1natsu-auto-resolve-conflicts/SKILL.md",
+    "skills/1natsu-auto-resolve-conflicts/evals/evals.json",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/07-feature-preservation.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/08-stale-pr-follow.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/09-silent-feature-drop-trap.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/10-rebase-1stage-success.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/11-semantic-port-integration.sh",
+    "skills/1natsu-auto-resolve-conflicts/references/bailout-rules.md",
+    "skills/1natsu-auto-resolve-conflicts/references/commit-message-template.md",
+    "skills/1natsu-auto-resolve-conflicts/references/stale-pr-follow.md",
+    "skills/1natsu-auto-resolve-conflicts/references/two-stage-commit.md",
+    "skills/1natsu-pair-resolve-conflicts/SKILL.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-8[1m]",
+  "turn_id": "28a7687a250f",
+  "checkpoint_transcript_start": 1024,
+  "transcript_lines_at_start": 1024,
+  "token_usage": {
+    "input_tokens": 1304,
+    "cache_creation_tokens": 85643,
+    "cache_read_tokens": 12603993,
+    "output_tokens": 58445,
+    "api_call_count": 30
+  },
+  "skill_events_version": 1,
+  "skill_events": [
+    {
+      "id": "prompt-skill-claude-code-skill-creator:skill-creator-2026-06-19T11:41:48.793775Z",
+      "event_type": "prompt_invocation",
+      "skill": {
+        "name": "skill-creator:skill-creator"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "prompt_slash_command",
+        "confidence": "explicit"
+      },
+      "turn_id": "59d061ad349d",
+      "timestamp": "2026-06-19T11:41:48.793775Z",
+      "native": {
+        "command": "/skill-creator:skill-creator"
+      },
+      "collapse": {
+        "target": "user_message",
+        "label": "/skill-creator:skill-creator",
+        "default_collapsed": true
+      }
+    },
+    {
+      "id": "claude-skill-toolu_0127zd1z1KT2Fc2YrdjhYsuY",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "code-review"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "28a7687a250f",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 1001,
+        "end": 1002,
+        "entry_ids": [
+          "96cc470f-fae5-4b39-9913-62354bc0424f"
+        ],
+        "tool_use_id": "toolu_0127zd1z1KT2Fc2YrdjhYsuY"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_0127zd1z1KT2Fc2YrdjhYsuY"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: code-review",
+        "default_collapsed": true
+      }
+    }
+  ],
+  "session_metrics": {
+    "turn_count": 6
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-20T10:05:50.677823Z",
+    "agent_lines": 70,
+    "agent_removed": 35,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 70,
+    "total_lines_changed": 105,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    }
+  ]
+}
