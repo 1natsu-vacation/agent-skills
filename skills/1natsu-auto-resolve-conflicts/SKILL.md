@@ -1,6 +1,6 @@
 ---
 name: 1natsu-auto-resolve-conflicts
-description: Gitのコンフリクト解消をAI単独で完全自動化する自走スキル。merge / rebase / cherry-pick / stash pop で衝突した時、コミット履歴と変更意図を読み取って解消し、両側の機能を壊さず統合し、検証コマンドを自動検出して実行し、コミット/--continue まで一気に完了させる。すでに衝突している場合だけでなく、stale な PR（mergeable:false）でローカルは未コンフリクトの状態からでも、base ブランチ追従でコンフリクトを発生させるところから自動化する。解消履歴を後から追えるよう、merge では「マーカー入りコミット→解消コミット」の2段で残す。ユーザーが「自動でコンフリクト解消」「コンフリクト解消お任せ」「auto resolve conflicts」「コミット/--continue まで自動」「stale な PR を base 追従して解消」「mergeable false を直して」等、AI 主導の自動化・自走を示唆する発話で使用する。AIがコンフリクト検知時にユーザーが自動化を示唆した場合も本スキルへ移行する。デグレ防止が最優先のため、安全に解消できないと判断したら途中で `1natsu-pair-resolve-conflicts` へ引き継ぐ。**人間と一緒に1ファイルずつ承認しながら解消したい場合は本スキルではなく `1natsu-pair-resolve-conflicts` を使うこと。**
+description: Gitのコンフリクト解消をAI単独で完全自動化する自走スキル。merge / rebase / cherry-pick / stash pop で衝突した時、履歴と変更意図を読み、両側の機能を壊さず統合し、検証を自動実行して --continue まで完了する。すでに衝突している場合に加え、stale な PR（mergeable:false）で未コンフリクトの状態からでも base 追従で衝突を発生させて解消する。merge は解消履歴を追えるよう2段コミットで残す。「自動でコンフリクト解消」「コンフリクト解消お任せ」「auto resolve conflicts」「stale な PR を base 追従して解消」「mergeable false を直して」等、AI主導の自動化・自走を示唆した時に使う。デグレ防止が最優先で、安全に解消できなければ `1natsu-pair-resolve-conflicts` へ引き継ぐ。**1ファイルずつ承認しながら解消したい場合は本スキルでなく `1natsu-pair-resolve-conflicts` を使う。**
 license: MIT
 metadata:
   author: 1natsu
