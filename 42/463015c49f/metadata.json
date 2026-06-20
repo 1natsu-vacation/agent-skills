@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.7.6",
+  "checkpoint_id": "42463015c49f",
+  "strategy": "manual-commit",
+  "branch": "chore/trim-resolve-conflicts-descriptions",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "skills/1natsu-auto-resolve-conflicts/SKILL.md",
+    "skills/1natsu-pair-resolve-conflicts/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/42/463015c49f/0/metadata.json",
+      "transcript": "/42/463015c49f/0/full.jsonl",
+      "content_hash": "/42/463015c49f/0/content_hash.txt",
+      "prompt": "/42/463015c49f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 498,
+    "cache_creation_tokens": 29438,
+    "cache_read_tokens": 7588843,
+    "output_tokens": 22994,
+    "api_call_count": 14
+  }
+}
