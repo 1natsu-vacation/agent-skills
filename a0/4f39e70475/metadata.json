@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.7.6",
+  "checkpoint_id": "a04f39e70475",
+  "strategy": "manual-commit",
+  "branch": "br",
+  "checkpoints_count": 6,
+  "files_touched": [
+    "skills/1natsu-auto-resolve-conflicts/SKILL.md",
+    "skills/1natsu-auto-resolve-conflicts/evals/evals.json",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/07-feature-preservation.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/08-stale-pr-follow.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/09-silent-feature-drop-trap.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/10-rebase-1stage-success.sh",
+    "skills/1natsu-auto-resolve-conflicts/evals/fixtures/11-semantic-port-integration.sh",
+    "skills/1natsu-auto-resolve-conflicts/references/bailout-rules.md",
+    "skills/1natsu-auto-resolve-conflicts/references/commit-message-template.md",
+    "skills/1natsu-auto-resolve-conflicts/references/stale-pr-follow.md",
+    "skills/1natsu-auto-resolve-conflicts/references/two-stage-commit.md",
+    "skills/1natsu-pair-resolve-conflicts/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a0/4f39e70475/0/metadata.json",
+      "transcript": "/a0/4f39e70475/0/full.jsonl",
+      "content_hash": "/a0/4f39e70475/0/content_hash.txt",
+      "prompt": "/a0/4f39e70475/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 29254,
+    "cache_creation_tokens": 1433004,
+    "cache_read_tokens": 25097577,
+    "output_tokens": 226147,
+    "api_call_count": 120
+  }
+}
