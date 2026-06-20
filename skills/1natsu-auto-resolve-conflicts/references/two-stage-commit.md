@@ -50,9 +50,10 @@ git diff --name-only --diff-filter=U > "$LIST"
 SAVE="$(mktemp -d "${TMPDIR:-/tmp}/resolved-XXXXXX")"
 
 # 1) 検証済みの「解消後の内容」を一意ディレクトリへ退避（テキスト解消＋再生成 lockfile を全件）
+#    `--` を付け、`-foo` のような先頭ハイフンのパスをオプションと誤解釈させない
 while IFS= read -r f; do
-  mkdir -p "$SAVE/$(dirname "$f")"
-  cp "$f" "$SAVE/$f"
+  mkdir -p -- "$SAVE/$(dirname "$f")"
+  cp -- "$f" "$SAVE/$f"
 done < "$LIST"
 
 # 2) ①スナップショットコミット: index の unmerged stages からマーカー入り原文を git に再生成させてコミット
@@ -72,7 +73,7 @@ MSG
 
 # 3) ②解消コミット: 退避した解消後を全件書き戻してコミット（再生成 lockfile もここで復元される）
 while IFS= read -r f; do
-  cp "$SAVE/$f" "$f"
+  cp -- "$SAVE/$f" "$f"
   git add -- "$f"
 done < "$LIST"
 git commit -F - <<'MSG'

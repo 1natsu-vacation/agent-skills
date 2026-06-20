@@ -109,7 +109,7 @@ git commit -q -m 'feat: add featureMain import on base'
 git checkout -q feature/x
 
 # Sanity: 現在は clean（unmerged paths なし）であること
-if git status --porcelain | grep -qE '^(UU|AA|DD|U |.U)'; then
+if [ -n "$(git diff --name-only --diff-filter=U)" ]; then
   echo "ERROR: expected a clean (non-conflicting) starting state" >&2
   exit 1
 fi
