@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.7.8",
+  "checkpoint_version": "branch-v1",
+  "checkpoint_id": "4cb1219557da",
+  "strategy": "manual-commit",
+  "branch": "claude/spec-watch-2026-07-04",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "skills/1natsu-document-harness-model/SKILL.md",
+    "skills/1natsu-document-harness-model/references/placement-guide.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/4c/b1219557da/0/metadata.json",
+      "transcript": "/4c/b1219557da/0/full.jsonl",
+      "compact_transcript": "/4c/b1219557da/0/transcript.jsonl",
+      "content_hash": "/4c/b1219557da/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 22295,
+    "cache_creation_tokens": 288046,
+    "cache_read_tokens": 1195786,
+    "output_tokens": 24486,
+    "api_call_count": 16
+  }
+}
