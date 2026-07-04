@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.7.8",
+  "checkpoint_version": "branch-v1",
+  "checkpoint_id": "c74210a87cbb",
+  "strategy": "manual-commit",
+  "branch": "claude/publish-skill-warning-note",
+  "checkpoints_count": 3,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/c7/4210a87cbb/0/metadata.json",
+      "transcript": "/c7/4210a87cbb/0/full.jsonl",
+      "compact_transcript": "/c7/4210a87cbb/0/transcript.jsonl",
+      "content_hash": "/c7/4210a87cbb/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 584,
+    "cache_creation_tokens": 21729,
+    "cache_read_tokens": 1882930,
+    "output_tokens": 11932,
+    "api_call_count": 15
+  }
+}
