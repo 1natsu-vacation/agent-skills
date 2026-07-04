@@ -7,7 +7,7 @@
       "label": "Claude Code Docs — LLM 向けインデックス（全 doc ページの一覧）。新ハーネス関連ページの自己検出に使う",
       "role": "index",
       "skills": [],
-      "last_checked": "2026-06-15"
+      "last_checked": "2026-07-04"
     },
     {
       "id": "claude-code-memory",
@@ -17,7 +17,7 @@
       "skills": [
         "skills/1natsu-document-harness-model"
       ],
-      "last_checked": "2026-06-15"
+      "last_checked": "2026-07-04"
     },
     {
       "id": "claude-code-large-codebases",
@@ -27,7 +27,7 @@
       "skills": [
         "skills/1natsu-document-harness-model"
       ],
-      "last_checked": "2026-06-15"
+      "last_checked": "2026-07-04"
     }
   ]
 }
