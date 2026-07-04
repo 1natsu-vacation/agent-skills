@@ -4,7 +4,7 @@ description: agent-skills リポジトリの公開・デプロイ・リリース
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.1.0"
+  version: "1.1.1"
   internal: true
 ---
 
@@ -63,6 +63,8 @@ gh skill publish --dry-run .
 失敗があれば本フローを中断し、該当スキルの修正をユーザーに依頼する。`gh skill publish --fix .` で自動修正可能なケースもある。
 
 注意: `.claude/skills/publish-this-repo/SKILL.md` は `metadata.internal: true` かつ `gh skill publish` のスキャン対象外（`.claude/` 配下）なので検証対象に含まれない（含まれるべきでもない）。
+
+また dry-run / 本番公開の実行時に `.claude/skills/ contains installed skills and should be added to .gitignore to avoid publishing other authors' content` という警告が出るが、**当リポジトリでは想定内で無視してよい**。この警告は汎用ヒューリスティックで、`.claude/skills/` 配下の spec-drift-watch 等（自リポジトリの Internal skill・意図的にバージョン管理下）を「他者のインストール済みスキル」と誤認したもの。`.claude/` は publish のスキャン対象外のため公開内容には影響せず、gitignore すべきものでもない（gitignore すると spec-watch 機構がリポジトリから失われる）。
 
 ### Step 3. semver 決定
 
