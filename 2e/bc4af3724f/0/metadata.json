@@ -1,0 +1,97 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "2ebc4af3724f",
+  "session_id": "8e95367b-42da-4a67-a3cc-b7e8ea88af41",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-15T16:31:04.646984Z",
+  "branch": "main",
+  "checkpoints_count": 4,
+  "save_step_count": 1,
+  "files_touched": [
+    ".spec-watch/README.md",
+    "AGENTS.md",
+    "docs/distribution-policy.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-fable-5",
+  "turn_id": "b7f26875ccf6",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 53,
+    "cache_creation_tokens": 148918,
+    "cache_read_tokens": 3645509,
+    "output_tokens": 39077,
+    "api_call_count": 29
+  },
+  "skill_events_version": 1,
+  "skill_events": [
+    {
+      "id": "prompt-skill-claude-code-1natsu-document-harness-audit-2026-07-15T15:50:07.351367Z",
+      "event_type": "prompt_invocation",
+      "skill": {
+        "name": "1natsu-document-harness-audit"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "prompt_slash_command",
+        "confidence": "explicit"
+      },
+      "turn_id": "0c89f4a84433",
+      "timestamp": "2026-07-15T15:50:07.351367Z",
+      "native": {
+        "command": "/1natsu-document-harness-audit"
+      },
+      "collapse": {
+        "target": "user_message",
+        "label": "/1natsu-document-harness-audit",
+        "default_collapsed": true
+      }
+    },
+    {
+      "id": "claude-skill-toolu_014rvC5axV2ZNwxJQfzzPATm",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "1natsu-commit"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "b7f26875ccf6",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 306,
+        "end": 307,
+        "entry_ids": [
+          "8e252585-f019-461b-9c6e-3b040a04c879"
+        ],
+        "tool_use_id": "toolu_014rvC5axV2ZNwxJQfzzPATm"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_014rvC5axV2ZNwxJQfzzPATm"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: 1natsu-commit",
+        "default_collapsed": true
+      }
+    }
+  ],
+  "session_metrics": {
+    "turn_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-15T16:31:04.617038Z",
+    "agent_lines": 32,
+    "agent_removed": 0,
+    "human_added": 2,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 34,
+    "total_lines_changed": 35,
+    "agent_percentage": 91.42857142857143,
+    "metric_version": 2
+  }
+}
