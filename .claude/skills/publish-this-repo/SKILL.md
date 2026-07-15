@@ -4,7 +4,7 @@ description: agent-skills リポジトリの公開・デプロイ・リリース
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.1.1"
+  version: "1.2.0"
   internal: true
 ---
 
@@ -144,6 +144,7 @@ gh release delete vX.Y.Z --cleanup-tag --yes
 | `not authenticated` | `gh auth login` を実行 |
 | `immutable-releases` API が 404 | gh CLI / GitHub 側の機能未到達。`brew upgrade gh` 後に再試行、それでも駄目なら GitHub Web UI から状態確認 |
 | 公開後 release が `isImmutable: false` | リポジトリ設定 immutability が release 作成より後に有効化されたケース。Step 7 で再 publish |
+| Consumer から「最新が反映されない」報告 | (a) 最新の Release を作成済みか確認（`gh skill install` は Release タグ取得）。(b) Consumer が `npx skills add` / `apm install` の main 取得経路なら Release 不要で、main への反映タイミングの問題 |
 
 ## References
 
