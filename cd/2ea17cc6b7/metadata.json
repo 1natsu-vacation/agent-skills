@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "cd2ea17cc6b7",
+  "strategy": "manual-commit",
+  "branch": "claude/spec-watch-2026-07-15",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "skills/1natsu-document-harness-model/references/placement-guide.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/cd/2ea17cc6b7/0/metadata.json",
+      "transcript": "/cd/2ea17cc6b7/0/full.jsonl",
+      "compact_transcript": "/cd/2ea17cc6b7/0/transcript.jsonl",
+      "content_hash": "/cd/2ea17cc6b7/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6,
+    "cache_creation_tokens": 83307,
+    "cache_read_tokens": 240949,
+    "output_tokens": 5695,
+    "api_call_count": 3
+  }
+}
