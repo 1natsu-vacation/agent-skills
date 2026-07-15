@@ -4,7 +4,7 @@ description: spec-drift-watch が上げたドリフト PR をローカルに che
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.0.0"
+  version: "1.0.1"
   internal: true
 ---
 
@@ -50,7 +50,7 @@ git log -p -1 -- .spec-watch/snapshots/
 
 1. 上流 doc を再 fetch する（snapshot と一致するはずだが、レポートの判定を自分の目で裏取りする）。
 2. 追従スキル（`sources.json` の `skills`、例 `skills/1natsu-document-harness-model/SKILL.md` と `references/`）を読む。
-3. スキル側の記述のうち、上流変化で **不正・不足・余剰** になった箇所を具体的に列挙する（ファイル・行・現記述・あるべき記述）。
+3. スキル側の記述のうち、上流変化で **不正・不足・余剰** になった箇所を具体的に列挙する（ファイル・行・現記述・あるべき記述）。3分類の定義は `spec-drift-watch` ステップ3が正（特に「不足」＝守備範囲内なのに未記述は、既存文が誤りにならなくても是正対象）。
 
 ### ステップ3: 検証ゲート（人間判断・自動化しない）
 

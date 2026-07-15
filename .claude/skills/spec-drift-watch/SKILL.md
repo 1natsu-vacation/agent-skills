@@ -4,7 +4,7 @@ description: agent-skills リポジトリ内の「プラットフォーム仕様
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.0.0"
+  version: "1.1.0"
   internal: true
 ---
 
@@ -69,11 +69,17 @@ node .claude/skills/spec-drift-watch/scripts/check.mjs
 
 1. その source の `skills`（追従スキルのパス）を `sources.json` から読む。
 2. 該当スキル（例 `skills/1natsu-document-harness-model/SKILL.md` と `references/`）を読む。
-3. **変化分の新テキスト**（diff の追加行／更新後の上流）とスキルの記述を突き合わせ、影響を判定する:
-   - **影響あり**: スキルが具体的に記述している仕様（ロード挙動、frontmatter キー、パス解決、用語）が上流変化で不正・不足・余剰になった。該当スキルの箇所を特定する。
-   - **影響なし**: 上流変化がスキルの守備範囲外（無関係なページ追記、表現変更のみで意味不変）。
+3. **変化分の新テキスト**（diff の追加行／更新後の上流）とスキルの記述を突き合わせ、影響を判定する。判定は **「不正・不足・余剰」の3分類**で行う（`spec-drift-fix` ステップ2の是正でも同じ語彙を使い、検出と是正で基準を揃える。**分類の定義は本ステップが正**）:
 
-**ここで実測（プローブ実行）はしない。** テキスト・意味レベルの判定に留める。挙動仕様が本当に変わったかの実証は人間ゲートの `spec-drift-fix` 側で行う。判定は「影響あり/なし＋疑わしい箇所」を示すまで。
+   - **不正（影響あり）**: スキルが具体的に記述している仕様（ロード挙動、frontmatter キー、パス解決、用語）が上流変化で**誤りになった**。旧仕様前提の記述が残っている。
+   - **不足（影響あり）**: 上流が、スキルが**カバーを標榜する領域**（該当節がスコープに含む挙動・設定）に**新しい仕様を明文化**したのに、スキル側にその記述が無い。──**既存の記述が誤りになるかは問わない**。守備範囲内の上流追加は「まだ書けていない」時点でドリフトであり、今の版で「影響あり」に倒す。
+   - **余剰（影響あり）**: 上流が仕様を削除・廃止したのに、スキルにその記述が残っている。
+   - **影響なし**: 上流変化がスキルの守備範囲**外**（無関係なページの追記、スキルが扱わない機能の変更、表現変更のみで意味不変）。
+
+   **アンチパターンと迷ったときの既定**: 「既存文が誤りにならないから影響なし／将来改訂候補」と倒すのは誤判定（不足の見落とし）。また**守備範囲内か判断に迷うときは「影響あり（不足）・要確認」側に倒す**（偽陰性より偽陽性を許容。挙動仕様かどうかの実証と最終判断は spec-drift-fix の人間ゲートが行う）。
+   → worked example: PR #14 で、上流が `paths` glob の `[` ブラケット式（文字クラス）挙動を新たに明文化した。`1natsu-document-harness-model` の `placement-guide.md` は glob によるパス配置判断を既にカバーしているが `[` 記法の記述は無かった。既存文は誤りにならないが**守備範囲内の不足**なので「影響あり」。当時 watch はこれを「影響なし・将来改訂候補」に倒し期待値未達だった（この基準はその反省から明文化した）。
+
+**ここで実測（プローブ実行）はしない。** テキスト・意味レベルの判定に留める。挙動仕様が本当に変わったかの実証は人間ゲートの `spec-drift-fix` 側で行う。判定は「影響あり（不正／不足／余剰のどれか）／なし＋疑わしい箇所」を示すまで。
 
 ### ステップ4: ドリフトレポートを生成する
 
@@ -84,7 +90,9 @@ node .claude/skills/spec-drift-watch/scripts/check.mjs
 
 | 種別 | 対象 | 要約 | 追従スキル | 影響判定 | 推奨アクション |
 |------|------|------|-----------|----------|---------------|
-| doc | claude-code-memory | +12/-3。auto memory のパス記述が変更 | 1natsu-document-harness-model | 影響あり: L15 の境界注記が旧パス前提 | spec-drift-fix で L15 を更新、必要なら実測 |
+| doc | claude-code-memory | +12/-3。auto memory のパス記述が変更 | 1natsu-document-harness-model | 影響あり（不正）: L15 の境界注記が旧パス前提 | spec-drift-fix で L15 を更新、必要なら実測 |
+| doc | claude-code-paths | +6/-0。glob の `[` 文字クラス挙動を新規明文化 | 1natsu-document-harness-model | 影響あり（不足）: placement-guide の glob 節がスコープ内だが未記述 | spec-drift-fix で glob 節に追記（挙動なら実測） |
+| doc | claude-code-settings | +0/-5。旧パス規約が上流から削除 | 1natsu-document-harness-model | 影響あり（余剰）: 廃止済み規約の記述がスキルに残存 | spec-drift-fix で該当記述を削除 |
 | doc | claude-code-large-codebases | +1/-0。無関係な節追記 | 1natsu-document-harness-model | 影響なし | snapshot 更新のみ（確認済み記録） |
 | index | claude-code-docs-index | 新ページ `settings.md` 追加 | — | 関連あり（rules ロード設定） | sources.json に追加済み・seed 済み |
 | error/移転 | claude-code-XXX | HTTP 404 | 1natsu-... | 要確認 | 新 URL を特定し sources.json を更新 |
@@ -150,6 +158,7 @@ node .claude/skills/spec-drift-watch/scripts/check.mjs
 
 - **検出と是正を分離**: このスキルは snapshot を進めて「気づき」を PR にするだけ。スキル本体の修正・version bump・実測検証は `spec-drift-fix`（人間ゲート）が行う。
 - **空振りはノイズではない**: 影響なしでも snapshot を進める PR は「ここまで上流を確認した」という監査痕跡。そのままマージしてよい。
+- **「不足」を見落とさない**: 影響判定は「不正・不足・余剰」の3分類（ステップ3）。既存文が誤りにならなくても、スキルの守備範囲内に上流が新仕様を明文化したら「不足」＝影響あり。「まだ壊れていないから将来送り」で取りこぼさない。
 - **変化ゼロで PR を作らない**: 無音が正常。PR 乱立を防ぐ。
 - **固定 URL に閉じない**: `role:"index"` の source（llms.txt）を毎回 diff するので、上流が新ページを増やしても気づける。tracked URL の移転/削除も「インデックスに無い」「取得エラー」で surface する。新ページの relevance 判定と `sources.json` への反映はエージェント（ステップ2）が行う。
 - **1 source の不達で全体を止めない**: `check.mjs` は per-source でエラーを捕捉し `[ERROR]` として報告して継続する。`--update` は取得成功した source だけ `last_checked` を進める。
