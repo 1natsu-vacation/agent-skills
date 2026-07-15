@@ -1,0 +1,49 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "668019d90990",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 12,
+  "files_touched": [
+    ".gitignore",
+    "AGENTS.md",
+    "eval-fixtures/document-harness/fixture-a-init/.claude/rules/commit-style.md",
+    "eval-fixtures/document-harness/fixture-a-init/CLAUDE.md",
+    "eval-fixtures/document-harness/fixture-a-init/docs/architecture.md",
+    "eval-fixtures/document-harness/fixture-a-init/packages/api/CLAUDE.md",
+    "eval-fixtures/document-harness/fixture-a-init/packages/api/package.json",
+    "eval-fixtures/document-harness/fixture-a-init/packages/api/src/middleware/rateLimit.ts",
+    "eval-fixtures/document-harness/fixture-a-init/packages/api/src/server.ts",
+    "eval-fixtures/document-harness/fixture-a-init/packages/web/CLAUDE.md",
+    "eval-fixtures/document-harness/fixture-a-init/packages/web/src/OrdersTable.tsx",
+    "eval-fixtures/document-harness/fixture-b-sync/.claude/rules/api-rate-limit.md",
+    "eval-fixtures/document-harness/fixture-b-sync/CLAUDE.md",
+    "eval-fixtures/document-harness/fixture-b-sync/docs/api/rate-limit-design.md",
+    "eval-fixtures/document-harness/fixture-b-sync/packages/api/package.json",
+    "eval-fixtures/document-harness/fixture-b-sync/packages/api/src/middleware/rateLimit.ts",
+    "eval-fixtures/document-harness/fixture-c-audit/.claude/rules/auth.md",
+    "eval-fixtures/document-harness/fixture-c-audit/CLAUDE.md",
+    "eval-fixtures/document-harness/fixture-c-audit/docs/auth-design.md",
+    "eval-fixtures/document-harness/fixture-c-audit/docs/cache.md",
+    "eval-fixtures/document-harness/fixture-c-audit/src/auth/revocationList.ts",
+    "eval-fixtures/document-harness/fixture-c-audit/src/auth/service.ts",
+    "eval-fixtures/document-harness/fixture-c-audit/src/cache.ts",
+    "skills/1natsu-document-harness/evals/evals.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/66/8019d90990/0/metadata.json",
+      "transcript": "/66/8019d90990/0/full.jsonl",
+      "compact_transcript": "/66/8019d90990/0/transcript.jsonl",
+      "content_hash": "/66/8019d90990/0/content_hash.txt",
+      "prompt": "/66/8019d90990/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 146,
+    "cache_creation_tokens": 198197,
+    "cache_read_tokens": 11101258,
+    "output_tokens": 81368,
+    "api_call_count": 79
+  }
+}
