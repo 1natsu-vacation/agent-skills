@@ -1,0 +1,24 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "3090d060f666",
+  "strategy": "manual-commit",
+  "branch": "claude/spec-watch-2026-07-15",
+  "checkpoints_count": 2,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/30/90d060f666/0/metadata.json",
+      "transcript": "/30/90d060f666/0/full.jsonl",
+      "compact_transcript": "/30/90d060f666/0/transcript.jsonl",
+      "content_hash": "/30/90d060f666/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 13,
+    "cache_creation_tokens": 27347,
+    "cache_read_tokens": 872784,
+    "output_tokens": 10899,
+    "api_call_count": 7
+  }
+}
