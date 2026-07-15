@@ -1,0 +1,109 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "b5121ed42983",
+  "session_id": "bdc2346b-1817-4e45-819e-7e31b14dfe0c",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-15T09:07:00.708416Z",
+  "branch": "main",
+  "checkpoints_count": 12,
+  "save_step_count": 1,
+  "files_touched": [
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/MEMORY.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/feedback_commit_convention.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/project_api_response_format.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/project_deploy_region_constraint.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/project_error_response_format.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/project_migration_script.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/project_wip_retry_pr.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/user_preferences.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/repo/CLAUDE.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/repo/docs/api-design.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/repo/src/api/handlers.ts",
+    "skills/1natsu-document-harness-audit/SKILL.md",
+    "skills/1natsu-document-harness-audit/evals/evals.json",
+    "skills/1natsu-document-harness-audit/references/memory-claude-code.md",
+    "skills/1natsu-document-harness-model/SKILL.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-fable-5",
+  "turn_id": "ac83e093c6c0",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 148,
+    "cache_creation_tokens": 199697,
+    "cache_read_tokens": 11304109,
+    "output_tokens": 82122,
+    "api_call_count": 80
+  },
+  "skill_events_version": 1,
+  "skill_events": [
+    {
+      "id": "prompt-skill-claude-code-skill-creator:skill-creator-2026-07-15T07:03:31.506905Z",
+      "event_type": "prompt_invocation",
+      "skill": {
+        "name": "skill-creator:skill-creator"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "prompt_slash_command",
+        "confidence": "explicit"
+      },
+      "turn_id": "26d1dac7c898",
+      "timestamp": "2026-07-15T07:03:31.506905Z",
+      "native": {
+        "command": "/skill-creator:skill-creator"
+      },
+      "collapse": {
+        "target": "user_message",
+        "label": "/skill-creator:skill-creator",
+        "default_collapsed": true
+      }
+    },
+    {
+      "id": "claude-skill-toolu_017b3xdviY5QXek78bSK57oG",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "1natsu-commit"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "ac83e093c6c0",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 693,
+        "end": 694,
+        "entry_ids": [
+          "07069ca2-d610-41b1-8b29-ee94a8e1a33a"
+        ],
+        "tool_use_id": "toolu_017b3xdviY5QXek78bSK57oG"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_017b3xdviY5QXek78bSK57oG"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: 1natsu-commit",
+        "default_collapsed": true
+      }
+    }
+  ],
+  "session_metrics": {
+    "turn_count": 12
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-15T09:07:00.655942Z",
+    "agent_lines": 261,
+    "agent_removed": 19,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 261,
+    "total_lines_changed": 280,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}

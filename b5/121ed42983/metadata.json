@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "b5121ed42983",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 12,
+  "files_touched": [
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/MEMORY.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/feedback_commit_convention.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/project_api_response_format.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/project_deploy_region_constraint.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/project_error_response_format.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/project_migration_script.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/project_wip_retry_pr.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/memory/user_preferences.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/repo/CLAUDE.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/repo/docs/api-design.md",
+    "eval-fixtures/document-harness/fixture-d-memory-audit/repo/src/api/handlers.ts",
+    "skills/1natsu-document-harness-audit/SKILL.md",
+    "skills/1natsu-document-harness-audit/evals/evals.json",
+    "skills/1natsu-document-harness-audit/references/memory-claude-code.md",
+    "skills/1natsu-document-harness-model/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/b5/121ed42983/0/metadata.json",
+      "transcript": "/b5/121ed42983/0/full.jsonl",
+      "compact_transcript": "/b5/121ed42983/0/transcript.jsonl",
+      "content_hash": "/b5/121ed42983/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 148,
+    "cache_creation_tokens": 199697,
+    "cache_read_tokens": 11304109,
+    "output_tokens": 82122,
+    "api_call_count": 80
+  }
+}
