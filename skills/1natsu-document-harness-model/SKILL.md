@@ -5,7 +5,7 @@ user-invocable: false
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.6.0"
+  version: "1.7.0"
 ---
 
 # ハーネスドキュメントモデル リファレンス
