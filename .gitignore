@@ -145,6 +145,10 @@ vite.config.ts.timestamp-*
 # fixture はここに置かない。規約は CLAUDE.md「Evals」参照。
 skills/*-workspace/
 
+# spec-drift-watch が PR 本文（--body-file）用に書き出す作業ファイル。
+# レポートの正本は PR 本文であり、リポジトリにはコミットしない。
+/report.md
+
 # `.claude/skills/` は `gh skill install` の取り込み先として gh CLI が前提にする
 # 場所のため、デフォルト ignore（他著者のスキルを誤って含めない）。
 # Internal skill は `!.claude/skills/<name>/` で個別に例外指定する。
