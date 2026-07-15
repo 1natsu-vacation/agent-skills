@@ -1,0 +1,44 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "f79d1ae97bb3",
+  "session_id": "dec63697-271e-4a16-88d7-2aa54b87969f",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-15T12:07:26.454752Z",
+  "branch": "chore/spec-drift-watch-insufficiency-classes",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/skills/spec-drift-watch/SKILL.md"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "3a41480f02d9",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 19,
+    "cache_creation_tokens": 76633,
+    "cache_read_tokens": 598865,
+    "output_tokens": 9921,
+    "api_call_count": 10
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-15T12:07:26.444326Z",
+    "agent_lines": 14,
+    "agent_removed": 6,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 14,
+    "total_lines_changed": 20,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    }
+  ]
+}

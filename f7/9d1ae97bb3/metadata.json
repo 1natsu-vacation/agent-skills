@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "f79d1ae97bb3",
+  "strategy": "manual-commit",
+  "branch": "chore/spec-drift-watch-insufficiency-classes",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/skills/spec-drift-watch/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f7/9d1ae97bb3/0/metadata.json",
+      "transcript": "/f7/9d1ae97bb3/0/full.jsonl",
+      "compact_transcript": "/f7/9d1ae97bb3/0/transcript.jsonl",
+      "content_hash": "/f7/9d1ae97bb3/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 19,
+    "cache_creation_tokens": 76633,
+    "cache_read_tokens": 598865,
+    "output_tokens": 9921,
+    "api_call_count": 10
+  }
+}
