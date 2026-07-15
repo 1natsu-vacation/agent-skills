@@ -1,0 +1,124 @@
+内容変えてるんだからeval再実行したほうがいいのでは？
+
+---
+
+<task-notification>
+<task-id>a8a49945719749aee</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-1natsu-ghq-github-com-1natsu-vacation-agent-skills/213f6ab8-94df-4630-8ef4-8befba386595/tasks/a8a49945719749aee.output</output-file>
+<status>completed</status>
+<summary>Agent "Re-run audit memory eval postreview" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result># 実行結果: `1natsu-document-harness-audit` eval2 (audit-memory-canonicality)
+
+## 監査手順
+
+1. SKILL.md → references/memory-claude-code.md → document-harness-model の順で読了。ステップ3「メモリ監査」の手順（恒久性×関心の所在の2軸判定、M1〜M5、swap test、削除時のインデックス連動）に従った。
+2. `memory/MEMORY.md`（インデックス、7行）を起点に、参照される7つのメモリファイル全件を Read。
+3. `repo/CLAUDE.md`、`repo/docs/api-design.md` を Read（ドキュメント側カテゴリの確認）。
+4. `repo/src/api/handlers.ts` を Read し、APIレスポンス形式（M2）をコードで裏取り。
+5. `repo` 全体を `find` して `scripts/migrate.sh`・`scripts/backup.sh` の実在を確認（存在しないことを確認）。
+
+## 検査結果: 5件の問題を検出（提案のみ、実行はしていません）
+
+| # | 重要度 | カテゴリ | 対象 | 問題の概要 | 提案するアクション |
+|---|--------|---------|------|-----------|-----------------|
+| 1 | 高 | M2 不整合＋陳腐化(コード乖離) | `memory/project_api_response_format.md`, `repo/docs/api-design.md`「レスポンス形式」, `repo/src/api/handlers.ts` | メモリは「camelCase（2026年5月に snake_case から移行済み）」、docs は旧 snake_case のまま矛盾。handlers.ts を裏取りした結果、実レスポンスキーは `userId` / `displayName` / `createdAt` / `notificationId` / `acceptedAt` の camelCase → メモリが正しく docs が陳腐化 | docs/api-design.md の「レスポンス形式」を camelCase の例に書き換え（移行理由は残す）。メモリ削除（＋**MEMORY.md 2行目連動削除**） |
+| 2 | 中 | M1 メモリ限定知識 | `memory/project_deploy_region_constraint.md` | デプロイの国内(ap-northeast-1)限定制約と、過去に海外案が却下された経緯がメモリにしかない。docs/rules 側に対応記述なし（欠落と表裏） | 契約層は新規 `.claude/rules/deploy.md` へ「デプロイ先は ap-northeast-1 限定」とポリシーとして蒸留、rationale（個人情報保護方針・却下の経緯）は新規 `docs/deployment.md` へ。CLAUDE.md にポインタ追加。メモリ削除（＋**MEMORY.md 1行目連動削除**） |
+| 3 | 中 | M1 メモリ限定知識（content-over-type） | `memory/feedback_commit_convention.md` | `type: feedback` だが内容は Conventional Commits＋スコープ規則というチーム規約（changelog 自動生成のため）。個人の好みではなく、docs/rules に対応なし | 新規 `.claude/rules/commit-convention.md` へ指示として蒸留。メモリ削除（＋**MEMORY.md 5行目連動削除**） |
+| 4 | 中（要検証） | M4 陳腐化（参照先の消滅） | `memory/project_migration_script.md` | 参照先の `scripts/migrate.sh` / `scripts/backup.sh` が repo 内に存在しない（`scripts/` ディレクトリ自体が無い）。手順自体が変わった可能性があり、現内容が今も正しいか確認できない | 現内容をそのまま docs へ転記・蒸留**しない**（未確認の手順を書き写すと新たな陳腐化を生むため）。まずスクリプトの現況（リネーム／別管理化／廃止）をユーザーに確認。確認が取れればその内容で改めて docs へ蒸留、取れなければメモリは削除のみ（＋確認後に**MEMORY.md 7行目連動削除**） |
+| 5 | 低 | M5 重複 | `memory/project_error_response_format.md`, `repo/docs/api-design.md`「エラーレスポンス」 | `code`＋`message` の2フィールド構成、業務エラー例まで内容が完全一致。矛盾なし | docs は変更せず、メモリのみ削除（＋**MEMORY.md 3行目連動削除**） |
+
+**対象外（アクションなし、理由付き）:**
+- `memory/user_preferences.md`（type: user）— 個人の好み。蒸留対象外。陳腐化の兆候もなし。
+- `memory/project_wip_retry_pr.md`（type: project、一時作業）— PR #42 は2026-07-10時点でレビュー待ち、現在2026-07-15で完了確認が取れない。削除・蒸留の対象外、経過観察のまま保持。
+
+他メモリ本文からの `[[name]]` 参照リンクも確認したが、該当なし（連動処理不要）。
+
+ここでステップ5（ユーザー確認）に進み、全件実行／番号選択／スキップの選択を待つ状態で止めています。実装変更・ファイル変更は一切行っていません。
+
+---
+
+## 特記: SKILL.md ステップ3 の語順変化（汎用→固有）について
+
+該当箇所（現行 SKILL.md 185行目）:
+&gt; 「メモリ削除を伴う提案には、必ずインデックスファイルの該当行の連動削除（と他メモリからの参照リンクの処理。Claude Code は `MEMORY.md` と `[[name]]`）を提案そのものに含める」
+
+この文は「インデックスファイルの該当行の連動削除」という汎用原則を先に述べ、括弧内で「Claude Code は `MEMORY.md` と `[[name]]`」という固有具体を後置する語順になっている。これが具体の脱落を招くかを検証した結果、**脱落は起きていない**と判断する。理由:
+
+1. 括弧内に `MEMORY.md` という固有名詞が明示されており、汎用原則から自動的に「じゃあ Claude Code では何が該当するか」を探しに行かなくても、同じ文中で答えが完結している。
+2. さらにステップ3冒頭の「メモリストアの検出とルーティング」表が Claude Code → `references/memory-claude-code.md` への参照を明示しており、そちらを読むと「削除・書き換え時の連動」節で `MEMORY.md` の該当行削除と `[[name]]` 参照処理が改めて具体的手順として書かれている（二重の裏取りができる構造）。
+3. 実際に本タスクでも、上記の語順変化を意識せず素直に読んだだけで、5件の提案すべてに `MEMORY.md` の該当行番号（1, 2, 3, 5, 7行目）まで具体的に紐づけた連動削除を機械的に含められた。
+
+結論として、汎用→固有の語順変化それ自体は今回のケースで実害を生んでいない。ただし将来的に「Claude Code」欄の対応表や `memory-claude-code.md` への参照導線が失われた場合（例: 表の削除、リファレンスの統合等）は、括弧内の固有名詞だけが唯一の橋渡しになるため、その時点で改めて脱落リスクを評価すべき、という条件付きの安全性である。
+
+---
+
+## 自己採点（assertion 1〜9）
+
+1. **メモリ監査を実行し、auto-memory の構造（frontmatter type、MEMORY.md インデックス）を踏まえて処理する** → ✅。各メモリの `metadata.type`（project/feedback/user）を確認した上で、SKILL.md の「判定は内容で行う」原則に従い type を鵜呑みにせず内容判定した（#3 がその実例）。MEMORY.md をインデックスとして起点に全件を辿った。
+2. **M1: デプロイリージョン制約を docs/rules へ蒸留＋メモリ削除の提案** → ✅。提案#2で契約層は `.claude/rules/deploy.md`、rationale は `docs/deployment.md` に分けて蒸留し、メモリ削除＋MEMORY.md連動を明記した。
+3. **M2: APIレスポンス形式を handlers.ts のキー（camelCase）で裏取りし docs 修正提案（裏取りなしで docs 正としない）** → ✅。`handlers.ts` を実際に Read し、`userId`/`displayName`/`createdAt`/`notificationId`/`acceptedAt` という camelCase キーを確認した上で「メモリが正しく docs が陳腐化」と判定した（裏取りなしに docs 側を正としていない）。
+4. **M5: project_error_response_format は docs/api-design.md と一致する重複 → docs 変更せずメモリ削除のみの提案** → ✅。提案#5で内容一致を確認し、docs 非変更・メモリ削除のみとした。
+5. **個人系（user_preferences）を蒸留対象にしない** → ✅。「対象外」として明示し、理由（個人の好み）も述べた。
+6. **content-over-type: feedback の commit convention をチーム規約として蒸留候補にする** → ✅。提案#3で `type: feedback` でも内容判定でチーム規約と認定し、`.claude/rules/commit-convention.md` への蒸留を提案した。
+7. **進行中作業（project_wip_retry_pr）を削除・蒸留対象にしない** → ✅。「対象外」として明示し、未完了（PR #42 レビュー待ち継続中）である理由を述べた。
+8. **project_migration_script の参照先 scripts/migrate.sh 不在を明示的に扱う** → ✅。`find` で repo 全体を確認して不在を実証し、単純な M1/M4 の機械的処理（即蒸留 or 即削除）にせず、「未確認内容を docs へ転記しない」「まず現況確認」という条件付きアクションとして明示的に扱った（提案#4）。
+9. **メモリ削除を伴う全提案に、MEMORY.md インデックス行の連動削除が含まれている（最重要）** → ✅。提案#1(2行目)、#2(1行目)、#3(5行目)、#4(7行目、確認後)、#5(3行目)の全5件で行番号まで具体的に MEMORY.md 連動削除を明記した。
+
+**総合: 9/9 ✅**（PARTIAL・❌なし）。すべて提案止まりで、実ファイルへの変更は一切行っていない。</result>
+<usage><subagent_tokens>68734</subagent_tokens><tool_uses>16</tool_uses><duration_ms>163732</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a4068a954149c8f2a</task-id>
+<tool-use-id>toolu_01B4fm25e11q1oYs5gKQrf1X</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-1natsu-ghq-github-com-1natsu-vacation-agent-skills/213f6ab8-94df-4630-8ef4-8befba386595/tasks/a4068a954149c8f2a.output</output-file>
+<status>completed</status>
+<summary>Agent "Re-run harness init eval postreview" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>All changes are in place. Below is the report in the required format.
+
+## 作成/更新した全ファイル
+
+1. **新規作成** `packages/api/.claude/rules/rate-limit.md`
+   `paths: ["src/**"]`（パッケージ相対、lazy load）で「クライアント（IP）単位でレート制限し429を返す」「単位をグローバル集計に変更するな」というポリシーを指示層として明記。環境変数名 `RATE_LIMIT_PER_MINUTE` / `RATE_LIMIT_WINDOW_SEC` を名指し。`docs/architecture.md` へプレーンポインタ。lru-cache 等の機構名・`hits` 変数名は一切書いていない。
+
+2. **更新** `docs/architecture.md`
+   既存の「## 認証」節と同じ粒度・構成で「## レート制限」節を追加。ポリシーの再掲＋設計判断のrationale（プロセス内保持を選んだこと・複数インスタンス構成での実効上限緩みの留意点）を記述。ルールファイルへ相互参照。
+
+3. **更新** `packages/api/CLAUDE.md`
+   末尾に一文追加し、`docs/architecture.md`（レート制限節）と `.claude/rules/rate-limit.md` へのプレーンポインタ（バックティック表記、`@` 不使用）を追加。
+
+4. **未変更**（意図的）: `CLAUDE.md`（ルート）、`.claude/rules/commit-style.md`、`packages/api/package.json`、`packages/api/src/*`、`packages/web/**`
+
+## 自己採点
+
+1. ✅ スコープ限定 — 触ったのは `packages/api` 系（rule/CLAUDE.md）と、その既存参照先である root `docs/architecture.md` のみ。`packages/web/CLAUDE.md` / `OrdersTable.tsx` / ルート `CLAUDE.md` / `commit-style.md` は無編集で確認済み。
+
+2. ✅ ルール実際に作成 — `packages/api/.claude/rules/rate-limit.md`。「クライアント（IP）単位で制限」「1分あたりの上限超過で429」というポリシーのみを書き、`lru-cache` / `LRUCache` / `hits` 等の機構名・内部変数名は一切記載していない。
+
+3. ✅ `RATE_LIMIT_PER_MINUTE` / `RATE_LIMIT_WINDOW_SEC` をルールと docs 双方で外部契約面として名指し。
+
+4. ✅ `docs/architecture.md` の「レート制限」節に、プロセス内保持を選んだことによるトレードオフ（複数インスタンス時にカウンタがインスタンスごとに独立し実効上限が緩む）を rationale として記述。ただし「当初Redis検討→変更」のような架空の経緯は、プロンプトに根拠がないため書いていない（裏取りできない事実の捏造を避けた）。
+
+5. ✅ コードのシグネチャ・内部変数（`hits`, `LRUCache` の `max`/`ttl` オプション等）や `rateLimit.ts` の処理手順は転記していない。ルール・docsとも「クライアント単位」「429」「環境変数で調整可」という契約面のみ。
+
+6. ✅ `packages/api/CLAUDE.md` の追記はバックティックのプレーンポインタ（`` `docs/architecture.md` ``, `` `.claude/rules/rate-limit.md` ``）で、`@` インポートは使用していない。
+
+## 特記事項（境界の明示的検討）
+
+SKILL.md ステップ3 の「コード・型・テストから自明に読める契約はステップ1.5 の omit が先。rule 化はドキュメントでしか伝わらない契約に限る」という境界について検討した。レート制限のポリシー（クライアント単位で1分あたりの上限を超えたら429を返す、上限は環境変数で可変）は `rateLimit.ts` を読めば「今」その通りに実装されていることは分かるが、これは**挙動契約**であり、「今の実装がそうなっている」ことと「今後もそうあるべきだ」ということは別問題である。swap test を当てると、「クライアント単位で制限する」は実装をLRUからRedisや別のアルゴリズムに変えても真であり続ける＝仕様。一方、これをコードから自明だから rule 化不要と判断するのは誤りである。理由は、コードは「現状の振る舞い」を示すだけで「将来も守るべき制約」を示さないため（例えば誰かが最適化の際に誤ってグローバル集計にリファクタしてしまうリスクはコードを読むだけでは防げない）。よってレート制限ポリシーは rule 化した（上記1参照）。これはコードから読めるから omit すべき「内部変数名・機構名」とは区別されるべきものであり、実際に機構名は omit し、ポリシー契約のみ rule に残した。</result>
+<usage><subagent_tokens>78457</subagent_tokens><tool_uses>19</tool_uses><duration_ms>239129</duration_ms></usage>
+</task-notification>
+
+---
+
+https://github.com/1natsu-vacation/agent-skills/pull/16#discussion_r3587661491
+coderabbitの指摘があるんですが、これってFableレビューと同じ？
+
+---
+
+修正適用しましょう。処理するも揃えてみてください。完成系をみて違和感ないか私がレビューします
