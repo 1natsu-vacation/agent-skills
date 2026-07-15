@@ -47,3 +47,8 @@ skill内容はOKです。evalsに関して質問があります。
 
 OK
 document-harness-workspace が残っているけどこれはもう捨てていいんよね？
+
+---
+
+ああ、そうかeval-fixturesだけ固定値だからGit管理で、 `-workspace` は作業場としては今後も運用するんでしたね。理解が追いつきました。
+今の状態でいいと思います。コミットしましょう。
