@@ -1,0 +1,50 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "8d932e7af0fa",
+  "session_id": "dec63697-271e-4a16-88d7-2aa54b87969f",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-15T14:18:48.720699Z",
+  "branch": "fix/harness-eval-findings",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "skills/1natsu-document-harness-audit/SKILL.md",
+    "skills/1natsu-document-harness/SKILL.md"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "830f9cd4c87e",
+  "checkpoint_transcript_start": 521,
+  "transcript_lines_at_start": 521,
+  "compact_transcript_start": 74,
+  "token_usage": {
+    "input_tokens": 13,
+    "cache_creation_tokens": 185218,
+    "cache_read_tokens": 1076582,
+    "output_tokens": 7467,
+    "api_call_count": 7
+  },
+  "session_metrics": {
+    "turn_count": 5
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-15T14:18:48.67431Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 1,
+    "human_modified": 5,
+    "human_removed": 0,
+    "total_committed": 1,
+    "total_lines_changed": 6,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    }
+  ]
+}
