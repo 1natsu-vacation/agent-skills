@@ -1,0 +1,7 @@
+- [デプロイリージョン制約](project_deploy_region_constraint.md) — 国内リージョン限定の理由
+- [APIレスポンス形式の移行](project_api_response_format.md) — snake_case→camelCase 移行済み
+- [エラーレスポンス形式](project_error_response_format.md) — code＋message の2フィールド
+- [ユーザーの好み](user_preferences.md) — シェル・応答言語
+- [コミット規約](feedback_commit_convention.md) — Conventional Commits＋スコープ規則
+- [進行中: 通知リトライPR](project_wip_retry_pr.md) — PR #42 レビュー待ち
+- [移行スクリプトの使い方](project_migration_script.md) — scripts/migrate.sh の実行手順

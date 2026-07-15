@@ -39,6 +39,14 @@ metadata:
 - Guidelines, rules, examples
 ```
 
+## Evals（スキルの評価資産）
+
+- eval 定義は各スキルの `skills/<name>/evals/evals.json`
+- fixture（eval の入力資産）は**再生成不能なので必ず git 管理する**。evals.json が参照するため、欠けると再クローンで evals が実行不能になる。形態は2つ:
+  - **生成スクリプト型**（使い捨て環境を作る `.sh` 等）: スキル内 `evals/fixtures/` に置く（例: `1natsu-auto-resolve-conflicts`）
+  - **静的ツリー型**（repo・memory 等のスナップショット）: ルートの `eval-fixtures/<ドメイン>/` に置く（例: `eval-fixtures/document-harness/`）
+- eval の**実行結果**（iteration 出力）は `skills/<name>-workspace/` に置く。gitignore 対象で、絶対パスや一時状態を含む**再生成可能物のみ**を置く。fixture をここに置かない
+
 ## Validation
 
 ```bash

@@ -1,0 +1,9 @@
+{
+  "name": "@acme/api",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "fastify": "^4.26.0",
+    "lru-cache": "^10.2.0"
+  }
+}

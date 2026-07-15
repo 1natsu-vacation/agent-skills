@@ -141,8 +141,8 @@ vite.config.ts.timestamp-*
 # Claude Code local settings
 .claude/settings.local.json
 
-# skill-creator evaluation workspaces (regeneratable, contain absolute paths
-# and subagent-specific temporary state — keep local only).
+# skill-creator の eval 実行結果置き場 — 再生成可能物のみ（local only）。
+# fixture はここに置かない。規約は CLAUDE.md「Evals」参照。
 skills/*-workspace/
 
 # `.claude/skills/` は `gh skill install` の取り込み先として gh CLI が前提にする
