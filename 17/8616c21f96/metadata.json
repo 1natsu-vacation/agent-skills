@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "178616c21f96",
+  "strategy": "manual-commit",
+  "branch": "fix/harness-eval-findings",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "skills/1natsu-document-harness-audit/SKILL.md",
+    "skills/1natsu-document-harness/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/17/8616c21f96/0/metadata.json",
+      "transcript": "/17/8616c21f96/0/full.jsonl",
+      "compact_transcript": "/17/8616c21f96/0/transcript.jsonl",
+      "content_hash": "/17/8616c21f96/0/content_hash.txt",
+      "prompt": "/17/8616c21f96/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 60,
+    "cache_creation_tokens": 67241,
+    "cache_read_tokens": 4183750,
+    "output_tokens": 26320,
+    "api_call_count": 33
+  }
+}
