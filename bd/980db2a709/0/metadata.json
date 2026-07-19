@@ -77,6 +77,37 @@
         "label": "Skill: 1natsu-commit",
         "default_collapsed": true
       }
+    },
+    {
+      "id": "claude-skill-toolu_01YSJQh8g8j1G1FZHq8pMbP1",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "publish-this-repo"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "145dfde59d47",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 503,
+        "end": 504,
+        "entry_ids": [
+          "fad3d2b6-26e6-4763-a659-43aac0df4138"
+        ],
+        "tool_use_id": "toolu_01YSJQh8g8j1G1FZHq8pMbP1"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_01YSJQh8g8j1G1FZHq8pMbP1"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: publish-this-repo",
+        "default_collapsed": true
+      }
     }
   ],
   "session_metrics": {
