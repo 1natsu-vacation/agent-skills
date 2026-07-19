@@ -1,0 +1,9 @@
+/skill-creator:skill-creator @skills/1natsu-document-harness-audit/SKILL.md を改善したい。memoryの削除は破壊的なので（通常Git管理されていない）、削除前に$TMPDIRにバックアップをとってから本体を削除したい。削除後にユーザーにバックアップPathと削除する場合のコマンドを返したい
+
+---
+
+レビューしました。内容確認してください
+
+---
+
+見ました。OKです。問題なさそうです。
