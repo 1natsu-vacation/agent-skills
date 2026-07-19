@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "bd980db2a709",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "skills/1natsu-document-harness-audit/SKILL.md",
+    "skills/1natsu-document-harness-audit/evals/evals.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/bd/980db2a709/0/metadata.json",
+      "transcript": "/bd/980db2a709/0/full.jsonl",
+      "compact_transcript": "/bd/980db2a709/0/transcript.jsonl",
+      "content_hash": "/bd/980db2a709/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1,
+    "cache_creation_tokens": 704,
+    "cache_read_tokens": 181606,
+    "output_tokens": 702,
+    "api_call_count": 1
+  }
+}
