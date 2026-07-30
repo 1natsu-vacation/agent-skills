@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "28e63b959fe2",
+  "strategy": "manual-commit",
+  "branch": "feat/hunk-wrapper-skill",
+  "checkpoints_count": 11,
+  "files_touched": [
+    "skills/1natsu-hunk/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/28/e63b959fe2/0/metadata.json",
+      "transcript": "/28/e63b959fe2/0/full.jsonl",
+      "compact_transcript": "/28/e63b959fe2/0/transcript.jsonl",
+      "content_hash": "/28/e63b959fe2/0/content_hash.txt",
+      "prompt": "/28/e63b959fe2/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1428,
+    "cache_creation_tokens": 151622,
+    "cache_read_tokens": 6302784,
+    "output_tokens": 65703,
+    "api_call_count": 53
+  }
+}
