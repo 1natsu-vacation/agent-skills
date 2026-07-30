@@ -63,6 +63,7 @@ Add `-g` for global / user scope.
 | [1natsu-create-pr](./skills/1natsu-create-pr/SKILL.md) | GitHub PR creation with conventional commits and multi-language support |
 | [1natsu-error-handling](./skills/1natsu-error-handling/SKILL.md) | Structured error handling guidelines |
 | [1natsu-git-analysis](./skills/1natsu-git-analysis/SKILL.md) | Git repository analysis — branches, diffs, commit history |
+| [1natsu-hunk](./skills/1natsu-hunk/SKILL.md) | Connects the agent to a live Hunk review session for human-in-the-loop local diff review |
 | [1natsu-pair-debug](./skills/1natsu-pair-debug/SKILL.md) | Collaborative debugging with human-in-the-loop observation |
 | [1natsu-pair-resolve-conflicts](./skills/1natsu-pair-resolve-conflicts/SKILL.md) | Collaborative git conflict resolution with commit history analysis |
 | [1natsu-pr-review-handler](./skills/1natsu-pr-review-handler/SKILL.md) | Autonomous PR review comment handling and code fixes |
