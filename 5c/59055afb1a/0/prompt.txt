@@ -128,3 +128,7 @@ https://microsoft.github.io/apm/reference/manifest-schema/ 「3.1. `name`」「3
 **判断**（これはドキュメントの記述ではなく、上記事実に基づく私の評価）: 現状維持が妥当。再検討トリガーになりうるのは「SBOM に license を載せたい消費者が実際に現れたとき」で、その場合でも必要なのは `name` / `version` / `license` / `description` の4フィールドだけのルート apm.yml であり、`.apm/` への移行は不要。</result>
 <usage><subagent_tokens>155661</subagent_tokens><tool_uses>17</tool_uses><duration_ms>1643649</duration_ms></usage>
 </task-notification>
+
+---
+
+OKです。
