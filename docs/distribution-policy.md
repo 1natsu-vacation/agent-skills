@@ -23,6 +23,40 @@ apm 関連の改修要望が来たら、次の順で検討する:
 3. Primitive Form の制約（transitive deps なし等）が消費側で実害になっているかを検証する
 4. それでも必要なら、`apm.yml` 追加と `.apm/skills/` 移行を分けて段階導入する（破壊的変更を避ける）
 
+### 2026-07-31 時点の再確認（apm 0.26.0、公式ドキュメントのみ）
+
+トリガー1が発火したため現行仕様を確認した。実機検証は未実施。出典は [package-types](https://microsoft.github.io/apm/reference/package-types/) / [targets-matrix](https://microsoft.github.io/apm/reference/targets-matrix/) / [primitives-and-targets](https://microsoft.github.io/apm/concepts/primitives-and-targets/)。
+
+**用語が変わった。** 「Primitive Form」「Package Form」は現行ドキュメントに存在しない。root signal による5つの layout に整理され、このリポジトリは **Skill collection**（`skills/<name>/SKILL.md`、`apm.yml` は任意）に当たる。`owner/repo/path` でサブディレクトリを直接指す経路は **virtual subdirectory** と呼ばれ、今も有効。
+
+**判断理由の1つが成立しなくなった。** 「`apm.yml` の追加は `.apm/skills/` への移行を伴い Vercel `skills` 互換を壊す」は現行仕様では誤り。`skills/` の配置を動かさずルート `apm.yml` だけを追加できる。ディレクトリ移動と `apm.yml` は独立した選択になっている。
+
+**判断時点の情報が古かった。** 0.8.11 は、`skills/<name>/SKILL.md` が第一級形態として明文化された 0.9.4 の直前。正式サポート前の状態で判断していた。
+
+`apm.yml` を持たない配布は現行でも第一級で、非推奨化の記述はない。
+
+#### ルート `apm.yml` は追加しない
+
+消費者の体験を変える要素がほとんどないため、現状維持とする。
+
+- pin と再現性は lockfile の `resolved_commit`（commit SHA）が担う。`apm.yml` は無関係で、`version` は表示用メタデータと明記されている
+- バージョン指定は git tag で解決される。`gh skill publish` が作る `vX.Y.Z` は apm が照合するタグパターンに一致するため、消費者は `#v2.4.0` や `#^2.0.0` を `apm.yml` なしで使える
+- `apm update` / `apm outdated` の更新検出も git tag / branch tip の比較で、`apm.yml` の version は判定に登場しない
+- 発見性を担うのは `apm search` だが、これはマーケットプレイス登録が前提で `apm.yml` では届かない
+- `apm publish` は `.apm/` を要求するため、Skill collection のままでは `apm.yml` を足しても使えない
+
+得られるのは実質2つだけ。ひとつは `license:` の宣言で、消費側の SBOM（`apm lock export`）に載る。`apm.yml` がないと CycloneDX は license 欄を省き、SPDX は `NOASSERTION` を書く（SKILL.md 側の `license: MIT` は apm の `declared_license` の出典に含まれない）。もうひとつはインストール済み利用者の `apm view` に name / version / description / author が表示されること。
+
+対するコストは、必須フィールドになる `version` を git tag と手動同期する義務。マーケットプレイスを持たない限り不整合を検出する仕組みがなく、ズレても install・update・outdated のどれにも現れない。`license` と `description` も SKILL.md と二重管理になる。
+
+`.claude-plugin/marketplace.json` を導入したのは利用者の install 単位が実際に変わるからで、`apm.yml` にはそれに当たる実効がない。静かにドリフトするフィールドを増やす方が損になる。
+
+**追加の再検討トリガー**: SBOM に license を要求する消費者が現れたとき。その場合も必要なのは `name` / `version` / `license` / `description` を持つルート `apm.yml` だけで、`.apm/` への移行は不要。
+
+#### frontmatter の ASCII 制約は検証しない
+
+Skill collection の validation rules に "All frontmatter values must be ASCII-only" とあり、全スキルの `description` が日本語なので形式上は抵触する。これは実測しない。`description` はエージェントが発動判断に使う自然言語のフィールドで、そこに ASCII 制約をかけるのは仕様側の設計問題であり、当リポジトリが吸収する責務ではない。
+
 ## 公開の運用形態
 
 公開（`gh skill publish` による Release 作成）は手動・ローカル運用で、CI / GitHub Actions は導入していない。Release＋semver タグを公開ゲートにする理由と手順は `.claude/skills/publish-this-repo` を参照。

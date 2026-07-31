@@ -69,7 +69,7 @@ claude plugin validate .      # marketplace.json の検証（renames の循環�
 - 公式公開チャネル: `gh skill publish`（手動・対話モード、要 gh CLI v2.90.0+）— GitHub Release＋semver タグを作成
 - 互換チャネル（デフォルトブランチ追従、リリースタグではない）:
   - Vercel `skills` 互換（`bunx skills` / `npx skills add`）
-  - apm Primitive Form（`apm install --skill` で個別スキル取得、`apm.yml` 不要）
+  - apm（Skill collection として認識される。`apm install --skill` で個別スキル取得、`apm.yml` 不要）
   - Claude Code plugin marketplace（`.claude-plugin/marketplace.json`、`/plugin marketplace add`）
 
 公開手順は `.claude/skills/publish-this-repo` (Internal skill) に集約。エージェントに「公開して」と伝えれば自動でガイドする。
