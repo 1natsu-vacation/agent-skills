@@ -1,0 +1,93 @@
+{
+  "name": "1natsu",
+  "owner": {
+    "name": "1natsu",
+    "url": "https://github.com/1natsu-vacation"
+  },
+  "description": "Personal collection of agent skills for coding agents, grouped into installable plugins.",
+  "plugins": [
+    {
+      "name": "1natsu-commit",
+      "source": "./",
+      "description": "Git commit best practices with Conventional Commits.",
+      "category": "engineering",
+      "license": "MIT",
+      "keywords": ["git", "commit", "conventional-commits"],
+      "skills": [
+        "./skills/1natsu-commit",
+        "./skills/1natsu-conventional-commits"
+      ]
+    },
+    {
+      "name": "1natsu-pr",
+      "source": "./",
+      "description": "GitHub PR creation and autonomous review comment handling.",
+      "category": "engineering",
+      "license": "MIT",
+      "keywords": ["github", "pull-request", "code-review"],
+      "skills": [
+        "./skills/1natsu-create-pr",
+        "./skills/1natsu-pr-review-handler"
+      ]
+    },
+    {
+      "name": "1natsu-conflicts",
+      "source": "./",
+      "description": "Git conflict resolution, either fully autonomous or paired with a human.",
+      "category": "engineering",
+      "license": "MIT",
+      "keywords": ["git", "merge-conflict", "rebase"],
+      "skills": [
+        "./skills/1natsu-auto-resolve-conflicts",
+        "./skills/1natsu-pair-resolve-conflicts"
+      ]
+    },
+    {
+      "name": "1natsu-document-harness",
+      "source": "./",
+      "description": "Harness documentation generation and audit with consistent placement and granularity.",
+      "category": "engineering",
+      "license": "MIT",
+      "keywords": ["documentation", "claude-md", "audit"],
+      "skills": [
+        "./skills/1natsu-document-harness",
+        "./skills/1natsu-document-harness-audit",
+        "./skills/1natsu-document-harness-model"
+      ]
+    },
+    {
+      "name": "1natsu-debug",
+      "source": "./",
+      "description": "Collaborative debugging with human-in-the-loop observation, plus git repository analysis.",
+      "category": "engineering",
+      "license": "MIT",
+      "keywords": ["debugging", "git", "analysis"],
+      "skills": [
+        "./skills/1natsu-pair-debug",
+        "./skills/1natsu-git-analysis"
+      ]
+    },
+    {
+      "name": "1natsu-error-handling",
+      "source": "./",
+      "description": "Structured error handling guidelines.",
+      "category": "engineering",
+      "license": "MIT",
+      "keywords": ["error-handling", "exceptions"],
+      "skills": [
+        "./skills/1natsu-error-handling"
+      ]
+    },
+    {
+      "name": "1natsu-hunk",
+      "source": "./",
+      "description": "(experimental) Connects the agent to a live Hunk review session for human-in-the-loop local diff review.",
+      "category": "engineering",
+      "license": "MIT",
+      "keywords": ["hunk", "diff", "code-review", "experimental"],
+      "skills": [
+        "./skills/1natsu-hunk"
+      ]
+    }
+  ]
+}

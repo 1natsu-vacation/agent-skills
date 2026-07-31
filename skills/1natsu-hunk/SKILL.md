@@ -1,6 +1,6 @@
 ---
 name: 1natsu-hunk
-description: Hunk（対話型ターミナル diff レビューア）の稼働中セッションにエージェントを接続する。`hunk skill path` の解決とセッション確認を代行するので、人間はこのコマンドを打つだけでよい。以降は Hunk 上の注釈と会話を行き来しながらレビューを進める。
+description: (experimental) Hunk（対話型ターミナル diff レビューア）の稼働中セッションにエージェントを接続する。`hunk skill path` の解決とセッション確認を代行するので、人間はこのコマンドを打つだけでよい。以降は Hunk 上の注釈と会話を行き来しながらレビューを進める。
 disable-model-invocation: true
 license: MIT
 metadata:

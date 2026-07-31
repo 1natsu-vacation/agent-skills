@@ -50,6 +50,27 @@ apm install 1natsu-vacation/agent-skills#v0.1.0 --skill 1natsu-<skill-name>
 
 Add `-g` for global / user scope.
 
+### Claude Code plugin
+
+Fetches from the default branch (`main`). Skills are grouped into plugins, so you install only the groups you want:
+
+```bash
+/plugin marketplace add 1natsu-vacation/agent-skills
+/plugin install 1natsu-commit@1natsu
+```
+
+Plugin skills are namespaced by the plugin, so `1natsu-commit` is invoked as `/1natsu-commit:1natsu-commit`. Installing through any other channel keeps the plain `/1natsu-commit` form.
+
+| Plugin | Skills |
+|--------|--------|
+| `1natsu-commit` | 1natsu-commit, 1natsu-conventional-commits |
+| `1natsu-pr` | 1natsu-create-pr, 1natsu-pr-review-handler |
+| `1natsu-conflicts` | 1natsu-auto-resolve-conflicts, 1natsu-pair-resolve-conflicts |
+| `1natsu-document-harness` | 1natsu-document-harness, 1natsu-document-harness-audit, 1natsu-document-harness-model |
+| `1natsu-debug` | 1natsu-pair-debug, 1natsu-git-analysis |
+| `1natsu-error-handling` | 1natsu-error-handling |
+| `1natsu-hunk` | 1natsu-hunk (experimental) |
+
 ## Skills
 
 | Skill | Description |

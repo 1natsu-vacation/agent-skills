@@ -3,6 +3,8 @@
 ## Structure
 
 ```
+.claude-plugin/
+└── marketplace.json   # スキルを plugin（install の束）に分ける配布マニフェスト
 skills/
 └── <skill-name>/
     └── SKILL.md       # YAML frontmatter (name, description) + markdown content
@@ -17,6 +19,7 @@ skills/
 - 1スキル = 1トピック、スコープを絞る
 - frontmatter には `license: MIT` と `metadata`（`author`, `version`）を必ず含める。バージョンは更新時にインクリメントする
 - Internal skill（`.claude/skills/` 配下）は `metadata.internal: true` を付け、配布チャネルから自動的に隠す
+- 配布対象スキルを追加・削除したら `.claude-plugin/marketplace.json` の該当 plugin の `skills[]` と README.md の一覧も更新する。登録漏れのスキルは Claude Code plugin チャネルに載らず、Vercel `skills` の UI では "Other" に落ちる（規約の詳細は「marketplace.json の規約」）
 
 ## SKILL.md Template
 
@@ -51,9 +54,10 @@ metadata:
 ## Validation
 
 ```bash
-bunx skills add . --list      # スキルが認識されるか確認（Internal skill は隠れる）
+bunx skills add . --list      # スキルが認識されるか確認（Internal skill は隠れる／plugin のグループ表示も確認できる）
 bunx skills add . -g -y       # グローバルインストール
 gh skill publish --dry-run .  # Agent Skills 仕様に沿っているかリポジトリ全体で検証（gh CLI v2.90.0+）
+claude plugin validate .      # marketplace.json の検証（renames の循環・終端も検査される）
 ```
 
 ## Distribution
@@ -61,13 +65,32 @@ gh skill publish --dry-run .  # Agent Skills 仕様に沿っているかリポ�
 **git push はリポジトリ更新であって公開ではない。** 公開は `gh skill publish` が唯一の正規チャネル。
 
 - 公式公開チャネル: `gh skill publish`（手動・対話モード、要 gh CLI v2.90.0+）— GitHub Release＋semver タグを作成
-- 互換チャネル（main 追従、リリースタグではない）:
+- 互換チャネル（デフォルトブランチ追従、リリースタグではない）:
   - Vercel `skills` 互換（`bunx skills` / `npx skills add`）
   - apm Primitive Form（`apm install --skill` で個別スキル取得、`apm.yml` 不要）
+  - Claude Code plugin marketplace（`.claude-plugin/marketplace.json`、`/plugin marketplace add`）
 
 公開手順は `.claude/skills/publish-this-repo` (Internal skill) に集約。エージェントに「公開して」と伝えれば自動でガイドする。
 
 チャネル選定の判断・経緯（apm Primitive Form 維持の理由と再検討トリガー、運用形態）は `docs/distribution-policy.md` を参照。
+
+### marketplace.json の規約
+
+`.claude-plugin/marketplace.json` は Claude Code の install 単位（plugin＝スキルの束）と、Vercel `skills` のインタラクティブ UI のグループ表示を**両方**決める。skills CLI も同ファイルを読むため、片方専用の設定にはできない。
+
+フィールドの仕様と上流ドキュメントの参照先は `docs/distribution-policy.md`「上流仕様の参照先」にまとめてある（公式に記述がなく実測でしか確定できない挙動も併記）。
+
+- **plugin 名は不変の識別子**。`/plugin install`・`enabledPlugins`・`pluginConfigs` が参照するので、変えると既存インストールが壊れる。表示名だけ変えたいときは `displayName` を足して `name` は据え置く
+- **`version` は書かない**。書くとその文字列が変わるまで利用者に更新が届かない（バンプ忘れが配信事故になる）。省略すればコミット SHA 追従になる。スキルの版は frontmatter `metadata.version`、リリースの版は `gh skill publish` のタグが担う
+- **`plugin.json` を置かない**。置くとその `name` が全 plugin 共通の表示名になり、marketplace エントリの `description` / `version` が無視される
+- **experimental は `description` 冒頭の `(experimental)` で示す**。plugin 名に含めると stable 化のたびにリネーム＝既存インストールの破壊が必要になる。marketplace エントリと該当 `SKILL.md` の**両方**に書く（チャネルごとに表示元が違う）。昇格は両方から prefix を外すだけ
+
+### plugin の廃止手順
+
+1. **非推奨を宣言**（撤去しない）— marketplace の `description` 冒頭に `(deprecated)` と移行先を書く。plugin はカタログに残し、既存利用者は動き続ける
+2. **撤去** — `plugins` からエントリを外すと同時に、最上位の `renames` に `"<plugin名>": null` を追加する。黙って消すと利用者は `plugin-not-found` になる。改名の場合は `null` の代わりに新しい名前を書く
+
+`renames` は**追記のみ**。移行が終わったと思っても古いエントリを消さない（Claude Code はチェーンを辿るため、再改名時は書き足す）。編集後は `claude plugin validate .` で循環と終端を検証する。
 
 ## Spec-Drift Watch（仕様追従・著者用）
 
