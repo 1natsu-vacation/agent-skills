@@ -4,7 +4,7 @@ description: agent-skills リポジトリの公開・デプロイ・リリース
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.2.0"
+  version: "1.3.0"
   internal: true
 ---
 
@@ -66,6 +66,23 @@ gh skill publish --dry-run .
 
 また dry-run / 本番公開の実行時に `.claude/skills/ contains installed skills and should be added to .gitignore to avoid publishing other authors' content` という警告が出るが、**当リポジトリでは想定内で無視してよい**。この警告は汎用ヒューリスティックで、`.claude/skills/` 配下の spec-drift-watch 等（自リポジトリの Internal skill・意図的にバージョン管理下）を「他者のインストール済みスキル」と誤認したもの。`.claude/` は publish のスキャン対象外のため公開内容には影響せず、gitignore すべきものでもない（gitignore すると spec-watch 機構がリポジトリから失われる）。
 
+### Step 2b. 配布マニフェストの検証
+
+`gh skill publish` は `.claude-plugin/marketplace.json` を見ないため、Claude Code plugin チャネルの破損は dry-run では検出されない。以下を別途実行する。
+
+```bash
+claude plugin validate .   # marketplace.json のスキーマと renames の循環・終端
+```
+
+登録漏れも検出されないので、全スキルがいずれかの plugin に属していることを確認する（出力があれば、それが未登録のスキル）。
+
+```bash
+comm -13 <(jq -r '.plugins[].skills[]' .claude-plugin/marketplace.json | sed 's|^\./||' | sort) \
+         <(ls -d skills/1natsu-*/ | sed 's|/$||' | sort)
+```
+
+未登録のスキルは Claude Code plugin チャネルに載らず、Vercel `skills` の UI では "Other" に落ちる。該当があれば `marketplace.json` の該当 plugin の `skills[]` と README.md の一覧に追加してから公開する。
+
 ### Step 3. semver 決定
 
 直近のリリースタグを確認し、main までの差分から semver を決定する。
@@ -80,8 +97,8 @@ fi
 ```
 
 分類基準:
-- **major** (`vX.0.0`): 既存スキルの破壊的変更（削除、name 変更、互換性のない description 変更）
-- **minor** (`vX.Y.0`): 新規スキル追加、既存スキルの後方互換な機能追加
+- **major** (`vX.0.0`): 既存スキルの破壊的変更（削除、name 変更、互換性のない description 変更）、plugin の name 変更・廃止（既存インストールが移行を要する）
+- **minor** (`vX.Y.0`): 新規スキル追加、新規 plugin 追加、既存スキルの後方互換な機能追加
 - **patch** (`vX.Y.Z`): バグ修正、ドキュメント・タイポ修正、内部リファクタ
 
 候補バージョンをユーザーに提示して確認を取る。
@@ -144,10 +161,12 @@ gh release delete vX.Y.Z --cleanup-tag --yes
 | `not authenticated` | `gh auth login` を実行 |
 | `immutable-releases` API が 404 | gh CLI / GitHub 側の機能未到達。`brew upgrade gh` 後に再試行、それでも駄目なら GitHub Web UI から状態確認 |
 | 公開後 release が `isImmutable: false` | リポジトリ設定 immutability が release 作成より後に有効化されたケース。Step 7 で再 publish |
-| Consumer から「最新が反映されない」報告 | (a) 最新の Release を作成済みか確認（`gh skill install` は Release タグ取得）。(b) Consumer が `npx skills add` / `apm install` の main 取得経路なら Release 不要で、main への反映タイミングの問題 |
+| Consumer から「最新が反映されない」報告 | (a) 最新の Release を作成済みか確認（`gh skill install` は Release タグ取得）。(b) Consumer が `npx skills add` / `apm install` / `/plugin` の取得経路ならいずれもデフォルトブランチ追従で Release 不要。反映タイミングの問題 |
+| Consumer から「plugin を更新しても変わらない」報告 | (a) セッション中の変更は `/reload-plugins` が必要。(b) third-party marketplace の auto-update は既定 OFF なので `/plugin marketplace update 1natsu` を案内する。(c) `marketplace.json` に `version` を書いていないか確認（書くと SHA 追従が止まる。AGENTS.md「marketplace.json の規約」参照） |
 
 ## References
 
+- 配布マニフェスト（`.claude-plugin/marketplace.json`）の仕様と上流ドキュメントの参照先: `docs/distribution-policy.md`「上流仕様の参照先」
 - `gh skill publish` reference: https://cli.github.com/manual/gh_skill_publish
 - Vercel skills README (Internal flag spec): https://github.com/vercel-labs/skills/blob/main/README.md
 - Immutable releases (GitHub Docs): https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases
