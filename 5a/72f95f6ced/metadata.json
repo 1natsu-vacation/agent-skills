@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "5a72f95f6ced",
+  "strategy": "manual-commit",
+  "branch": "feat/document-harness-writing-standard",
+  "checkpoints_count": 20,
+  "files_touched": [
+    "eval-fixtures/document-harness/fixture-e-style/.claude/rules/release.md",
+    "eval-fixtures/document-harness/fixture-e-style/CLAUDE.md",
+    "eval-fixtures/document-harness/fixture-e-style/docs/api-contract.md",
+    "eval-fixtures/document-harness/fixture-e-style/docs/incident-2026-05-payment-timeout.md",
+    "eval-fixtures/document-harness/fixture-e-style/docs/ops-runbook.txt",
+    "eval-fixtures/document-harness/fixture-e-style/docs/queue-design.md",
+    "eval-fixtures/document-harness/fixture-e-style/src/queue/worker.ts",
+    "skills/1natsu-document-harness-audit/SKILL.md",
+    "skills/1natsu-document-harness-audit/evals/evals.json",
+    "skills/1natsu-document-harness-audit/references/html-review.md",
+    "skills/1natsu-document-harness-model/SKILL.md",
+    "skills/1natsu-document-harness/SKILL.md",
+    "skills/1natsu-document-harness/evals/evals.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/5a/72f95f6ced/0/metadata.json",
+      "transcript": "/5a/72f95f6ced/0/full.jsonl",
+      "compact_transcript": "/5a/72f95f6ced/0/transcript.jsonl",
+      "content_hash": "/5a/72f95f6ced/0/content_hash.txt",
+      "prompt": "/5a/72f95f6ced/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 298,
+    "cache_creation_tokens": 242877,
+    "cache_read_tokens": 27917869,
+    "output_tokens": 123729,
+    "api_call_count": 158
+  }
+}
