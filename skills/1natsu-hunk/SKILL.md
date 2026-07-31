@@ -5,7 +5,7 @@ disable-model-invocation: true
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.0.0"
+  version: "0.0.1"
 ---
 
 # Hunk Review
