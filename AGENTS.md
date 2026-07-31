@@ -60,6 +60,8 @@ gh skill publish --dry-run .  # Agent Skills 仕様に沿っているかリポ�
 claude plugin validate .      # marketplace.json の検証（renames の循環・終端も検査される）
 ```
 
+互換チャネルはデフォルトブランチを追従するため、**main へのマージが実質の公開**になる。壊れた状態を配らないよう、配布物の実機確認はブランチのまま（push 不要）ローカルパスで済ませる。手順と注意点は `docs/local-verification.md` を参照。
+
 ## Distribution
 
 **git push はリポジトリ更新であって公開ではない。** 公開は `gh skill publish` が唯一の正規チャネル。
