@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "9e576bf6d447",
+  "strategy": "manual-commit",
+  "branch": "feat/hunk-wrapper-skill",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "AGENTS.md",
+    "docs/distribution-policy.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/9e/576bf6d447/0/metadata.json",
+      "transcript": "/9e/576bf6d447/0/full.jsonl",
+      "compact_transcript": "/9e/576bf6d447/0/transcript.jsonl",
+      "content_hash": "/9e/576bf6d447/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 247,
+    "cache_creation_tokens": 974096,
+    "cache_read_tokens": 24624333,
+    "output_tokens": 171611,
+    "api_call_count": 133
+  }
+}
