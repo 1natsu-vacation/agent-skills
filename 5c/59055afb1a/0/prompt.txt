@@ -1,0 +1,130 @@
+1ha
+
+---
+
+1は実際のユーザーでは問題になりません、.agents/ や .claude のようなSKILL置き場がリポジトリに見つからない場合のみfailし自動検出がデフォルトだからです。TMPDIRではこれらがないので指定しないといけなかっただけです。（なったとしてもCLIでtarget指定=ai agentは何か？を指定せよとして落ちる）。
+
+2. https://microsoft.github.io/apm/reference/package-types/ https://microsoft.github.io/apm/reference/targets-matrix/ https://microsoft.github.io/apm/concepts/primitives-and-targets/
+最新の関連Docsです。サブエージェントに調査させてください。実機検証にはすぐ進まずまずはDocsからわかる範囲を作業範囲にしてください。もしかすると概念は変わってないが名前がPrimitiveFormという概念名ではなくなっているという可能性などもありそうです。
+
+---
+
+apm.ymlをこのリポジトリに置くメリットは何だと思いますか？それによってclaude-pluginのように個別最適をメンテナンスする意義から決定理由が変わります。わからなければ調査させたエージェントに投げてください。
+
+ASCII計測はしない。descriptionに限っては自然言語制約がある方がおかしくもしそれによりバグが起こるのであればこのリポジトリの責務ではなくAPM側の問題だからです。
+
+> 消費者への案内をどちらに寄せるか。 apm install <repo> --skill <name>（Skill collection の正規手段、選択が lockfile に永続化される）と apm install <repo>/skills/<name>（virtual subdirectory）の2経路があり、README は後者に近い書き方です
+
+READMEは現在前者ではないの？
+
+---
+
+<task-notification>
+<task-id>a1b09bc9e58250df4</task-id>
+<tool-use-id>toolu_01Nw5h66SNrnnVsoEJhRDHwT</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-1natsu-ghq-github-com-1natsu-vacation-agent-skills/b744cfd2-e92e-47a2-aed7-ba805283767d/tasks/a1b09bc9e58250df4.output</output-file>
+<status>completed</status>
+<summary>Agent "apm の現行仕様を調査" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>追加調査完了。公式ドキュメント（microsoft.github.io/apm、ソース `microsoft/apm` の `docs/src/content/docs/` @ main）のみを読み、実行はしていません。
+
+**先に前回報告の訂正**: 「apm.yml で `apm view` / `apm search` 用の description が得られる」と書きましたが、`apm search` は**マーケットプレイス専用**で apm.yml では届きません（Q2 で詳述）。
+
+---
+
+## 1. version metadata の欠如が消費側に与える影響
+
+**lockfile に記録される pin は commit SHA。version は表示専用。**（確信度: 高）
+
+出典: https://microsoft.github.io/apm/reference/lockfile-spec/ 「Per-entry fields」
+- `resolved_commit`: "Exact 40-char commit SHA installed. **The pin.**"
+- `resolved_ref`: "The user-supplied ref from `apm.yml`（`main`, `v1.2.0`, a SHA）"
+- `version`: "For git/local entries: the `version` field from the dependency's `apm.yml` at resolution time (**display/inventory metadata only — replay always uses `resolved_ref`/`resolved_commit`**). For `package_type: claude_skill` (which has no `apm.yml`), the value is always `unknown`."
+
+→ 提供側 apm.yml の欠如は**再現性・pin・integrity に一切影響しない**。欠けるのは表示用メタデータのみ。
+※このリポジトリの `package_type` は `skill_bundle`（CHANGELOG 0.9.4 が `skills/&lt;name&gt;/SKILL.md` を `SKILL_BUNDLE` と明記）。`claude_skill` の `unknown` 規定が `skill_bundle` にも適用されるかは**記載なし**。同ページ "Fields are emitted only when set" から「フィールドごと省略」と読むのが自然だが、これは**推測**。
+
+**`apm update` / `apm outdated` の更新検出は git ref ベースで、apm.yml の version は判定に登場しない。**（確信度: 高）
+
+- https://microsoft.github.io/apm/reference/cli/update/ 「Behavior」: "Each entry in `apm.yml` is resolved against its **remote source** for the newest version or ref allowed by its constraint"
+- https://microsoft.github.io/apm/reference/cli/outdated/ 「Description」: 判定は全て git tag / branch tip / SHA 比較。同ページ「Examples」のサンプル出力にも `acme/agent-skills  v1.2.0  v1.4.1  outdated  **git tags**` の行がある。提供側 apm.yml への言及なし。
+
+**`@&lt;version&gt;` 構文は git dep に存在しない。バージョン指定は `#ref`。**（確信度: 高）
+
+- https://microsoft.github.io/apm/consumer/manage-dependencies/ 「Reference formats」: `| Pinned ref | owner/repo#v1.0.0 |`。`@` は `NAME@MARKETPLACE` と SSH ユーザ名に使われ、同ページ「Alias migration」注記で "reserves `@` for git usernames and **future** package-manager-compatible version syntax"（＝将来予約）。
+- 同ページ「Pin a semver range」: git-source dep は `#^1.2.0`, `#~1.4`, `#&gt;=2.0 &lt;3`, `#1.5.x` を受け付け、リモートのタグを `v{version}` / `{name}--v{version}` / `{name}-v{version}` / bare `{version}` パターンで照合して最高位を選ぶ。`constraint` と `resolved_tag` が lockfile に残り、fresh clone で同じタグを決定的に replay する。
+
+→ `gh skill publish` が作る `v2.4.0` は `v{version}` に一致するので、消費者は **apm.yml なしでも `#v2.4.0` および `#^2.0.0` 形式のバージョン指定が使える**。ドキュメントは条件を "git-source deps" としか書いておらず、提供側 apm.yml を要件に挙げて**いない**（＝要件としての記載なし）。
+
+## 2. `apm view` / `apm search` / `apm deps list` の前提
+
+| コマンド | 前提 | apm.yml なしの影響 |
+|---|---|---|
+| `apm view PKG` | **インストール済みローカルのみ**。レジストリ登録不要 | name/version/description/author が欠落 |
+| `apm view PKG versions` | リモートの git tag/branch を列挙。**apm.yml 不要** | 影響なし |
+| `apm search` | **マーケットプレイス登録が必須** | apm.yml を足しても出ない |
+| `apm deps list` | 消費側のインストール済み依存の一覧 | 発見性の機能ではない |
+
+- https://microsoft.github.io/apm/reference/cli/view/ 「Description」: "read installed package metadata from `apm_modules/` … **Local-only; the package must be installed**"。「`apm view &lt;package&gt;`」節の出力項目: "name, version, description, author, source, install path, lockfile ref and commit (when available), context-file counts (skills, prompts, instructions), workflow count, and hook count"。（確信度: 高／欠落値がどう表示されるかは**記載なし**）
+- 同ページ「`apm view &lt;package&gt; versions`」: "For git packages, output is a table with name, type (`tag` or `branch`), and short commit SHA" — リモート照会のみで apm.yml もインストールも不要。（確信度: 高）
+- https://microsoft.github.io/apm/reference/cli/search/ 「Synopsis」は `apm search QUERY@MARKETPLACE`（`@MARKETPLACE` 必須）、「Description」: "queries a single marketplace registered in the local marketplace registry"、"The marketplace must be **registered first** with `apm marketplace add`"。→ 任意の公開 GitHub リポジトリを横断検索する機能ではない。（確信度: 高）
+- https://microsoft.github.io/apm/reference/cli/deps/ 「`apm deps list`」: "List every **installed** dependency recorded by the manifest or lockfile and the primitive counts each one contributes"。「`apm deps info`」は "Equivalent to `apm view PACKAGE` for installed packages; prefer `apm view` in new scripts"。（確信度: 高）
+
+**結論**: apm における発見性は apm.yml ではなく**マーケットプレイス登録**が担っている。apm.yml 欠如による発見性の低下は「すでにインストールした人の `apm view` 出力にメタデータが出ない」ことに限定される。（確信度: 高）
+
+## 3. apm.yml がないと使えない／劣化する機能（ドキュメント明記のもの全て）
+
+1. `dependencies` / `devDependencies`（apm・mcp・lsp）— manifest-schema 「4. Dependencies」「5. devDependencies」
+2. `scripts:` と `apm run` — manifest-schema 「3.8. `scripts`」
+3. `targets:` の宣言 — manifest-schema 「3.6. `target`」。ただし用途は**自プロジェクトの compile 出力固定**（同節 tip「Deterministic committed output」）で、消費側の展開先は消費側が決める
+4. `apm pack` — https://microsoft.github.io/apm/reference/cli/pack/ 「Description」: "It **reads `apm.yml`** to decide what to emit"。「Exit codes」の `2` は apm.yml schema validation error
+5. `apm publish` — https://microsoft.github.io/apm/reference/cli/publish/ 「Common errors」: `apm.yml not found` に加え **`requires a flat APM package (.apm/ directory)`**。つまり Skill collection のままでは apm.yml を足しても publish できない（experimental `registries` 機能も必要）
+6. marketplace の提供者になること — manifest-schema 「7. Marketplace Authoring Block」
+7. `license:` の宣言 → 消費側 lockfile の `declared_license` と SBOM — manifest-schema 「3.5. `license`」: "recorded verbatim into a consumer's lockfile as `declared_license`… surfaced by `apm lock export`"。省略時は "the SBOM marks the component unknown — CycloneDX omits the license entry and SPDX writes the literal `NOASSERTION`"
+8. lockfile / `apm view` の `name`・`version` 表示（項目1）
+
+**apm.yml 非依存で劣化しないもの**（＝実害として記載なし）: install の可否、pin の再現性、hidden-Unicode security scan、`--skill` サブセット選択とその永続化（永続化先は**消費側の** apm.yml）、`apm outdated` のタグ比較、`apm find`。
+
+## 4. apm.yml を追加した場合の保守コスト
+
+**`name` と `version` は必須フィールド。**（確信度: 高）
+https://microsoft.github.io/apm/reference/manifest-schema/ 「3.1. `name`」「3.2. `version`」ともに **Required: MUST be present**。version は `^\d+\.\d+\.\d+` パターンで、不一致は "validation warning (non-blocking)"。
+
+**git tag との整合を検証する仕組みは、marketplace を作らない限り存在しない。**（確信度: 高）
+- 唯一の検証は `apm pack --check-versions`（https://microsoft.github.io/apm/reference/cli/pack/ 「Options」、exit `3`）。
+- しかしこれは `marketplace.versioning.strategy` に紐づく **marketplace producer 向け**のゲート。https://microsoft.github.io/apm/producer/versioning-strategies/ 冒頭: "The strategy **only matters when your marketplace has local-path packages**（single-plugin, monorepo-hybrid）"。`marketplace:` ブロックのないリポジトリでは働かない。
+- apm.yml の `version` と git tag の不一致を検出する汎用チェックは**記載なし**。
+
+→ 項目1と合わせると、**`version` はズレても install・update・outdated のどれにも現れないため、ドリフトが静かに残り続けるフィールド**になる。手動同期が唯一の担保。
+
+**その他の追加同期義務**
+- `license:` を書くと SKILL.md frontmatter の `license: MIT` と**二重管理**になる。manifest-schema 「3.5. `license`」は `declared_license` の出典を "`license:` in `apm.yml`, or `license` in a `plugin.json`" と明記しており、**SKILL.md の frontmatter は出典に挙がっていない**。
+- `includes:` — manifest-schema 「3.9. `includes`」: 未宣言だと "apm audit emits an `includes-consent` advisory whenever local content is deployed under this form"。ただしこの advisory は**自プロジェクトの local content を deploy する消費側**の文脈で書かれており、提供側リポジトリで `apm audit` を回さない限り影響しない（この読みは**推測**）。
+- description の二重管理 — 前回報告どおり（package-types「Metadata model (HYBRID packages)」）。ただしこの節は**ルート `SKILL.md` の HYBRID**についての規定であり、Skill collection にルート apm.yml を置いた場合に同じ分離規約が適用されるかは**明示的な記載なし**（同様に扱われると読むのが自然だが**推測**）。
+
+**apm.yml を足しても layout 分類は変わらない**（確信度: 高）: package-types「Layout summary」「Skill collection」節は `skills/&lt;name&gt;/SKILL.md` + optional apm.yml をそのまま Skill collection として扱う。`skills/` 配置も Vercel `skills` 互換も影響を受けない。
+
+## 5. このリポジトリの条件で apm.yml が効く場面があるか
+
+**効かないと確認できたもの**（すべて上記の出典に基づく、確信度: 高）
+
+| 期待されうる効用 | 実際 |
+|---|---|
+| 再現性・integrity | `resolved_commit` が pin。apm.yml 無関係 |
+| バージョン指定 install | `#v2.4.0` / `#^2.0.0` を **git tag** で解決。apm.yml 無関係 |
+| `apm update` / `apm outdated` の更新検出 | git tag / branch tip 比較。apm.yml 無関係 |
+| 発見性（`apm search`） | marketplace 登録が必要で、apm.yml では届かない |
+| transitive deps | 宣言する相手がいない（前提） |
+| `scripts` | 必要な処理がない（前提） |
+| `apm pack` / `apm publish` | 配布チャネルが別にある。publish は `.apm/` も要求するため Skill collection では不可 |
+
+**効きうる唯一の実質的候補**
+
+1. **`license:` → 消費側 SBOM**（manifest-schema 「3.5. `license`」）。apm.yml がないと `apm lock export` の SBOM でこのパッケージが CycloneDX では license 欄なし、SPDX では `NOASSERTION` になる。SKILL.md 側の `license: MIT` は apm の `declared_license` の出典に含まれていない。**SBOM を要求する企業消費者がいる場合にのみ意味を持つ。**
+2. `apm view &lt;installed&gt;` の表示品質（name / version / description / author が埋まる）。インストール済みユーザー向けの補助表示にとどまる。
+
+**コスト側**: `name` + `version` が必須になり、version は git tag と手動同期（自動検証なし・ドリフトが表面化しない）。`license` と `description` が SKILL.md と二重管理。apm 専用の保守箇所が1つ増える。
+
+**判断**（これはドキュメントの記述ではなく、上記事実に基づく私の評価）: 現状維持が妥当。再検討トリガーになりうるのは「SBOM に license を載せたい消費者が実際に現れたとき」で、その場合でも必要なのは `name` / `version` / `license` / `description` の4フィールドだけのルート apm.yml であり、`.apm/` への移行は不要。</result>
+<usage><subagent_tokens>155661</subagent_tokens><tool_uses>17</tool_uses><duration_ms>1643649</duration_ms></usage>
+</task-notification>
