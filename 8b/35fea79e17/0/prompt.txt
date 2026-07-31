@@ -1,0 +1,103 @@
+@skills/1natsu-hunk/SKILL.md 
+をexperimental-skillとして公開はするが、区分したい。
+https://github.com/mattpocock/skills をサンプルに見ると `bunx skills add mattpocock/skills` でskills/in-progress のSKILLはインタラクティブモードの選択肢の中で`Others` として分離されて表示されているので、どこかしらで識別しているのだろうと思うが仕様がわからない。vercel skills 独自の機能かもしれないけど、調べてください。もし実験するならインストールとかはここではせずTMPDIRを使ってください。
+
+---
+
+Bでいいんだけど、ついでにclaude pluginとしてのskillsの公開ができるか？と `/plugins` でclaude codeから個別のSKILL選んだものだけinstallするような公開ができるか？を調べて欲しい。
+なぜかというと、claude code pluginとして公開してるSKILLなのに個別のスキル指定ができずリポジトリのSKILL全部一括でしかインストールできないmarketplace pluginを経験したことがあるからです。
+
+---
+
+vercel skillsは現状も1skill単位で選択個別インストールできるので、そのユースケースを維持しつつ、インストール時のinteractive UIでグルーピングが別れてる（現状のstable groupとexperimental group）のが理想です。
+claude code pluginはプラグイン単位を分割しないと個別にinstallとかdisableができないという理解をしたので、groupわけは妥協＋冗長な呼び出しになることも許容できます。「1pluginのインストールで不要なSKILLまでインストールされる」が避けたいシナリオです。
+
+vercelとclaude codeで仕様が違う以上、各利用側に最適化するしかないと思っています。
+
+> /1natsu-skills:1natsu-commit のような冗長な呼び名になる
+
+呼び出しが冗長になるのも仕方ないと思います。anthropic公式のプラグインでも `pr-review-toolkit:review-pr` みたいになってるものを見かけるので。
+
+claude pluginでexperimental groupの区分けができない可能性はあるんでしたっけ？
+
+---
+
+> 今は 1natsu-hunk 1個なので綺麗に2グループになるが、experimental が2個以上に増えたら「experimental をまとめて1 plugin にする（＝その中では個別 install できない）」
+
+これは避けたいんですよね。cluaude pluginでは ` "name": "1natsu-skills-experimental",` を今前提にしているけど、名前にexperimentalがついていると、規則的に全て`-experimental`suffixをつけることになっていくし、stable公開の時にリネーム＝ユーザーはauto-updateできない。
+npmでいうところのbetaリリースを別モジュール名で公開するのと同じ意味になり奇行だと思う。なのでclaude pluginでは「descriptionが上書きされてもいい許容する前提でdescriptionの先頭にprefixで `(experimental)` と書く」で区分けする方針が良さそうです。
+
+加えてあなたの話を聞いて、これはもしかするとリポジトリのskillsをmattpocock同様にネストさせる方がいいのかもしれない気がしてきています。
+vercel skills前提かつMVPでフラットにはじめた名残で、すでに実は関連SKIKKがツリーにパックできていない。`1natsu-document-harness`系は3種のSKILLが1つのSKILLになっているので本当はdirectoryにまとめて、claude pluginで言うところの1プラグインにする＝plugin.jsonには `{"name": "1natsu-document-harness", "skills": [3種類のSKILL]}` とすべきなのかも。そうすれば呼び出しコマンドは変わらず、インストーラでも選びやすいはず。 `"name": "experimental", "skills": [1natsu-hunk]}` とすれば、インストールグループはexperimentalになり、その後Stable昇格しても呼び出しは`1natsu-hunk`のまま ですよね？
+
+つまり私がずっと1skill=1plugin個別にと言っていたのは正しくなくて、"正しくSKillを区分わけをして1区分単位でinstallしたりdisableできること"が本当の期待値だった。
+
+そうすると claude plugin nameの `<A>` をどうするか？の話は「コマンド名を短く定義するならPublish前にprefixの`1ntasu-`を削るパース処理が発生するコストが高いか低いか＆一貫性のなさが混乱を産まないか？が焦点になりそう。面倒さがメリットを上回らない気がするので `/1natsu-commit:1natsu-commit` 形式の方がシンプルか？
+
+---
+
+すみません、私が前提を書き漏らしたのであなたの推論が外れたかもです。
+
+> `"name": "experimental", "skills": [1natsu-hunk]}` とすれば、インストールグループはexperimentalになり、その後Stable昇格しても呼び出しは`1natsu-hunk`のまま ですよね？
+
+と書いたのは vercel skills 向けの plugin.json を指していました。marketplace.jsonを併用してmaketplace.jsonは(claude plugin用）と割り切る前提でした。
+
+なので私のイメージではmarketplace.jsonは
+
+```
+{ "name": "1natsu", "plugins": [
+    { "name": "1natsu-commit" //plugin名 , "source": "./", "skills": ["./skills/1natsu-commit"] },
+    … 13個 …,
+    { "name": "1natsu-hunk" //experimentalはjson内では定義しない。それはdescription , "source": "./", "skills": ["./skills/1natsu-hunk"] }
+]}
+```
+
+のイメージでした。
+
+---
+
+ネストは急がなくていいは理解しました。
+marketplace.json1本のパターンも理解です。その方針で計画を進めましょう。
+ここまでをまとめると deprecated になった時にどう落とすか？まで詰めるのが良さそうと感じています。
+また構成案の区分けは良さそうだが、ここまでの話から察するに "plugin名が重要" な雰囲気を感じています。plugin名=npmで言うところのモジュール名っぽいですよね。
+
+懸念として1点追加で思っているのは 1natsu-hunk のようなプラグイン名が stable になった時に正しくなくなって別の名前にしたいケースですね。より抽象度のたかいプラグインとして配布したいだけなら、 1natsu-hunkはそのままに別のパッケージング用Plugin（例えば 1natsu-utils）を作って、中身の1個に従来からある 1natsu-hunk skill を入れたらいいのか？
+
+---
+
+分類ですが再考してこうしたいです。認識合わせにテーブル出力を再度してください。
+1natsu-git => 1natsu-commit のplugin nameへ。
+1natsu-review => 1natsu-pr にplugin name 変更。 create-prは1natsu-prへ
+1natsu-debugの中にgit-analysisを入れて。
+
+versionについてですが、悩ましい。現状SKILL単位でバージョニングしていて、repoのpublishは独自の別タグでイミュータブルリリースなんです。
+PluginのバージョンとSKILLのバージョン（frontmatter）とPublishのバージョンは概念が違うので。。
+ユーザー目線だと何が変わったかを履歴で無駄なく追いやすいことを求むので、「このSKILLはいつのバージョンでどう変わったんだ？』がわかる方がUXはいいんですよね。
+
+---
+
+リリースブランチを作って、そこにリリースコミットしていくフローでもいいんだけど、そうするとvercelとかapmが逆に混乱するんですよね？developランチを切ってmainをリリース軸にする？でもvercelとかが見る互換＝デフォルトブランチの意なのかな？
+
+すごい手間が増えるのは嫌なので、シンプルさが減るなら現状維持でいいかな。。
+
+---
+
+/1natsu-document-harness
+
+---
+
+docsがまだ甘い気がします。ジャーゴンやナラティブな記述がないかの観点が抜けています。distribution-policyはナラティブが既存であるので今回はある程度は見逃しますが冗長さはないかはみてください。
+また @.claude/skills/publish-this-repo/SKILL.md に追記観点って今回は結局ないんでしたっけ？
+
+spec-watchの件はghでissueにしてください。
+
+descriptionのexperimentalはdocumentにそうするって書いてあるのになんですでにあなたの中でドリフトしてるの？やらない理由が2箇所外すことになるのそんなにコスト高いですか？
+
+---
+
+Plugin周りの仕様って実機検証でしかわからないことも多かったはずだけど、公式のDocsのリンクって参照したものありますか？marketplace.jsonのフィールドスキーマの仕様とか、そういう辿ればわかるものはドキュメントに参照できるようにURLのインデックスを作っておきたい。
+
+---
+
+spec-watch でも検出できない（[#17](https://github.com/1natsu-vacation/agent-skills/issues/17)）。
+この記述って必要ですか？ある方がいい？
