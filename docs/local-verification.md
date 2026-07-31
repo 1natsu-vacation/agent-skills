@@ -66,12 +66,14 @@ CFG=$(mktemp -d "$TMPDIR/cfg.XXXXXX")
 CLAUDE_CONFIG_DIR=$CFG claude plugin marketplace add "https://github.com/1natsu-vacation/agent-skills.git#<branch>"
 CLAUDE_CONFIG_DIR=$CFG claude plugin install 1natsu-hunk@1natsu --scope user
 
-# apm（--target が必須。省略するとインストールが中断する）
+# apm
 D=$(mktemp -d "$TMPDIR/apm-verify.XXXXXX")
 cd "$D" && apm install "1natsu-vacation/agent-skills#<branch>" --skill 1natsu-hunk --target claude
 ```
 
 **apm は必ず使い捨てディレクトリで実行する。** cwd に `apm_modules/` を作り、`.gitignore` にその行を自動追記する。リポジトリ内で走らせると作業ツリーが汚れる。
+
+`--target` は検証時だけ必要になる。apm は cwd の `.claude/` や `.agents/` から対象エージェントを自動検出するので、それらが無い新規ディレクトリでは明示しないと中断する。実プロジェクトへのインストールでは通常指定しなくてよい。
 
 ## 静的検証
 
