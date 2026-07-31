@@ -50,6 +50,27 @@ apm install 1natsu-vacation/agent-skills#v0.1.0 --skill 1natsu-<skill-name>
 
 Add `-g` for global / user scope.
 
+### Claude Code plugin
+
+Fetches from the default branch (`main`). Skills are grouped into plugins, so you install only the groups you want:
+
+```bash
+/plugin marketplace add 1natsu-vacation/agent-skills
+/plugin install 1natsu-commit@1natsu
+```
+
+Plugin skills are namespaced by the plugin, so `1natsu-commit` is invoked as `/1natsu-commit:1natsu-commit`. Installing through any other channel keeps the plain `/1natsu-commit` form.
+
+| Plugin | Skills |
+|--------|--------|
+| `1natsu-commit` | 1natsu-commit, 1natsu-conventional-commits |
+| `1natsu-pr` | 1natsu-create-pr, 1natsu-pr-review-handler |
+| `1natsu-conflicts` | 1natsu-auto-resolve-conflicts, 1natsu-pair-resolve-conflicts |
+| `1natsu-document-harness` | 1natsu-document-harness, 1natsu-document-harness-audit, 1natsu-document-harness-model |
+| `1natsu-debug` | 1natsu-pair-debug, 1natsu-git-analysis |
+| `1natsu-error-handling` | 1natsu-error-handling |
+| `1natsu-hunk` | 1natsu-hunk (experimental) |
+
 ## Skills
 
 | Skill | Description |
@@ -63,6 +84,7 @@ Add `-g` for global / user scope.
 | [1natsu-create-pr](./skills/1natsu-create-pr/SKILL.md) | GitHub PR creation with conventional commits and multi-language support |
 | [1natsu-error-handling](./skills/1natsu-error-handling/SKILL.md) | Structured error handling guidelines |
 | [1natsu-git-analysis](./skills/1natsu-git-analysis/SKILL.md) | Git repository analysis — branches, diffs, commit history |
+| [1natsu-hunk](./skills/1natsu-hunk/SKILL.md) | Connects the agent to a live Hunk review session for human-in-the-loop local diff review |
 | [1natsu-pair-debug](./skills/1natsu-pair-debug/SKILL.md) | Collaborative debugging with human-in-the-loop observation |
 | [1natsu-pair-resolve-conflicts](./skills/1natsu-pair-resolve-conflicts/SKILL.md) | Collaborative git conflict resolution with commit history analysis |
 | [1natsu-pr-review-handler](./skills/1natsu-pr-review-handler/SKILL.md) | Autonomous PR review comment handling and code fixes |
