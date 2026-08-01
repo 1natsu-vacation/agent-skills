@@ -49,3 +49,7 @@ In `@skills/1natsu-document-harness-audit/references/html-review.md` around line
 > CSS と JavaScript はファイル内に持ち、外部リソースを読みに行かない。渡した先で install も起動も要らない
 
 この記述ではインラインで全部自前で書けと言っているようにも捉えられる可能性があります。npm registryにあるライブラリ＝外部リソースと言えるので。バンドルすればCDNにオンタイムアクセスすることもないので
+
+---
+
+コミットして。再生成テスト前にあと決めるべき要件って何がありますか？
