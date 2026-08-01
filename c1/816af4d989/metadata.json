@@ -1,0 +1,24 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "c1816af4d989",
+  "strategy": "manual-commit",
+  "branch": "feat/document-harness-writing-standard",
+  "checkpoints_count": 1,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/c1/816af4d989/0/metadata.json",
+      "transcript": "/c1/816af4d989/0/full.jsonl",
+      "compact_transcript": "/c1/816af4d989/0/transcript.jsonl",
+      "content_hash": "/c1/816af4d989/0/content_hash.txt",
+      "prompt": "/c1/816af4d989/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 697,
+    "cache_creation_tokens": 964623,
+    "cache_read_tokens": 106337024,
+    "output_tokens": 293973,
+    "api_call_count": 353
+  }
+}
