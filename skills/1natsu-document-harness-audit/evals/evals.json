@@ -80,6 +80,29 @@
         "実体を確定できない比喩（ゲート / アンカー / キューのホーム）を憶測で書き換えず、確認事項として提示する",
         "指示層（.claude/rules/）にある比喩の重要度を、docs 側の文体問題より高く扱う（行動を誤らせるため）"
       ]
+    },
+    {
+      "id": 5,
+      "name": "audit-code-comments",
+      "fixture": "eval-fixtures/document-harness/fixture-f-comments",
+      "prompt": "このリポジトリを監査してください。ドキュメントだけでなく、コード内のコメントも見てほしいです。注: 現セッションで私はまだ何も実装変更していません。",
+      "expected_output": "ステップ2.5 でコード内コメントを検査し、他カテゴリと節を分けて報告する。検出すべき違反: (1) ジャーゴン = src/api/dispatch.ts:3 の「配信のゲート」、scripts/deploy.sh:2 の「デプロイのアンカー」。(2) 作業記録 = src/jobs/retry.py:11 の「2025-08-12 に田中さんの依頼で追加した。その後1回直している」。(3) ナラティブ = src/api/queue.go:5-6 の時系列の語り。(4) ダッシュ = dispatch.ts:3 の em dash。過剰検出しないこと: dispatch.ts の英語コメント（em dash を含むが規約は日本語の文章に適用）、src/styles/main.css:1 の CSS ID セレクタ、scripts/deploy.sh:3 の長オプション、dispatch.ts:15 の文字列リテラル、docs/delivery-design.md「チャネルの選択」の棄却理由。取りこぼしの明示: ブロックコメント内部行（dispatch.ts:11-12 の「配信のホーム」という造語）と Python の docstring 本文（retry.py:6）は行単位の絞り込みでは取れないため、絞り込みが完全でない旨を報告に添える。是正がコメント本文に限りコードに触れないことも明記する。提案→確認のフローを取り、自動修正しない。",
+      "files": [],
+      "assertions": [
+        "コード内コメントの検査を、ドキュメントの検査と節を分けて報告する",
+        "ジャーゴンを検出する: src/api/dispatch.ts:3 の「配信のゲート」と scripts/deploy.sh:2 の「デプロイのアンカー」",
+        "作業記録を検出する: src/jobs/retry.py:11 の日付・依頼者・修正回数",
+        "ナラティブを検出する: src/api/queue.go:5-6 の時系列の語り",
+        "行末コメントを検出できている（retry.py:8 / dispatch.ts:6 / queue.go:3 のいずれかを拾っている）",
+        "半角カタカナを含むコメント（src/api/queue.go:3 の「ｷｭｰ」）を取りこぼしていない",
+        "過剰検出しない: dispatch.ts の英語コメント中の em dash を違反として挙げない",
+        "過剰検出しない: src/styles/main.css:1 の CSS ID セレクタと scripts/deploy.sh:3 の長オプションを違反として挙げない",
+        "過剰検出しない: dispatch.ts:15 のコメント記号を含む文字列リテラルを違反として挙げない",
+        "過剰検出しない: docs/delivery-design.md「チャネルの選択」の棄却理由を作業記録として削除提案しない",
+        "絞り込みが完全でないことを報告に明記する（ブロックコメント内部行と Python の docstring 本文が取れない）",
+        "是正がコメント本文に限り、コードに触れないことを明記する",
+        "提案→確認のフローを取り、自動修正しない"
+      ]
     }
   ]
 }
