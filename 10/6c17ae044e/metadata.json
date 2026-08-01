@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "106c17ae044e",
+  "strategy": "manual-commit",
+  "branch": "feat/document-harness-writing-standard",
+  "checkpoints_count": 16,
+  "files_touched": [
+    "eval-fixtures/document-harness/fixture-e-style/docs/queue-design.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/10/6c17ae044e/0/metadata.json",
+      "transcript": "/10/6c17ae044e/0/full.jsonl",
+      "compact_transcript": "/10/6c17ae044e/0/transcript.jsonl",
+      "content_hash": "/10/6c17ae044e/0/content_hash.txt",
+      "prompt": "/10/6c17ae044e/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 482,
+    "cache_creation_tokens": 1072055,
+    "cache_read_tokens": 73817002,
+    "output_tokens": 221407,
+    "api_call_count": 263
+  }
+}
