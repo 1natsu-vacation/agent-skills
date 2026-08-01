@@ -66,7 +66,7 @@ claude plugin validate .      # marketplace.json の検証（renames の循環�
 
 **git push はリポジトリ更新であって公開ではない。** 公開は `gh skill publish` が唯一の正規チャネル。
 
-- 公式公開チャネル: `gh skill publish`（手動・対話モード、要 gh CLI v2.90.0+）— GitHub Release＋semver タグを作成
+- 公式公開チャネル: `gh skill publish`（手動・対話モード、要 gh CLI v2.90.0+）。GitHub Release＋semver タグを作成する
 - 互換チャネル（デフォルトブランチ追従、リリースタグではない）:
   - Vercel `skills` 互換（`bunx skills` / `npx skills add`）
   - apm（Skill collection として認識される。`apm install --skill` で個別スキル取得、`apm.yml` 不要）
@@ -89,8 +89,8 @@ claude plugin validate .      # marketplace.json の検証（renames の循環�
 
 ### plugin の廃止手順
 
-1. **非推奨を宣言**（撤去しない）— marketplace の `description` 冒頭に `(deprecated)` と移行先を書く。plugin はカタログに残し、既存利用者は動き続ける
-2. **撤去** — `plugins` からエントリを外すと同時に、最上位の `renames` に `"<plugin名>": null` を追加する。黙って消すと利用者は `plugin-not-found` になる。改名の場合は `null` の代わりに新しい名前を書く
+1. **非推奨を宣言**（撤去しない）: marketplace の `description` 冒頭に `(deprecated)` と移行先を書く。plugin はカタログに残し、既存利用者は動き続ける
+2. **撤去**: `plugins` からエントリを外すと同時に、最上位の `renames` に `"<plugin名>": null` を追加する。黙って消すと利用者は `plugin-not-found` になる。改名の場合は `null` の代わりに新しい名前を書く
 
 `renames` は**追記のみ**。移行が終わったと思っても古いエントリを消さない（Claude Code はチェーンを辿るため、再改名時は書き足す）。編集後は `claude plugin validate .` で循環と終端を検証する。
 
@@ -98,6 +98,6 @@ claude plugin validate .      # marketplace.json の検証（renames の循環�
 
 プラットフォーム仕様に結合したスキル（例 `1natsu-document-harness-model`）は、上流の公式ドキュメント進化で陳腐化する。その追従を仕組み化している（非配布・著者関心）:
 
-- `.spec-watch/` — 監視マニフェスト `sources.json` ＋ 差分基準の `snapshots/`。詳細は `.spec-watch/README.md`。
-- `.claude/skills/spec-drift-watch` (Internal skill) — 検出器。`scripts/check.mjs`（依存ゼロ Node）で上流と diff し、変化があればドリフトレポート PR を1本上げる。Cloud Routine から隔週実行する想定。
-- `.claude/skills/spec-drift-fix` (Internal skill) — 是正役。ドリフト PR をローカル checkout した状態で起動し、上流に追従してスキルを直す（挙動仕様の変化は実測で裏取り）。
+- `.spec-watch/`: 監視マニフェスト `sources.json` ＋ 差分基準の `snapshots/`。詳細は `.spec-watch/README.md`。
+- `.claude/skills/spec-drift-watch` (Internal skill): 検出器。`scripts/check.mjs`（依存ゼロ Node）で上流と diff し、変化があればドリフトレポート PR を1本上げる。Cloud Routine から隔週実行する想定。
+- `.claude/skills/spec-drift-fix` (Internal skill): 是正役。ドリフト PR をローカル checkout した状態で起動し、上流に追従してスキルを直す（挙動仕様の変化は実測で裏取り）。
