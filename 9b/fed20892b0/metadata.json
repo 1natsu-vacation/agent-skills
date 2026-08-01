@@ -3,7 +3,7 @@
   "checkpoint_id": "9bfed20892b0",
   "strategy": "manual-commit",
   "branch": "feat/document-harness-writing-standard",
-  "checkpoints_count": 2,
+  "checkpoints_count": 34,
   "files_touched": [
     "skills/1natsu-document-harness-audit/evals/evals.json",
     "skills/1natsu-document-harness-model/SKILL.md"
@@ -22,13 +22,20 @@
       "compact_transcript": "/9b/fed20892b0/1/transcript.jsonl",
       "content_hash": "/9b/fed20892b0/1/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/9b/fed20892b0/2/metadata.json",
+      "transcript": "/9b/fed20892b0/2/full.jsonl",
+      "compact_transcript": "/9b/fed20892b0/2/transcript.jsonl",
+      "content_hash": "/9b/fed20892b0/2/content_hash.txt",
+      "prompt": "/9b/fed20892b0/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 66,
-    "cache_creation_tokens": 172107,
-    "cache_read_tokens": 2946634,
-    "output_tokens": 41488,
-    "api_call_count": 35
+    "input_tokens": 451,
+    "cache_creation_tokens": 1161351,
+    "cache_read_tokens": 52032421,
+    "output_tokens": 216450,
+    "api_call_count": 244
   }
 }
