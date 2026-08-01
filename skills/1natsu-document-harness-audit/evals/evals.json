@@ -61,7 +61,7 @@
       "name": "audit-style-violations",
       "fixture": "eval-fixtures/document-harness/fixture-e-style",
       "prompt": "このリポジトリのドキュメント、書き手がばらついていて用語や文体がちぐはぐな気がします。監査して、問題と直し方を出してください。注: 現セッションで私はまだ何も実装変更していません。",
-      "expected_output": "audit として処理し、用語・文体の規約違反（カテゴリ10）を検出する。検出すべき違反: (1) 比喩ジャーゴン = rules/release.md の『ステージングのゲート』『本番のアンカー』、docs/queue-design.md の『キューのホーム』『バックプレッシャの底』。実体で書き直す提案を出す。(2) 規範に混ざった作業記録 = rules/release.md の『2025-11-04 に佐藤さんの依頼で追加。その後2回改訂している』。(3a) 用語ゆれ = 同じ概念が docs/queue-design.md では「再投入」、docs/api-contract.md では「リトライ」。ヘッダ名 x-retry-count は外部契約なので統一対象に含めない。(3b) ナラティブ = docs/queue-design.md 冒頭の時系列の語り。(4) ダッシュ = 日本語散文中の em dash 5箇所（rules/release.md 1、docs/queue-design.md 2、docs/ops-runbook.txt 1、src/queue/worker.ts の日本語コメント 1）を、拡張子を .md に絞らない検索で網羅し、接続詞と読点・:・文分割へ書き換える提案を出す。過剰検出しないこと: docs/api-contract.md の表の空セルの — と数値範囲 18–21 は規約上の対象外、src/queue/worker.ts の英語コメント中の — も対象外、原語のままの技術用語（pull request / dry run / feature flag）は正しい、docs/queue-design.md の『永続化方式の選択』は捨てた選択肢の棄却理由なので残す根拠、インシデントレポートのナラティブは例外。提案→確認のフローを取り、自動修正しない。 実体を確定できない比喩は憶測で書き換えず確認事項として出し、指示層にある比喩は行動を誤らせるため重要度を引き上げる。",
+      "expected_output": "audit として処理し、用語・文体の規約違反（カテゴリ10）を検出する。検出すべき違反: (1) 比喩ジャーゴン = rules/release.md の『ステージングのゲート』『本番のアンカー』、docs/queue-design.md の『キューのホーム』『バックプレッシャの底』。実体で書き直す提案を出す。(2) 規範に混ざった作業記録 = rules/release.md の『2025-11-04 に佐藤さんの依頼で追加。その後2回改訂している』。(3a) 用語ゆれ = 同じ概念が docs/queue-design.md では「再投入」、docs/api-contract.md では「リトライ」。ヘッダ名 x-retry-count は外部契約なので統一対象に含めない。(3b) ナラティブ = docs/queue-design.md 冒頭の時系列の語り。(4) ダッシュ = 日本語文章中の em dash 5箇所（rules/release.md 1、docs/queue-design.md 2、docs/ops-runbook.txt 1、src/queue/worker.ts の日本語コメント 1）を、拡張子を .md に絞らない検索で網羅し、接続詞と読点・:・文分割へ書き換える提案を出す。過剰検出しないこと: docs/api-contract.md の表の空セルの — と数値範囲 18–21 は規約上の対象外、src/queue/worker.ts の英語コメント中の — も対象外、原語のままの技術用語（pull request / dry run / feature flag）は正しい、docs/queue-design.md の『永続化方式の選択』は捨てた選択肢の棄却理由なので残す根拠、インシデントレポートのナラティブは例外。提案→確認のフローを取り、自動修正しない。 実体を確定できない比喩は憶測で書き換えず確認事項として出し、指示層にある比喩は行動を誤らせるため重要度を引き上げる。",
       "files": [],
       "assertions": [
         "audit として処理し、harness へリダイレクトしない",
@@ -70,7 +70,7 @@
         "規範に混ざった作業記録を検出する: rules/release.md の『2025-11-04 に佐藤さんの依頼で追加。その後2回改訂している』の削除を提案する",
         "ナラティブを検出する: docs/queue-design.md 冒頭の時系列の語りを、節単独で読める形へ書き直す提案を出す",
         "用語ゆれを検出する: 同じ概念が docs/queue-design.md では「再投入」、docs/api-contract.md では「リトライ」と書かれている（ヘッダ名 x-retry-count は外部契約なので統一対象に含めない）",
-        "本文中のダッシュを網羅的に検出する: 日本語散文の em dash 5箇所（rules/release.md 1、docs/queue-design.md 2、docs/ops-runbook.txt 1、src/queue/worker.ts のコメント 1）を漏れなく挙げている。拡張子を .md に絞らず、ドット始まりディレクトリ配下の .claude/rules/ も取りこぼしていない",
+        "本文中のダッシュを網羅的に検出する: 日本語文章の em dash 5箇所（rules/release.md 1、docs/queue-design.md 2、docs/ops-runbook.txt 1、src/queue/worker.ts のコメント 1）を漏れなく挙げている。拡張子を .md に絞らず、ドット始まりディレクトリ配下の .claude/rules/ も取りこぼしていない",
         "過剰検出しない: docs/api-contract.md の表の空セルの — と数値範囲 18–21 を違反として挙げない",
         "過剰検出しない: src/queue/worker.ts の英語コメント中の em dash を違反として挙げない（規約は日本語の文章に対するもの）",
         "過剰検出しない: 原語のままの技術用語（pull request / dry run / feature flag / semver）を訳せと言わない",
