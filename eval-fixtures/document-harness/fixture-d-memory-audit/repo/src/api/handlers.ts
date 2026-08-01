@@ -16,6 +16,7 @@ api.get("/users/:id", async (req, res) => {
 });
 
 api.post("/notifications", async (req, res) => {
+  // 2026-03-11 に佐藤さんの依頼で acceptedAt を返すようにした。その後1回直している。
   const result = await createNotification(req.body);
   res.status(201).json({
     notificationId: result.id,
