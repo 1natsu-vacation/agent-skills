@@ -76,7 +76,7 @@
         "規範に混ざった作業記録を検出する: rules/release.md の『2025-11-04 に佐藤さんの依頼で追加。その後2回改訂している』の削除を提案する",
         "ナラティブを検出する: docs/queue-design.md 冒頭の時系列の語りを、節単独で読める形へ書き直す提案を出す",
         "用語ゆれを検出する: 同じ概念が docs/queue-design.md では「再投入」、docs/api-contract.md では「リトライ」と書かれている（ヘッダ名 x-retry-count は外部契約なので統一対象に含めない）",
-        "本文中のダッシュを網羅的に検出する: 日本語文章の em dash 6箇所（rules/release.md 1、docs/queue-design.md 3、docs/ops-runbook.txt 1、src/queue/worker.ts のコメント 1）を漏れなく挙げている。拡張子を .md に絞らず、ドット始まりディレクトリ配下の .claude/rules/ も取りこぼしていない",
+        "本文中のダッシュを網羅的に検出する: 日本語文章の em dash 5箇所（rules/release.md 1、docs/queue-design.md 2、docs/ops-runbook.txt 1、src/queue/worker.ts のコメント 1）を漏れなく挙げている。拡張子を .md に絞らず、ドット始まりディレクトリ配下の .claude/rules/ も取りこぼしていない",
         "過剰検出しない: docs/api-contract.md の表の空セルの — と数値範囲 18–21 を違反として挙げない",
         "過剰検出しない: src/queue/worker.ts の英語コメント中の em dash を違反として挙げない（規約は日本語の文章に対するもの）",
         "過剰検出しない: 原語のままの技術用語（pull request / dry run / feature flag / semver）を訳せと言わない",
