@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "ad99f31ad56e",
+  "strategy": "manual-commit",
+  "branch": "feat/document-harness-writing-standard",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "skills/1natsu-document-harness-audit/SKILL.md",
+    "skills/1natsu-document-harness-audit/evals/evals.json",
+    "skills/1natsu-document-harness-model/SKILL.md",
+    "skills/1natsu-document-harness/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ad/99f31ad56e/0/metadata.json",
+      "transcript": "/ad/99f31ad56e/0/full.jsonl",
+      "compact_transcript": "/ad/99f31ad56e/0/transcript.jsonl",
+      "content_hash": "/ad/99f31ad56e/0/content_hash.txt",
+      "prompt": "/ad/99f31ad56e/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 672,
+    "cache_creation_tokens": 941840,
+    "cache_read_tokens": 98973040,
+    "output_tokens": 280211,
+    "api_call_count": 340
+  }
+}
