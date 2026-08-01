@@ -1,6 +1,6 @@
 ---
 name: 1natsu-document-harness-model
-description: ハーネスドキュメント（CLAUDE.md, .claude/rules/, docs/, feature README）の書き方・配置判断・粒度の基準を提供する内部リファレンス。document-harness 系スキルの共通知識として他のスキルから自動参照される。
+description: ハーネスドキュメント（CLAUDE.md, .claude/rules/, docs/, feature README、コード内コメント等）の書き方・配置判断・粒度の基準を提供する内部リファレンス。document-harness 系スキルの共通知識として他のスキルから自動参照される。
 user-invocable: false
 license: MIT
 metadata:
@@ -12,7 +12,7 @@ metadata:
 
 ハーネスドキュメントの判断基準を集約した内部リファレンス。「何を書くか」「どこに置くか」「どう書くか」の共通知識を提供する。
 
-> **auto memory との区別**: 本リファレンスが扱うのは、人間/エージェントが著者として書く「ハーネスドキュメント」（CLAUDE.md, `.claude/rules/`, `docs/`, feature README）。Claude 自身が学習として書き溜める **auto memory**（`~/.claude/projects/<project>/memory/`）は別系統で、対象外。設計判断や規約は auto memory に依存させず、ハーネスドキュメントに明示的に書く。メモリに溜まった恒久知識のリポジトリ側への蒸留・メモリの整理は `1natsu-document-harness-audit` のメモリ監査が扱う。
+> **auto memory との区別**: 本リファレンスが扱うのは、人間/エージェントが著者として書く「ハーネスドキュメント」（CLAUDE.md, `.claude/rules/`, `docs/`, feature README、コード内コメント）。Claude 自身が学習として書き溜める **auto memory**（`~/.claude/projects/<project>/memory/`）は別系統で、対象外。設計判断や規約は auto memory に依存させず、ハーネスドキュメントに明示的に書く。メモリに溜まった恒久知識のリポジトリ側への蒸留・メモリの整理は `1natsu-document-harness-audit` のメモリ監査が扱う。
 
 ## 3層モデル
 
@@ -25,6 +25,8 @@ metadata:
 | **知識** | 「なぜこうなっているか」 | `docs/` / feature `README.md` | 設計背景、データフロー、依存関係、状態遷移 |
 
 3層に加え、**手順的・反復的なタスク知識**（特定作業のワークフロー、繰り返す操作手順）は、常時ロードの CLAUDE.md/rules ではなく **skill**（必要時に on-demand ロード）へ置く。常時コンテキストを消費させず、関連する時だけ呼び出せる。
+
+**コード内のコメントも知識層に属する。** コードと同じ場所に置かれた「なぜこうなっているか」であり、markdown のファイルと性質は変わらない。ハーネスドキュメントの一部として扱い、用語と文体の規約も配置の判断も同じ基準を当てる。扱いが違うのは監査のスキャン範囲だけで、コメント全件を毎回走査すると終わらないため、カテゴリごとに範囲を定める（`1natsu-document-harness-audit` のステップ1・ステップ2）。
 
 ### 3層分離の例
 
