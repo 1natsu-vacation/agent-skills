@@ -4,7 +4,7 @@ description: agent-skills リポジトリ内の「プラットフォーム仕様
 license: MIT
 metadata:
   author: 1natsu
-  version: "1.1.0"
+  version: "1.2.0"
   internal: true
 ---
 
@@ -102,7 +102,9 @@ node .claude/skills/spec-drift-watch/scripts/check.mjs
 
 ### ステップ5: 冪等に PR を1本作る
 
-0. **レポートをファイルに用意する**。ステップ4のレポートに「実ドリフトがあれば、このブランチをローカル checkout して `spec-drift-fix` を起動して是正してください」の次アクションを足し、ファイルに書き出しておく（例 `report.md`）。PR 本文は diff 由来のバッククォートや `$(...)` を含みうるので、**必ず `--body-file` で渡す**（`--body "..."` のインライン渡しはシェル展開で本文が壊れる／注入される）。
+0. **レポートをファイルに用意する**。ステップ4のレポートに「実ドリフトがあれば、このブランチをローカル checkout して `spec-drift-fix` を起動して是正してください」の次アクションを足し、ファイルに書き出しておく。PR 本文は diff 由来のバッククォートや `$(...)` を含みうるので、**必ず `--body-file` で渡す**（`--body "..."` のインライン渡しはシェル展開で本文が壊れる／注入される）。
+
+   書き出し先は**作業ツリーの外**にする（`REPORT="$TMPDIR/spec-drift-report.md"` 等）。レポートは PR 本文にするための一時ファイルであって、リポジトリの資産ではない。特に `.spec-watch/` 配下に置くと後続の `git add .spec-watch/` が巻き込んでコミットしてしまい、PR 本文と二重の SSoT になる。コミットされたレポートは `spec-drift-fix` が是正を積んだ時点で古い状態を指したまま残る。リポジトリ側の記録は snapshot の前進が担う。
 
 1. **既存 PR を確認**（冪等性）。open な spec-watch PR があれば新規作成せず、それを更新する:
 
@@ -123,7 +125,7 @@ node .claude/skills/spec-drift-watch/scripts/check.mjs
    git add .spec-watch/
    git commit -m "chore(spec-watch): snapshot 更新（$(date -u +%Y-%m-%d)）"
    git push
-   gh pr edit "$PR" --body-file report.md
+   gh pr edit "$PR" --body-file "$REPORT"
    ```
 
    これで完了。以降の「新規 PR パス」は実行しない。
@@ -151,7 +153,7 @@ node .claude/skills/spec-drift-watch/scripts/check.mjs
 5. レポートを本文にして PR を作成する（本文はファイル渡し）:
 
    ```bash
-   gh pr create --title "Spec-drift watch: $(date -u +%Y-%m-%d)" --body-file report.md
+   gh pr create --title "Spec-drift watch: $(date -u +%Y-%m-%d)" --body-file "$REPORT"
    ```
 
 ## 設計上の注意
