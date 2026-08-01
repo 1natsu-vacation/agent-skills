@@ -202,3 +202,28 @@ In `@skills/1natsu-document-harness-audit/references/html-review.md` at line 88,
 ---
 
 eval検証してデグレないか確認しよう
+
+---
+
+概ね良さそうですが、空振りの件だけ把握しておきたい。
+
+> 空振りの宣言が消えました。 audit-distill で走査範囲の宣言が出なくなったのは、fixture のソースにダッシュが1つも無く報告すべきものが無かったためです。語ベース検索へ変えた結果として妥当な挙動です。
+
+before/afterでbeforeで検出していたものはなんだったのか？そしてafterで問題ない判断が本当に正しいのかをレビューしたい。
+
+また、coderabbitの追加レビューがあります。
+
+Verify each finding against current code. Fix only still-valid issues, skip the
+rest with a brief reason, keep changes minimal, and validate.
+
+In `@skills/1natsu-document-harness-audit/SKILL.md` around lines 316 - 321,
+メモリバックアップ手順のシェルブロックを fail-fast に更新し、mktemp または cp
+が失敗した時点で処理を停止して後続のメモリ削除へ進まないようにする。バックアップが正常完了した場合のみ削除処理を実行することを手順本文にも明記する。
+
+Verify each finding against current code. Fix only still-valid issues, skip the
+rest with a brief reason, keep changes minimal, and validate.
+
+In `@skills/1natsu-document-harness-audit/SKILL.md` at line 202,
+HTMLレビューへ渡す報告では、複数ファイルの違反を集約する場合も各対象の path:line
+を対象列にすべて列挙するよう、ステップ4の報告ルールを更新してください。「ほか3ファイル」のような省略は認めず、references/html-review.md
+の要求を満たす形式を維持してください。
