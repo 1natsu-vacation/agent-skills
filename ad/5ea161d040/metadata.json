@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "ad5ea161d040",
+  "strategy": "manual-commit",
+  "branch": "feat/document-harness-writing-standard",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "skills/1natsu-document-harness-audit/SKILL.md",
+    "skills/1natsu-document-harness-audit/references/html-review.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ad/5ea161d040/0/metadata.json",
+      "transcript": "/ad/5ea161d040/0/full.jsonl",
+      "compact_transcript": "/ad/5ea161d040/0/transcript.jsonl",
+      "content_hash": "/ad/5ea161d040/0/content_hash.txt",
+      "prompt": "/ad/5ea161d040/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 464,
+    "cache_creation_tokens": 320550,
+    "cache_read_tokens": 50265080,
+    "output_tokens": 177141,
+    "api_call_count": 229
+  }
+}
